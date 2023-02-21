@@ -53,6 +53,7 @@ public class SecurityConfig {
                         .antMatchers("/", "/api/signin", "/api/login")
                         .permitAll();
 
+
         http.userDetailsService(userDetailsService);
 
 
