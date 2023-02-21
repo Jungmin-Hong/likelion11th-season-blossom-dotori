@@ -37,4 +37,9 @@ public class User {
         password = passwordEncoder.encode(password);
         return this;
     }
+
+    public User commonRegister(){
+        authority = Authority.ROLE_USER;
+        return this;
+    }
 }

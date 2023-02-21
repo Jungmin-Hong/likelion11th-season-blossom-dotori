@@ -3,7 +3,7 @@ package season.blossom.dotori.user;
 import lombok.Data;
 
 @Data
-public class AuthRequestDto {
+public class RegisterRequestDto {
     private String email;
     private String password;
 }
