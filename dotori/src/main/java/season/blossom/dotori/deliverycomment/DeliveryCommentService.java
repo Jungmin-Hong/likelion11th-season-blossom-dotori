@@ -3,7 +3,6 @@ package season.blossom.dotori.deliverycomment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import season.blossom.dotori.delivery.DeliveryPost;
 import season.blossom.dotori.delivery.DeliveryPostRepository;
 
 import java.util.List;
