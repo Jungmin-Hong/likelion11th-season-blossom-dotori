@@ -1,6 +1,7 @@
 package season.blossom.dotori.delivery;
 
 import lombok.*;
+import season.blossom.dotori.user.User;
 
 import java.time.LocalDateTime;
 
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class DeliveryPostDto {
     private Long id;
-    private String writer;
+    private User writer;
     private String title;
     private String content;
     private LocalDateTime createdDate;
@@ -27,7 +28,7 @@ public class DeliveryPostDto {
     }
 
     @Builder
-    public DeliveryPostDto(Long id, String title, String content, String writer, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    public DeliveryPostDto(Long id, String title, String content, User writer, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.writer = writer;
         this.title = title;
