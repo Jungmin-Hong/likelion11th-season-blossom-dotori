@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import season.blossom.dotori.delivery.DeliveryPostDto;
 import season.blossom.dotori.delivery.DeliveryPostRepository;
+import season.blossom.dotori.deliverycomment.DeliveryComment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +17,20 @@ public class DeliveryPostService {
     private DeliveryPostRepository deliveryPostRepository;
 
     @Transactional
-    public Long savePost(DeliveryPostDto deliveryPostDto) {
-        return deliveryPostRepository.save(deliveryPostDto.toEntity()).getId();
+    public DeliveryPost savePost(DeliveryPostDto deliveryPostDto) {
+
+        DeliveryPost deliveryPost = DeliveryPost.builder()
+                .writer(deliveryPostDto.getWriter())
+                .title(deliveryPostDto.getTitle())
+                .content(deliveryPostDto.getContent())
+                .build();
+
+        return deliveryPostRepository.save(deliveryPost);
     }
 
+
     @Transactional
-    public List<DeliveryPostDto> getDeliveryPostList() {
+    public List<DeliveryPostDto> getList() {
         List<DeliveryPost> deliveryPosts = deliveryPostRepository.findAll();
         List<DeliveryPostDto> deliveryPostList = new ArrayList<>();
 
@@ -36,8 +45,9 @@ public class DeliveryPostService {
 
             deliveryPostList.add(deliveryPostDto);
         }
-
+//
         return deliveryPostList;
+//        return deliveryPosts;
     }
 
     @Transactional
