@@ -4,17 +4,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import season.blossom.dotori.deliverycomment.DeliveryComment;
-import season.blossom.dotori.deliverycomment.DeliveryCommentRequestDto;
-import season.blossom.dotori.deliverycomment.DeliveryCommentReturnDto;
 import season.blossom.dotori.user.CustomUserDetail;
 import season.blossom.dotori.user.User;
-
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @RestController
 @AllArgsConstructor
@@ -37,7 +31,8 @@ public class DeliveryPostController {
 //        return ResponseEntity.ok(deliveryPostDtos);
 
         List<DeliveryPostDto> deliveryPosts = deliveryPostService.getList();
-        return ResponseEntity.status(HttpStatus.OK).body(deliveryPosts);
+
+        return ResponseEntity.status( HttpStatus.OK).body(deliveryPosts);
     }
 
 
@@ -47,7 +42,7 @@ public class DeliveryPostController {
 //        return "deliveryPost/write";
 //    }
 
-    @GetMapping("/api/board/delivery/write")
+    @PostMapping("/api/board/delivery/write")
     public ResponseEntity<DeliveryPostDto> createPost(@RequestBody DeliveryPostDto deliveryPostDto,
                                                       @AuthenticationPrincipal CustomUserDetail customUserDetail) {
         User user = customUserDetail.getUser();
@@ -55,14 +50,14 @@ public class DeliveryPostController {
         DeliveryPost deliveryPost = deliveryPostService.savePost(deliveryPostDto);
 
         DeliveryPostDto delivery = DeliveryPostDto.builder()
+                .id(deliveryPost.getId())
                 .writer(deliveryPost.getWriter())
-                .title(deliveryPostDto.getTitle())
-                .content(deliveryPostDto.getContent())
+                .title(deliveryPost.getTitle())
+                .content(deliveryPost.getContent())
                 .build();
 
         return ResponseEntity.ok(delivery);
     }
-
 
     // 글 작성 완료 후
 //    @PostMapping("/api/board/delivery/write")
@@ -72,7 +67,7 @@ public class DeliveryPostController {
 //    }
 
     // 상세 조회
-    @GetMapping("/api/board/delivery/{no}")
+    @GetMapping("ㅁ")
     public ResponseEntity<DeliveryPostDto> getPostDetail(@PathVariable("no") Long no) {
         DeliveryPostDto deliveryPostDto = deliveryPostService.getPost(no);
 
