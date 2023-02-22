@@ -24,7 +24,7 @@ public class DeliveryPostController {
 //    }
 
     @GetMapping("/api/board/delivery")
-    public ResponseEntity<List<DeliveryPostDto>> getPosts(@AuthenticationPrincipal CustomUserDetail customUserDetail) {
+    public ResponseEntity<List<DeliveryPostDto>> getPosts() {
 //        List<DeliveryPost> deliveryPosts = deliveryPostService.getList();
 //        List<DeliveryPostDto> deliveryPostDtos = deliveryPosts.stream()
 //                .collect(Collectors.toList());
@@ -32,7 +32,7 @@ public class DeliveryPostController {
 
         List<DeliveryPostDto> deliveryPosts = deliveryPostService.getList();
 
-        return ResponseEntity.status( HttpStatus.OK).body(deliveryPosts);
+        return ResponseEntity.status(HttpStatus.OK).body(deliveryPosts);
     }
 
 
@@ -92,10 +92,9 @@ public class DeliveryPostController {
 
     @PutMapping("/api/board/delivery/edit/{no}")
     public ResponseEntity<DeliveryPostDto> update(@PathVariable("no") Long no, @RequestBody DeliveryPostDto deliveryPostDto) {
-        DeliveryPostDto deliveryPost = deliveryPostService.getPost(no);
+        deliveryPostService.updatePost(no, deliveryPostDto);
 
-        deliveryPostService.savePost(deliveryPostDto);
-        return ResponseEntity.status(HttpStatus.OK).body(deliveryPost);
+        return ResponseEntity.ok(deliveryPostDto);
     }
 
 

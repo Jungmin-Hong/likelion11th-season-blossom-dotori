@@ -64,6 +64,19 @@ public class DeliveryPostService {
         return deliveryPostDto;
     }
 
+    @Transactional
+    public DeliveryPostDto updatePost(Long postId, DeliveryPostDto deliveryPostDto) {
+        Optional<DeliveryPost> byId = deliveryPostRepository.findById(postId);
+        DeliveryPost deliveryPost = byId.orElseThrow(() -> new NullPointerException("해당 포스트가 존재하지 않습니다."));
+
+        deliveryPost.setTitle(deliveryPostDto.getTitle());
+        deliveryPost.setContent(deliveryPostDto.getContent());
+
+        return deliveryPostDto.builder()
+                .id(deliveryPost.getId())
+                .build();
+    }
+
 
     @Transactional
     public void deletePost(Long id) {

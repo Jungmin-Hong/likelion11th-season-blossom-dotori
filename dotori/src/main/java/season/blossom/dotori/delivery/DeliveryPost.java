@@ -45,4 +45,9 @@ public class DeliveryPost extends TimeEntity {
         this.deliveryStatus = DeliveryStatus.MATCHING;
     }
 
+    public void update(String title, String content, User writer) {
+        this.title = title;
+        this.content = content;
+        this.writer = writer;
+    }
 }
