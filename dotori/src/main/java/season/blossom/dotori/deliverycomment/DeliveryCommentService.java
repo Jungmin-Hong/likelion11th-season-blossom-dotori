@@ -23,9 +23,9 @@ public class DeliveryCommentService {
             parentComment = deliveryCommentRepository.findById(commentDto.getParentCommentId()).orElse(null);
         }
 
-        DeliveryPost deliveryPost = deliveryPostRepository.findById(commentDto.getDeliveryPostId()).orElse(null);
+//        DeliveryPost deliveryPost = deliveryPostRepository.findById(commentDto.getDeliveryPostId()).orElse(null);
         DeliveryComment deliveryComment = DeliveryComment.builder()
-                .deliveryPost(deliveryPost)
+//                .deliveryPost(deliveryPost)
                 .parentComment(parentComment)
                 .writer(commentDto.getWriter())
                 .content(commentDto.getContent())

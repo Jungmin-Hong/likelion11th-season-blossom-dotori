@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import season.blossom.dotori.user.CustomUserDetail;
 import season.blossom.dotori.user.User;
 
-import java.util.ArrayList;
+import java.nio.file.attribute.UserPrincipal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,8 +21,7 @@ public class DeliveryCommentController {
     public ResponseEntity<DeliveryCommentReturnDto> createComment(@PathVariable Long postId,
                                                                   @RequestBody DeliveryCommentRequestDto commentDto,
                                                                   @AuthenticationPrincipal CustomUserDetail customUserDetail) {
-        User user = customUserDetail.getUser();
-        commentDto.setWriter(user);
+        commentDto.setWriter(customUserDetail.getUser());
         commentDto.setDeliveryPostId(postId);
         DeliveryComment deliveryComment = deliveryCommentService.createComment(commentDto);
 
@@ -69,8 +68,8 @@ public class DeliveryCommentController {
 
     private String filterContent(Long userId, DeliveryComment deliveryComment){
         if(deliveryComment.isSecret()){
-            if(!(deliveryComment.getDeliveryPost().getWriter().getUserId().equals(userId) ||
-                    deliveryComment.getWriter().getUserId().equals(userId)))
+//            if(!(deliveryComment.getDeliveryPost().getWriter().getUserId().equals(userId) ||
+//                    deliveryComment.getWriter().getUserId().equals(userId)))
                 return "비밀댓글입니다.";
         }
         return deliveryComment.getContent();
