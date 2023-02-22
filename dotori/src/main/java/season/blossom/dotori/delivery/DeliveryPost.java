@@ -14,7 +14,6 @@ public class DeliveryPost extends TimeEntity {
 
     // 배달 게시글 번호
     @Id
-    @Column(name = "item_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 

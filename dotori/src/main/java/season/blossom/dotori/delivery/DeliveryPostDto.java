@@ -19,7 +19,7 @@ public class DeliveryPostDto {
 
     public DeliveryPost toEntity(){
         DeliveryPost deliveryPost = DeliveryPost.builder()
-                .id(id)
+//                .id(id)
                 .writer(writer)
                 .title(title)
                 .content(content)
