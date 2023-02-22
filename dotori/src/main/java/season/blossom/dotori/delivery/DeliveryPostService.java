@@ -36,10 +36,12 @@ public class DeliveryPostService {
 
         for ( DeliveryPost deliveryPost : deliveryPosts) {
             DeliveryPostDto deliveryPostDto = DeliveryPostDto.builder()
+                    .id(deliveryPost.getId())
                     .title(deliveryPost.getTitle())
                     .content(deliveryPost.getContent())
                     .writer(deliveryPost.getWriter())
                     .createdDate(deliveryPost.getCreatedDate())
+                    .modifiedDate(deliveryPost.getModifiedDate())
                     .build();
 
             deliveryPostList.add(deliveryPostDto);
@@ -55,10 +57,12 @@ public class DeliveryPostService {
         DeliveryPost deliveryPost = deliveryPostWrapper.get();
 
         DeliveryPostDto deliveryPostDto = DeliveryPostDto.builder()
+                .id(deliveryPost.getId())
                 .title(deliveryPost.getTitle())
                 .content(deliveryPost.getContent())
                 .writer(deliveryPost.getWriter())
                 .createdDate(deliveryPost.getCreatedDate())
+                .modifiedDate(deliveryPost.getModifiedDate())
                 .build();
 
         return deliveryPostDto;

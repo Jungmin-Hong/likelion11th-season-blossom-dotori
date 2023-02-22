@@ -25,21 +25,13 @@ public class DeliveryPostController {
 
     @GetMapping("/api/board/delivery")
     public ResponseEntity<List<DeliveryPostDto>> getPosts() {
-//        List<DeliveryPost> deliveryPosts = deliveryPostService.getList();
-//        List<DeliveryPostDto> deliveryPostDtos = deliveryPosts.stream()
-//                .collect(Collectors.toList());
-//        return ResponseEntity.ok(deliveryPostDtos);
-
         List<DeliveryPostDto> deliveryPosts = deliveryPostService.getList();
-
         return ResponseEntity.status(HttpStatus.OK).body(deliveryPosts);
     }
 
-
-    // 글 작성
-//    @GetMapping("/api/board/delivery/write")
-//    public String write() {
-//        return "deliveryPost/write";
+//    @GetMapping("/api/board/delivery")
+//    public List<DeliveryPostDto> findAllBoard() {
+//        return deliveryPostService.getList();
 //    }
 
     @PostMapping("/api/board/delivery/write")
@@ -59,12 +51,6 @@ public class DeliveryPostController {
         return ResponseEntity.ok(delivery);
     }
 
-    // 글 작성 완료 후
-//    @PostMapping("/api/board/delivery/write")
-//    public String write(DeliveryPostDto deliveryPostDto) {
-//        deliveryPostService.savePost(deliveryPostDto);
-//        return "redirect:/";
-//    }
 
     // 상세 조회
     @GetMapping("/api/board/delivery/{no}")
@@ -74,21 +60,6 @@ public class DeliveryPostController {
         return ResponseEntity.status(HttpStatus.OK).body(deliveryPostDto);
     }
 
-
-//    // 수정
-//    @GetMapping("/api/board/delivery/edit/{no}")
-//    public String edit(@PathVariable("no") Long no, Model model) {
-//        DeliveryPostDto deliveryPostDto = deliveryPostService.getPost(no);
-//
-//        model.addAttribute("deliveryPostDto", deliveryPostDto);
-//        return "deliveryPost/update";
-//    }
-//    @PutMapping("/api/board/delivery/edit/{no}")
-//    public String update(DeliveryPostDto deliveryPostDto) {
-//        deliveryPostService.savePost(deliveryPostDto);
-//
-//        return "redirect:/";
-//    }
 
     @PutMapping("/api/board/delivery/edit/{no}")
     public ResponseEntity<DeliveryPostDto> update(@PathVariable("no") Long no, @RequestBody DeliveryPostDto deliveryPostDto) {
