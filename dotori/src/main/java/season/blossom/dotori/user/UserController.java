@@ -3,9 +3,13 @@ package season.blossom.dotori.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +30,7 @@ public class UserController {
 
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
 
 
     @PostMapping("/register")
@@ -45,8 +50,15 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(HttpServletRequest request, HttpServletResponse response,
                                    @RequestBody LoginRequestDto loginRequestDto){
+        UserDetails userDetails = userService.loadUserByUsername(loginRequestDto.getEmail());
         Authentication authentication
-                = new UsernamePasswordAuthenticationToken(loginRequestDto.getEmail(), loginRequestDto.getPassword(), new ArrayList<>());
+                = new UsernamePasswordAuthenticationToken(userDetails, loginRequestDto.getPassword(), new ArrayList<>());
+        try {
+            authenticationManager.authenticate(authentication);
+        }
+        catch (AuthenticationException e){
+            throw new BadCredentialsException("Invalid email or password");
+        }
         SecurityContextHolder.getContext().setAuthentication(authentication);
         HttpSession session = request.getSession();
         session.setAttribute
