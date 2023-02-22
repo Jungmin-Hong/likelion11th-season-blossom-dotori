@@ -1,11 +1,12 @@
 package season.blossom.dotori.delivery;
 
 import lombok.*;
+import season.blossom.dotori.user.User;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "DeliveryPost")
+@Table(name = "delivery_post")
 @Getter @Setter
 @ToString
 @NoArgsConstructor
@@ -13,14 +14,12 @@ public class DeliveryPost extends TimeEntity {
 
     // 배달 게시글 번호
     @Id
-    @Column(name = "item_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "delivery_post_id")
     private Long id;
 
-    // 매핑 필요
-//    private Long writer_id;
-    @Column(nullable = false, length = 10)
-    private String writer;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User writer;
 
     @Column(nullable = false, length = 30) // 제한 없이도 가능
     private String title;
@@ -38,7 +37,7 @@ public class DeliveryPost extends TimeEntity {
 
 
     @Builder
-    public DeliveryPost(Long id, String writer, String title, String content) {
+    public DeliveryPost(Long id, User writer, String title, String content) {
         this.id = id;
         this.writer = writer;
         this.title = title;
@@ -46,4 +45,9 @@ public class DeliveryPost extends TimeEntity {
         this.deliveryStatus = DeliveryStatus.MATCHING;
     }
 
+    public void update(String title, String content, User writer) {
+        this.title = title;
+        this.content = content;
+        this.writer = writer;
+    }
 }
