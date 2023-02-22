@@ -15,6 +15,7 @@ public class DeliveryPost extends TimeEntity {
     // 배달 게시글 번호
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "delivery_post_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
