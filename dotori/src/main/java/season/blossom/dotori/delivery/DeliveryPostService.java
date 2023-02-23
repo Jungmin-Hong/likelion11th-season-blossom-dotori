@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import season.blossom.dotori.delivery.DeliveryPostDto;
 import season.blossom.dotori.delivery.DeliveryPostRepository;
 import season.blossom.dotori.deliverycomment.DeliveryComment;
+import season.blossom.dotori.roommate.RoommatePost;
+import season.blossom.dotori.roommate.RoommatePostReturnDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +53,30 @@ public class DeliveryPostService {
     }
 
     @Transactional
+    public List<DeliveryPostReturnDto> getListFiltered() {
+        List<DeliveryPost> deliveryPosts = deliveryPostRepository.findAll();
+        List<DeliveryPostReturnDto> deliveryPostList = new ArrayList<>();
+
+        for ( DeliveryPost deliveryPost : deliveryPosts) {
+            if (deliveryPost.getDeliveryStatus().toString().equals("MATCHING")) {
+                DeliveryPostReturnDto deliveryPostDto = DeliveryPostReturnDto.builder()
+                        .id(deliveryPost.getId())
+                        .title(deliveryPost.getTitle())
+                        .content(deliveryPost.getContent())
+                        .writer(deliveryPost.getWriter().getEmail())
+                        .createdDate(deliveryPost.getCreatedDate())
+                        .modifiedDate(deliveryPost.getModifiedDate())
+                        .build();
+                deliveryPostList.add(deliveryPostDto);
+            }
+            else {
+                continue;
+            }
+        }
+        return deliveryPostList;
+    }
+
+    @Transactional
     public DeliveryPostReturnDto getPost(Long id) {
         Optional<DeliveryPost> deliveryPostWrapper = deliveryPostRepository.findById(id);
         DeliveryPost deliveryPost = deliveryPostWrapper.get();
@@ -74,6 +100,7 @@ public class DeliveryPostService {
 
         deliveryPost.setTitle(deliveryPostDto.getTitle());
         deliveryPost.setContent(deliveryPostDto.getContent());
+        deliveryPost.setDeliveryStatus(deliveryPostDto.toEntity().getDeliveryStatus());
 
         return deliveryPostDto.builder()
                 .id(deliveryPost.getId())
