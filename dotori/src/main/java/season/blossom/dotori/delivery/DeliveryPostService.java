@@ -11,15 +11,17 @@ import season.blossom.dotori.user.User;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
+@Transactional
 public class DeliveryPostService {
     private DeliveryPostRepository deliveryPostRepository;
     private DeliveryCommentService deliveryCommentService;
 
     @Transactional
-    public DeliveryPost savePost(DeliveryPostDto deliveryPostDto) {
+    public DeliveryPostReturnDto savePost(DeliveryPostDto deliveryPostDto) {
 
         DeliveryPost deliveryPost = DeliveryPost.builder()
                 .writer(deliveryPostDto.getWriter())
@@ -28,29 +30,26 @@ public class DeliveryPostService {
                 .deliveryStatus(deliveryPostDto.getDeliveryStatus())
                 .build();
 
-        return deliveryPostRepository.save(deliveryPost);
+
+        return new DeliveryPostReturnDto(deliveryPostRepository.save(deliveryPost));
     }
 
 
     @Transactional
-    public List<DeliveryPostReturnDto> getList() {
-        List<DeliveryPost> deliveryPosts = deliveryPostRepository.findAll();
-        List<DeliveryPostReturnDto> deliveryPostList = new ArrayList<>();
+    public List<DeliveryPostReturnDto> getList(User user, int matchType) {
 
-        for ( DeliveryPost deliveryPost : deliveryPosts) {
-            DeliveryPostReturnDto deliveryPostDto = DeliveryPostReturnDto.builder()
-                    .id(deliveryPost.getId())
-                    .title(deliveryPost.getTitle())
-                    .content(deliveryPost.getContent())
-                    .writer(deliveryPost.getWriter().getEmail())
-                    .createdDate(deliveryPost.getCreatedDate())
-                    .modifiedDate(deliveryPost.getModifiedDate())
-                    .build();
+        List<DeliveryPost> deliveryPosts;
 
-            deliveryPostList.add(deliveryPostDto);
+        if(matchType == 1) {
+            deliveryPosts = deliveryPostRepository.findAllByWriter_UniversityAndDeliveryStatusOrderByCreatedDateDesc(
+                    user.getUniversity(), DeliveryStatus.MATCHING);
+        }
+        else {
+            deliveryPosts = deliveryPostRepository.findAllByWriter_UniversityOrderByCreatedDateDesc(
+                    user.getUniversity());
         }
 
-        return deliveryPostList;
+        return deliveryPosts.stream().map(DeliveryPostReturnDto::new).collect(Collectors.toList());
     }
 
     @Transactional
@@ -100,18 +99,21 @@ public class DeliveryPostService {
         Optional<DeliveryPost> deliveryPostWrapper = deliveryPostRepository.findById(postId);
         DeliveryPost deliveryPost = deliveryPostWrapper.get();
 
-        DeliveryPostReturnDto deliveryPostDto = DeliveryPostReturnDto.builder()
-                .id(deliveryPost.getId())
-                .title(deliveryPost.getTitle())
-                .content(deliveryPost.getContent())
-                .writer(deliveryPost.getWriter().getEmail())
-                .createdDate(deliveryPost.getCreatedDate())
-                .modifiedDate(deliveryPost.getModifiedDate())
-                .build();
+        DeliveryPostReturnDto deliveryPostDto = new DeliveryPostReturnDto(deliveryPost);
 
         return deliveryPostDto;
     }
 
+    public DeliveryPostReturnDto postMatchStatus(Long postId, Long userId){
+        DeliveryPost deliveryPost = deliveryPostRepository.findById(postId).orElse(null);
+        if(deliveryPost.getWriter().getUserId() == userId){
+            deliveryPost.setDeliveryStatus(DeliveryStatus.MATCHED);
+        }
+
+        DeliveryPostReturnDto deliveryPostDto = new DeliveryPostReturnDto(deliveryPost);
+
+        return deliveryPostDto;
+    }
 
     @Transactional
     public DeliveryPostDto updatePost(Long postId, DeliveryPostDto deliveryPostDto) {

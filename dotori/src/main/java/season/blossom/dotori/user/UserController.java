@@ -38,14 +38,9 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody RegisterRequestDto authRequestDto) {
-        User user = User.builder()
-                .email(authRequestDto.getEmail())
-                .password(authRequestDto.getPassword())
-                .build();
+        authRequestDto.setPassword(passwordEncoder.encode(authRequestDto.getPassword()));
 
-        user.encodePassword(passwordEncoder);
-
-        User registeredUser = userService.registerUser(user);
+        User registeredUser = userService.registerUser(authRequestDto);
 
         return new ResponseEntity<>(registeredUser, HttpStatus.OK);
     }

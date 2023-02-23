@@ -21,16 +21,16 @@ public class DeliveryComment {
     @Column(name = "delivery_comment_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY)
     private DeliveryPost deliveryPost;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY)
     private User writer;
 
     private String content;
     private boolean isSecret;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY)
     private DeliveryComment parentComment;
 
     @OneToMany(mappedBy = "parentComment")

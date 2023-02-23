@@ -40,6 +40,13 @@ public class DeliveryPost extends TimeEntity {
     @OneToMany(mappedBy = "deliveryPost")
     private List<DeliveryComment> comments;
 
+    @ManyToMany
+    @JoinTable(
+            name = "delivery_post_matching",
+            joinColumns = @JoinColumn(name = "delivery_post_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> matchedUsers;
+
 
     @Builder
     public DeliveryPost(Long id, User writer, String title, String content, DeliveryStatus deliveryStatus) {

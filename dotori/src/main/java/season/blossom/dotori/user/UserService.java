@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import season.blossom.dotori.roommate.RoommatePost;
@@ -41,8 +40,14 @@ public class UserService implements UserDetailsService {
         return new CustomUserDetail(user);
     }
 
-    public User registerUser(User user) {
-        user.commonRegister();
+    public User registerUser(RegisterRequestDto registerRequestDto) {
+        User user = User.builder()
+                .email(registerRequestDto.getEmail())
+                .password(registerRequestDto.getPassword())
+                .university(University.valueOf(registerRequestDto.getUniversity().toUpperCase(Locale.ROOT)))
+                .authority(Authority.ROLE_USER)
+                .build();
+
         return userRepository.save(user);
     }
 
