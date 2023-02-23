@@ -9,7 +9,7 @@ public class DeliveryCommentRequestDto {
     private Long parentCommentId;
     private String content;
     private User writer;
-    private boolean isSecret;
+    private Boolean isSecret;
 
     public DeliveryComment toEntity(){
         return DeliveryComment.builder()
