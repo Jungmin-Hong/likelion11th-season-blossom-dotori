@@ -48,6 +48,9 @@ public class User {
     private List<DeliveryPost> matchedDelieveryPost;
     
 
+    @OneToMany(mappedBy = "writer")
+    private List<DeliveryPost> deliveryPosts;
+
     public User encodePassword(PasswordEncoder passwordEncoder){
         password = passwordEncoder.encode(password);
         return this;
@@ -55,5 +58,9 @@ public class User {
 
     public void updatePassword(PasswordEncoder passwordEncoder, String password){
         this.password = passwordEncoder.encode(password);
+    }
+
+    public boolean matchPassword(PasswordEncoder passwordEncoder, String checkPassword){
+        return passwordEncoder.matches(checkPassword, getPassword());
     }
 }
