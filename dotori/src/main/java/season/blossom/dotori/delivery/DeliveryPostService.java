@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import season.blossom.dotori.deliverycomment.DeliveryCommentReturnDto;
+import season.blossom.dotori.deliverycomment.DeliveryCommentSeq;
+import season.blossom.dotori.deliverycomment.DeliveryCommentSeqRepository;
 import season.blossom.dotori.deliverycomment.DeliveryCommentService;
 import season.blossom.dotori.user.User;
 
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class DeliveryPostService {
+    private DeliveryCommentSeqRepository deliveryCommentSeqRepository;
     private DeliveryPostRepository deliveryPostRepository;
     private DeliveryCommentService deliveryCommentService;
 
@@ -27,9 +30,20 @@ public class DeliveryPostService {
                 .writer(deliveryPostDto.getWriter())
                 .title(deliveryPostDto.getTitle())
                 .content(deliveryPostDto.getContent())
+                .deliveryStatus(deliveryPostDto.getDeliveryStatus())
+                .numberOfCommentWriter(0)
                 .build();
 
-        return new DeliveryPostReturnDto(deliveryPostRepository.save(deliveryPost));
+        DeliveryPost savedPost = deliveryPostRepository.save(deliveryPost);
+        DeliveryCommentSeq deliveryCommentSeq = DeliveryCommentSeq.builder()
+                .deliveryPost(savedPost)
+                .user(deliveryPost.getWriter())
+                .writeSeq(savedPost.getNumberOfCommentWriter())
+                .build();
+
+        deliveryCommentSeqRepository.save(deliveryCommentSeq);
+
+        return new DeliveryPostReturnDto(savedPost);
     }
 
 

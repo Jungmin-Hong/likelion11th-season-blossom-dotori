@@ -5,14 +5,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import season.blossom.dotori.delivery.DeliveryPost;
 import season.blossom.dotori.delivery.DeliveryPostRepository;
+import season.blossom.dotori.user.User;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class DeliveryCommentService {
+    private final DeliveryCommentSeqRepository deliveryCommentSeqRepository;
     private final DeliveryPostRepository deliveryPostRepository;
     private final DeliveryCommentRepository deliveryCommentRepository;
 
@@ -59,6 +62,21 @@ public class DeliveryCommentService {
                 throw new IllegalStateException();
         }
 
+        DeliveryCommentSeq foundSeq = deliveryCommentSeqRepository.findByUserAndDeliveryPost(commentDto.getWriter(), deliveryPost).orElse(null);
+        if(deliveryPost.getWriter().getUserId() != commentDto.getWriter().getUserId()) {
+            if(foundSeq == null){
+                deliveryPost.increaseNumber();
+                DeliveryCommentSeq curSeq = DeliveryCommentSeq.builder()
+                        .writeSeq(deliveryPost.getNumberOfCommentWriter())
+                        .user(commentDto.getWriter())
+                        .deliveryPost(deliveryPost)
+                        .build();
+                deliveryCommentSeqRepository.save(curSeq);
+            }
+        }
+
+        deliveryPost.increaseNumber();
+
         DeliveryComment deliveryComment = DeliveryComment.builder()
                 .deliveryPost(deliveryPost)
                 .parentComment(parentComment)
@@ -72,16 +90,18 @@ public class DeliveryCommentService {
 
     public List<DeliveryCommentReturnDto> getComments(Long postId, Long userId) {
         List<DeliveryComment> comments = deliveryCommentRepository.findByDeliveryPostIdAndParentCommentIsNull(postId);
+        DeliveryPost deliveryPost = deliveryPostRepository.findById(postId).orElse(null);
 
         List<DeliveryCommentReturnDto> returnDtos = comments.stream()
                 .map(comment -> {
                     List<DeliveryCommentReturnDto> childCommentDtos = comment.getChildComment().stream()
                             .map(child -> {
                                 String content = filterContent(userId, child);
+                                String writerAlias = convertWriter(child.getWriter(), deliveryPost);
                                 DeliveryCommentReturnDto returnDto = DeliveryCommentReturnDto.builder()
                                         .commentId(child.getId())
                                         .content(content)
-                                        .writer(child.getWriter().getEmail())
+                                        .writer(writerAlias)
                                         .isSecret(child.isSecret())
                                         .build();
                                 return returnDto;
@@ -90,7 +110,7 @@ public class DeliveryCommentService {
                     return DeliveryCommentReturnDto.builder()
                             .commentId(comment.getId())
                             .content(filterContent(userId, comment))
-                            .writer(comment.getWriter().getEmail())
+                            .writer(convertWriter(comment.getWriter(), deliveryPost))
                             .isSecret(comment.isSecret())
                             .childCommentList(childCommentDtos.isEmpty() ? null : childCommentDtos)
                             .build();
@@ -99,23 +119,24 @@ public class DeliveryCommentService {
         return returnDtos;
     }
 
-    public void addMatchingUser(Long userId, Long postId, Long commentId) {
-        DeliveryComment deliveryComment = deliveryCommentRepository.findById(commentId).orElse(null);
-        DeliveryPost deliveryPost = deliveryPostRepository.findById(postId).orElse(null);
 
-        if(deliveryPost.getWriter().getUserId() == userId){
-            deliveryPost.getMatchedUsers().add(deliveryComment.getWriter());
-        }
-        else{
-            throw new RuntimeException();
-        }
-    }
-        private String filterContent(Long userId, DeliveryComment deliveryComment){
+    private String filterContent(Long userId, DeliveryComment deliveryComment){
         if(deliveryComment.isSecret()){
             if(!(deliveryComment.getDeliveryPost().getWriter().getUserId() == userId ||
                     deliveryComment.getWriter().getUserId() == userId))
             return "비밀댓글입니다.";
         }
         return deliveryComment.getContent();
+    }
+
+    private String convertWriter(User user, DeliveryPost deliveryPost){
+        DeliveryCommentSeq deliveryCommentSeq = deliveryCommentSeqRepository.findByUserAndDeliveryPost(user, deliveryPost).orElse(null);
+        int writeSeq = deliveryCommentSeq.getWriteSeq();
+        if(writeSeq == 0){
+            return "글 쓴 다람쥐";
+        }
+        else{
+            return "익명의 다람쥐" + writeSeq;
+        }
     }
 }

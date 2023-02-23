@@ -30,8 +30,7 @@ public class DeliveryPost extends TimeEntity {
     @Column(nullable = false)
     private String content;
 
-    // 등록 시간
-//    private LocalDateTime regTime;
+    private Integer numberOfCommentWriter;
 
     // 매칭 상태
     @Enumerated(EnumType.STRING)
@@ -40,20 +39,17 @@ public class DeliveryPost extends TimeEntity {
     @OneToMany(mappedBy = "deliveryPost")
     private List<DeliveryComment> comments;
 
-    @ManyToMany
-    @JoinTable(
-            name = "delivery_post_matching",
-            joinColumns = @JoinColumn(name = "delivery_post_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> matchedUsers;
-
+    public void increaseNumber(){
+        this.numberOfCommentWriter += 1;
+    }
 
     @Builder
-    public DeliveryPost(Long id, User writer, String title, String content) {
+    public DeliveryPost(Long id, User writer, String title, String content, Integer numberOfCommentWriter, DeliveryStatus deliveryStatus) {
         this.id = id;
         this.writer = writer;
         this.title = title;
         this.content = content;
+        this.numberOfCommentWriter = numberOfCommentWriter;
         this.deliveryStatus = DeliveryStatus.MATCHING;
     }
 }
