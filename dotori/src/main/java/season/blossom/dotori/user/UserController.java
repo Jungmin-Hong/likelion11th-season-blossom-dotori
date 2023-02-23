@@ -14,18 +14,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.web.bind.annotation.*;
-import season.blossom.dotori.delivery.DeliveryPostReturnDto;
-import season.blossom.dotori.roommate.RoommatePostDto;
-import season.blossom.dotori.roommate.RoommatePostReturnDto;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
+@CrossOrigin(origins = "http://127.0.0.1:5500", allowCredentials = "true")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
@@ -66,9 +62,9 @@ public class UserController {
         Cookie cookie = new Cookie("JSESSIONID", session.getId());
         cookie.setPath("/");
         cookie.setHttpOnly(true);
-        cookie.setMaxAge(30 * 60);
+        cookie.setMaxAge(30000 * 60);
         response.addCookie(cookie);
-        return ResponseEntity.ok(authentication.getPrincipal());
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("/profile")

@@ -1,4 +1,4 @@
-package season.blossom.dotori.deliverycomment;
+package season.blossom.dotori.roommatecomment;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -8,19 +8,19 @@ import season.blossom.dotori.user.CustomUserDetail;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/board/delivery/{postId}/comments")
-public class DeliveryCommentController {
-    private final DeliveryCommentService deliveryCommentService;
+@RequestMapping("/api/board/roommate/{postId}/comments")
+public class RoommateCommentController {
+    private final RoommateCommentService deliveryCommentService;
 
     @PostMapping
-    public ResponseEntity<DeliveryCommentReturnDto> createComment(@PathVariable Long postId,
-                                                                  @RequestBody DeliveryCommentRequestDto commentDto,
+    public ResponseEntity<RoommateCommentReturnDto> createComment(@PathVariable Long postId,
+                                                                  @RequestBody RoommateCommentRequestDto commentDto,
                                                                   @AuthenticationPrincipal CustomUserDetail customUserDetail) {
         commentDto.setWriter(customUserDetail.getUser());
-        commentDto.setDeliveryPostId(postId);
-        DeliveryComment deliveryComment = deliveryCommentService.createComment(commentDto);
+        commentDto.setRoommatePostId(postId);
+        RoommateComment deliveryComment = deliveryCommentService.createComment(commentDto);
 
-        DeliveryCommentReturnDto returnDto = DeliveryCommentReturnDto.builder()
+        RoommateCommentReturnDto returnDto = RoommateCommentReturnDto.builder()
                 .commentId(deliveryComment.getId())
                 .content(deliveryComment.getContent())
                 .writer(deliveryComment.getWriter().getEmail())
@@ -29,6 +29,7 @@ public class DeliveryCommentController {
 
         return ResponseEntity.ok(returnDto);
     }
+
 
 //    @GetMapping
 //    public ResponseEntity<List<DeliveryCommentReturnDto>> getComments(@PathVariable Long postId,
@@ -60,7 +61,7 @@ public class DeliveryCommentController {
 //        return ResponseEntity.ok(returnDtos);
 //    }
 
-    private String filterContent(Long userId, DeliveryComment deliveryComment){
+    private String filterContent(Long userId, RoommateComment deliveryComment){
         if(deliveryComment.isSecret()){
 //            if(!(deliveryComment.getDeliveryPost().getWriter().getUserId().equals(userId) ||
 //                    deliveryComment.getWriter().getUserId().equals(userId)))
