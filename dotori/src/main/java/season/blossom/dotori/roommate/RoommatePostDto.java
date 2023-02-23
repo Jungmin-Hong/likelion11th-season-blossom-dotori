@@ -24,8 +24,8 @@ public class RoommatePostDto {
     private LocalDateTime modifiedDate;
     private RoommateStatus roommateStatus;
 
-    public DeliveryPost toEntity() {
-        DeliveryPost roommatePost = DeliveryPost.builder()
+    public RoommatePost toEntity() {
+        RoommatePost roommatePost = RoommatePost.builder()
 //                .id(id)
                 .writer(writer)
                 .title(title)
