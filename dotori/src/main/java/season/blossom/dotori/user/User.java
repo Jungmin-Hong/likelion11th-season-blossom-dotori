@@ -48,6 +48,9 @@ public class User {
     private List<DeliveryPost> matchedDelieveryPost;
     
 
+    @OneToMany(mappedBy = "writer")
+    private List<DeliveryPost> deliveryPosts;
+
     public User encodePassword(PasswordEncoder passwordEncoder){
         password = passwordEncoder.encode(password);
         return this;
