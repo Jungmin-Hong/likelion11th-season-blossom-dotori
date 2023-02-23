@@ -50,26 +50,9 @@ public class UserService implements UserDetailsService {
                 .university(University.valueOf(registerRequestDto.getUniversity().toUpperCase(Locale.ROOT)))
                 .authority(Authority.ROLE_USER)
                 .build();
+        UserReturnDto userReturnDto = new UserReturnDto(user);
 
         return userRepository.save(user);
-    }
-
-    @Transactional
-    public User registerInfo(User user, UserReturnDto userReturnDto) {
-        Optional<User> byId = userRepository.findById(user.getUserId());
-        User me = byId.orElseThrow(() -> new NullPointerException("해당 포스트가 존재하지 않습니다."));
-
-        me.setAge(userReturnDto.getAge());
-        me.setCalling(userReturnDto.getCalling());
-        me.setSmoking(userReturnDto.getSmoking());
-        me.setEating(userReturnDto.getEating());
-        me.setCleaningCycle(userReturnDto.getCleaningCycle());
-        me.setFloor(userReturnDto.getFloor());
-        me.setSleepHabits(userReturnDto.getSleepHabits());
-        me.setSleepTime(userReturnDto.getSleepTime());
-        userRepository.save(me);
-
-        return me;
     }
 
     @Transactional
@@ -77,14 +60,18 @@ public class UserService implements UserDetailsService {
         Optional<User> byId = userRepository.findById(user.getUserId());
         User me = byId.orElseThrow(() -> new NullPointerException("해당 포스트가 존재하지 않습니다."));
 
+        me.setGender(userReturnDto.getGender());
         me.setAge(userReturnDto.getAge());
-        me.setCalling(userReturnDto.getCalling());
+        me.setDorm(userReturnDto.getDorm());
+        me.setFloor(userReturnDto.getFloor());
+        me.setCleaningCycle(userReturnDto.getCleaningCycle());
+        me.setSleepTime(userReturnDto.getSleepTime());
+        me.setSleepHabits(userReturnDto.getSleepHabits());
+        me.setUseTime(userReturnDto.getUseTime());
         me.setSmoking(userReturnDto.getSmoking());
         me.setEating(userReturnDto.getEating());
-        me.setCleaningCycle(userReturnDto.getCleaningCycle());
-        me.setFloor(userReturnDto.getFloor());
-        me.setSleepHabits(userReturnDto.getSleepHabits());
-        me.setSleepTime(userReturnDto.getSleepTime());
+        me.setCalling(userReturnDto.getCalling());
+        me.setSmokeMate(userReturnDto.getSmokeMate());
         userRepository.save(me);
 
         return me;
@@ -92,15 +79,22 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public UserReturnDto getUser(User user) {
+        Optional<User> byId = userRepository.findById(user.getUserId());
+        User me = byId.orElseThrow(() -> new NullPointerException("해당 포스트가 존재하지 않습니다."));
+
         UserReturnDto userReturnDto = UserReturnDto.builder()
-                .age(user.getAge())
-                .calling(user.getCalling())
-                .smoking(user.getSmoking())
-                .eating(user.getEating())
-                .cleaningCycle(user.getCleaningCycle())
-                .floor(user.getFloor())
-                .sleepHabits(user.getSleepHabits())
-                .sleepTime(user.getSleepTime())
+                .gender(me.getGender())
+                .age(me.getAge())
+                .dorm(me.getDorm())
+                .floor(me.getFloor())
+                .cleaningCycle(me.getCleaningCycle())
+                .sleepTime(me.getSleepTime())
+                .sleepHabits(me.getSleepHabits())
+                .useTime(me.getUseTime())
+                .smoking(me.getSmoking())
+                .eating(me.getEating())
+                .calling(me.getCalling())
+                .smokeMate(me.getSmokeMate())
                 .build();
 
         return userReturnDto;
@@ -120,8 +114,6 @@ public class UserService implements UserDetailsService {
         else {
             throw new IllegalStateException("비밀번호가 틀렸습니다.");
         }
-
-
 
         return me;
     }

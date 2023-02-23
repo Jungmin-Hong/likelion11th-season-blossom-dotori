@@ -13,7 +13,6 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 public class DeliveryPostReturnDto {
-
     private Long id;
     private String writer;
     private String title;

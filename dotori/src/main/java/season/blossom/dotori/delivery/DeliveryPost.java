@@ -50,6 +50,6 @@ public class DeliveryPost extends TimeEntity {
         this.title = title;
         this.content = content;
         this.numberOfCommentWriter = numberOfCommentWriter;
-        this.deliveryStatus = deliveryStatus;
+        this.deliveryStatus = DeliveryStatus.MATCHING;
     }
 }

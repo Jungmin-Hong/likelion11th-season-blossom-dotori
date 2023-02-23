@@ -2,9 +2,12 @@ package season.blossom.dotori.roommate;
 
 import lombok.*;
 import season.blossom.dotori.delivery.TimeEntity;
+import season.blossom.dotori.deliverycomment.DeliveryComment;
+import season.blossom.dotori.roommatecomment.RoommateComment;
 import season.blossom.dotori.user.User;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "roommate_post")
@@ -29,30 +32,27 @@ public class RoommatePost extends TimeEntity {
     @Column(nullable = false)
     private Integer people;
 
-    // 기숙사명
-    @Column(nullable = false, length = 30)
-    private String dorm_name;
-
     @Lob
     @Column(nullable = false)
     private String content;
-
 
 
     // 매칭 상태
     @Enumerated(EnumType.STRING)
     private RoommateStatus roommateStatus;
 
+    @OneToMany(mappedBy = "roommatePost")
+    private List<RoommateComment> comments;
+
 
     @Builder
-    public RoommatePost(Long id, User writer, Integer people, String dorm_name, String title, String content, RoommateStatus roommateStatus) {
+    public RoommatePost(Long id, User writer, Integer people, String title, String content, RoommateStatus roommateStatus) {
         this.id = id;
         this.writer = writer;
         this.people = people;
-        this.dorm_name = dorm_name;
         this.title = title;
         this.content = content;
-        this.roommateStatus = roommateStatus;
+        this.roommateStatus = RoommateStatus.MATCHING;
     }
 }
 

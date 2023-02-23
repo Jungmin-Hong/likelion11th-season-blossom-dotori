@@ -27,15 +27,30 @@ public class User {
     @Enumerated(EnumType.STRING)
     private University university;
     private String name;
+    // 성별
+    private Boolean gender;
+    // 나이
     private Integer age;
-
-    private Boolean calling;
-    private Boolean smoking;
-    private Boolean eating;
-    private Integer cleaningCycle;
+    // 기숙사명
+    private String dorm;
+    // 선호 층수
     private Integer floor;
-    private String sleepHabits;
+    // 청소 주기
+    private String cleaningCycle;
+    // 소등 시간
     private String sleepTime;
+    // 잠버릇
+    private String sleepHabits;
+    // 기숙사 이용시간
+    private String useTime;
+    // 본인 흡연
+    private Boolean smoking;
+    // 식사 가능 여부
+    private Boolean eating;
+    // 통화 가능 여부
+    private Boolean calling;
+    // 룸메 흡연 여부
+    private Boolean smokeMate;
 
     @Enumerated(EnumType.STRING)
     private Authority authority;
@@ -60,4 +75,5 @@ public class User {
     public boolean matchPassword(PasswordEncoder passwordEncoder, String checkPassword){
         return passwordEncoder.matches(checkPassword, getPassword());
     }
+
 }

@@ -64,30 +64,6 @@ public class DeliveryPostService {
         return deliveryPosts.stream().map(DeliveryPostReturnDto::new).collect(Collectors.toList());
     }
 
-    @Transactional
-    public List<DeliveryPostReturnDto> getListFiltered() {
-        List<DeliveryPost> deliveryPosts = deliveryPostRepository.findAll();
-        List<DeliveryPostReturnDto> deliveryPostList = new ArrayList<>();
-
-        for ( DeliveryPost deliveryPost : deliveryPosts) {
-            if (deliveryPost.getDeliveryStatus().toString().equals("MATCHING")) {
-                DeliveryPostReturnDto deliveryPostDto = DeliveryPostReturnDto.builder()
-                        .id(deliveryPost.getId())
-                        .title(deliveryPost.getTitle())
-                        .content(deliveryPost.getContent())
-                        .writer(deliveryPost.getWriter().getEmail())
-                        .createdDate(deliveryPost.getCreatedDate())
-                        .modifiedDate(deliveryPost.getModifiedDate())
-                        .build();
-                deliveryPostList.add(deliveryPostDto);
-            }
-            else {
-                continue;
-            }
-        }
-        return deliveryPostList;
-    }
-
     public DeliveryPostReturnDto getPost(Long postId, Long userId) {
         Optional<DeliveryPost> deliveryPostWrapper = deliveryPostRepository.findById(postId);
         DeliveryPost deliveryPost = deliveryPostWrapper.get();
@@ -95,11 +71,12 @@ public class DeliveryPostService {
 
         DeliveryPostReturnDto deliveryPostDto = DeliveryPostReturnDto.builder()
                 .id(deliveryPost.getId())
+                .writer(deliveryPost.getWriter().getEmail())
                 .title(deliveryPost.getTitle())
                 .content(deliveryPost.getContent())
-                .writer(deliveryPost.getWriter().getEmail())
                 .createdDate(deliveryPost.getCreatedDate())
                 .modifiedDate(deliveryPost.getModifiedDate())
+                .deliveryStatus(deliveryPost.getDeliveryStatus())
                 .comments(comments)
                 .build();
 
@@ -133,9 +110,10 @@ public class DeliveryPostService {
         DeliveryPost deliveryPost = byId.orElseThrow(() -> new NullPointerException("해당 포스트가 존재하지 않습니다."));
 
         if (deliveryPost.getWriter().getUserId().equals(userId)){
+            deliveryPost.setId(deliveryPost.getId());
+            deliveryPost.setWriter(deliveryPost.getWriter());
             deliveryPost.setTitle(deliveryPostDto.getTitle());
             deliveryPost.setContent(deliveryPostDto.getContent());
-            deliveryPost.setDeliveryStatus(deliveryPostDto.toEntity().getDeliveryStatus());
 
             return deliveryPostDto.builder()
                     .id(deliveryPost.getId())
@@ -144,7 +122,6 @@ public class DeliveryPostService {
         else {
             throw new IllegalStateException();
         }
-
     }
 
 
@@ -158,7 +135,6 @@ public class DeliveryPostService {
         else {
             throw new IllegalStateException();
         }
-
     }
 
 
