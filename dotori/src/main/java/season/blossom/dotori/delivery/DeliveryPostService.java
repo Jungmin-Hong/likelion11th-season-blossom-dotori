@@ -30,37 +30,36 @@ public class DeliveryPostService {
 
 
     @Transactional
-    public List<DeliveryPostDto> getList() {
+    public List<DeliveryPostReturnDto> getList() {
         List<DeliveryPost> deliveryPosts = deliveryPostRepository.findAll();
-        List<DeliveryPostDto> deliveryPostList = new ArrayList<>();
+        List<DeliveryPostReturnDto> deliveryPostList = new ArrayList<>();
 
         for ( DeliveryPost deliveryPost : deliveryPosts) {
-            DeliveryPostDto deliveryPostDto = DeliveryPostDto.builder()
+            DeliveryPostReturnDto deliveryPostDto = DeliveryPostReturnDto.builder()
                     .id(deliveryPost.getId())
                     .title(deliveryPost.getTitle())
                     .content(deliveryPost.getContent())
-                    .writer(deliveryPost.getWriter())
+                    .writer(deliveryPost.getWriter().getEmail())
                     .createdDate(deliveryPost.getCreatedDate())
                     .modifiedDate(deliveryPost.getModifiedDate())
                     .build();
 
             deliveryPostList.add(deliveryPostDto);
         }
-//
+
         return deliveryPostList;
-//        return deliveryPosts;
     }
 
     @Transactional
-    public DeliveryPostDto getPost(Long id) {
+    public DeliveryPostReturnDto getPost(Long id) {
         Optional<DeliveryPost> deliveryPostWrapper = deliveryPostRepository.findById(id);
         DeliveryPost deliveryPost = deliveryPostWrapper.get();
 
-        DeliveryPostDto deliveryPostDto = DeliveryPostDto.builder()
+        DeliveryPostReturnDto deliveryPostDto = DeliveryPostReturnDto.builder()
                 .id(deliveryPost.getId())
                 .title(deliveryPost.getTitle())
                 .content(deliveryPost.getContent())
-                .writer(deliveryPost.getWriter())
+                .writer(deliveryPost.getWriter().getEmail())
                 .createdDate(deliveryPost.getCreatedDate())
                 .modifiedDate(deliveryPost.getModifiedDate())
                 .build();
