@@ -173,4 +173,10 @@ public class DeliveryPostService {
         }
         return deliveryPostList;
     }
+
+    public List<DeliveryPostReturnDto> getMyCommentList(User user) {
+        return deliveryPostRepository.findAllByCommentWriter(user)
+                .stream().map(DeliveryPostReturnDto::new)
+                .collect(Collectors.toList());
+    }
 }

@@ -5,7 +5,6 @@ import lombok.*;
 import season.blossom.dotori.delivery.DeliveryPost;
 import season.blossom.dotori.user.User;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
@@ -25,8 +24,8 @@ public class RoommatePostDto {
     private LocalDateTime modifiedDate;
     private RoommateStatus roommateStatus;
 
-    public RoommatePost toEntity() {
-        RoommatePost roommatePost = RoommatePost.builder()
+    public DeliveryPost toEntity() {
+        DeliveryPost roommatePost = DeliveryPost.builder()
 //                .id(id)
                 .writer(writer)
                 .title(title)

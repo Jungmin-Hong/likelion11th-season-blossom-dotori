@@ -3,7 +3,6 @@ package season.blossom.dotori.roommate;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import season.blossom.dotori.delivery.DeliveryPostDto;
 import season.blossom.dotori.user.User;
 
 import java.util.ArrayList;

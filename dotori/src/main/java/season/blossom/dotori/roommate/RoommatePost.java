@@ -38,6 +38,7 @@ public class RoommatePost extends TimeEntity {
     private String content;
 
 
+
     // 매칭 상태
     @Enumerated(EnumType.STRING)
     private RoommateStatus roommateStatus;
