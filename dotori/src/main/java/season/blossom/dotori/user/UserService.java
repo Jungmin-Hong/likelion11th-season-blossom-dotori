@@ -54,6 +54,24 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
+    public User registerInfo(User user, UserReturnDto userReturnDto) {
+        Optional<User> byId = userRepository.findById(user.getUserId());
+        User me = byId.orElseThrow(() -> new NullPointerException("해당 포스트가 존재하지 않습니다."));
+
+        me.setAge(userReturnDto.getAge());
+        me.setCalling(userReturnDto.getCalling());
+        me.setSmoking(userReturnDto.getSmoking());
+        me.setEating(userReturnDto.getEating());
+        me.setCleaningCycle(userReturnDto.getCleaningCycle());
+        me.setFloor(userReturnDto.getFloor());
+        me.setSleepHabits(userReturnDto.getSleepHabits());
+        me.setSleepTime(userReturnDto.getSleepTime());
+        userRepository.save(me);
+
+        return me;
+    }
+
+    @Transactional
     public User updateInfo(User user, UserReturnDto userReturnDto) {
         Optional<User> byId = userRepository.findById(user.getUserId());
         User me = byId.orElseThrow(() -> new NullPointerException("해당 포스트가 존재하지 않습니다."));

@@ -116,23 +116,37 @@ public class DeliveryPostService {
     }
 
     @Transactional
-    public DeliveryPostDto updatePost(Long postId, DeliveryPostDto deliveryPostDto) {
+    public DeliveryPostDto updatePost(Long postId, DeliveryPostDto deliveryPostDto, Long userId) {
         Optional<DeliveryPost> byId = deliveryPostRepository.findById(postId);
         DeliveryPost deliveryPost = byId.orElseThrow(() -> new NullPointerException("해당 포스트가 존재하지 않습니다."));
 
-        deliveryPost.setTitle(deliveryPostDto.getTitle());
-        deliveryPost.setContent(deliveryPostDto.getContent());
-        deliveryPost.setDeliveryStatus(deliveryPostDto.toEntity().getDeliveryStatus());
+        if (deliveryPost.getWriter().getUserId().equals(userId)){
+            deliveryPost.setTitle(deliveryPostDto.getTitle());
+            deliveryPost.setContent(deliveryPostDto.getContent());
+            deliveryPost.setDeliveryStatus(deliveryPostDto.toEntity().getDeliveryStatus());
 
-        return deliveryPostDto.builder()
-                .id(deliveryPost.getId())
-                .build();
+            return deliveryPostDto.builder()
+                    .id(deliveryPost.getId())
+                    .build();
+        }
+        else {
+            throw new IllegalStateException();
+        }
+
     }
 
 
     @Transactional
-    public void deletePost(Long id) {
-        deliveryPostRepository.deleteById(id);
+    public void deletePost(Long postId, Long userId) {
+        Optional<DeliveryPost> byId = deliveryPostRepository.findById(postId);
+        DeliveryPost deliveryPost = byId.orElseThrow(() -> new NullPointerException("해당 포스트가 존재하지 않습니다."));
+        if (deliveryPost.getWriter().getUserId().equals(userId)){
+            deliveryPostRepository.deleteById(postId);
+        }
+        else {
+            throw new IllegalStateException();
+        }
+
     }
 
 

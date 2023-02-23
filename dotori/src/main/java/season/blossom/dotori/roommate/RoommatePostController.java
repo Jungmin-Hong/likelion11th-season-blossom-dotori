@@ -39,14 +39,6 @@ public class RoommatePostController {
         RoommatePostReturnDto roommate = RoommatePostReturnDto.builder()
                 .id(roommatePost.getId())
                 .writer(roommatePost.getWriter().getEmail())
-                .age(roommatePost.getWriter().getAge())
-                .calling(roommatePost.getWriter().getCalling())
-                .smoking(roommatePost.getWriter().getSmoking())
-                .eating(roommatePost.getWriter().getEating())
-                .cleaningCycle(roommatePost.getWriter().getCleaningCycle())
-                .floor(roommatePost.getWriter().getFloor())
-                .sleepHabits(roommatePost.getWriter().getSleepHabits())
-                .sleepTime(roommatePost.getWriter().getSleepTime())
                 .title(roommatePost.getTitle())
                 .people(roommatePost.getPeople())
                 .dorm_name(roommatePost.getDorm_name())
@@ -69,16 +61,16 @@ public class RoommatePostController {
 
 
     @PutMapping("/api/board/roommate/edit/{no}")
-    public ResponseEntity<RoommatePostReturnDto> update(@PathVariable("no") Long no, @RequestBody RoommatePostDto roommatePostDto) {
-        roommatePostService.updatePost(no, roommatePostDto);
+    public ResponseEntity<RoommatePostReturnDto> update(@PathVariable("no") Long no, @RequestBody RoommatePostDto roommatePostDto, @AuthenticationPrincipal CustomUserDetail customUserDetail) {
+        roommatePostService.updatePost(no, roommatePostDto, customUserDetail.getUserId());
         RoommatePostReturnDto roommatePostReturnDto = roommatePostService.getPost(no);
         return ResponseEntity.ok(roommatePostReturnDto);
     }
 
 
     @DeleteMapping("/api/board/roommate/delete/{no}")
-    public ResponseEntity<HttpStatus> delete(@PathVariable("no") Long no) {
-        roommatePostService.deletePost(no);
+    public ResponseEntity<HttpStatus> delete(@PathVariable("no") Long no, @AuthenticationPrincipal CustomUserDetail customUserDetail) {
+        roommatePostService.deletePost(no, customUserDetail.getUserId());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

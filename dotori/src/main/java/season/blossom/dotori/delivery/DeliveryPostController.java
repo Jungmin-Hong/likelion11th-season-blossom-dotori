@@ -58,8 +58,8 @@ public class DeliveryPostController {
 
 
     @PutMapping("/api/board/delivery/edit/{no}")
-    public ResponseEntity<DeliveryPostReturnDto> update(@PathVariable("no") Long no, @RequestBody DeliveryPostDto deliveryPostDto) {
-        deliveryPostService.updatePost(no, deliveryPostDto);
+    public ResponseEntity<DeliveryPostReturnDto> update(@PathVariable("no") Long no, @RequestBody DeliveryPostDto deliveryPostDto, @AuthenticationPrincipal CustomUserDetail customUserDetail) {
+        deliveryPostService.updatePost(no, deliveryPostDto, customUserDetail.getUserId());
 
         DeliveryPostReturnDto deliveryPostReturnDto = deliveryPostService.getPost(no);
 
@@ -68,8 +68,8 @@ public class DeliveryPostController {
 
 
     @DeleteMapping("/api/board/delivery/delete/{no}")
-    public ResponseEntity<HttpStatus> delete(@PathVariable("no") Long no) {
-        deliveryPostService.deletePost(no);
+    public ResponseEntity<HttpStatus> delete(@PathVariable("no") Long no, @AuthenticationPrincipal CustomUserDetail customUserDetail) {
+        deliveryPostService.deletePost(no, customUserDetail.getUserId());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
