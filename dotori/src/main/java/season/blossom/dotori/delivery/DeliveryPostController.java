@@ -23,12 +23,6 @@ public class DeliveryPostController {
         List<DeliveryPostReturnDto> deliveryPosts = deliveryPostService.getList(customUserDetail.getUser(), matchType);
         return ResponseEntity.status(HttpStatus.OK).body(deliveryPosts);
     }
-    
-    @GetMapping("/api/board/delivery/filtered")
-    public ResponseEntity<List<DeliveryPostReturnDto>> getPostsFiltered() {
-        List<DeliveryPostReturnDto> deliveryPosts = deliveryPostService.getListFiltered();
-        return ResponseEntity.status(HttpStatus.OK).body(deliveryPosts);
-    }
 
 
     @PostMapping("/api/board/delivery/write")

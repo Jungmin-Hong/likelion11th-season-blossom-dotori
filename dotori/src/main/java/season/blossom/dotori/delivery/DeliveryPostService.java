@@ -64,30 +64,6 @@ public class DeliveryPostService {
         return deliveryPosts.stream().map(DeliveryPostReturnDto::new).collect(Collectors.toList());
     }
 
-    @Transactional
-    public List<DeliveryPostReturnDto> getListFiltered() {
-        List<DeliveryPost> deliveryPosts = deliveryPostRepository.findAll();
-        List<DeliveryPostReturnDto> deliveryPostList = new ArrayList<>();
-
-        for ( DeliveryPost deliveryPost : deliveryPosts) {
-            if (deliveryPost.getDeliveryStatus().toString().equals("MATCHING")) {
-                DeliveryPostReturnDto deliveryPostDto = DeliveryPostReturnDto.builder()
-                        .id(deliveryPost.getId())
-                        .title(deliveryPost.getTitle())
-                        .content(deliveryPost.getContent())
-                        .writer(deliveryPost.getWriter().getEmail())
-                        .createdDate(deliveryPost.getCreatedDate())
-                        .modifiedDate(deliveryPost.getModifiedDate())
-                        .build();
-                deliveryPostList.add(deliveryPostDto);
-            }
-            else {
-                continue;
-            }
-        }
-        return deliveryPostList;
-    }
-
     public DeliveryPostReturnDto getPost(Long postId, Long userId) {
         Optional<DeliveryPost> deliveryPostWrapper = deliveryPostRepository.findById(postId);
         DeliveryPost deliveryPost = deliveryPostWrapper.get();

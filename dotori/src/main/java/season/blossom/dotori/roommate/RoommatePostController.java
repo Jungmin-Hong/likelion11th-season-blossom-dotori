@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import season.blossom.dotori.delivery.DeliveryPostReturnDto;
 import season.blossom.dotori.user.CustomUserDetail;
 import season.blossom.dotori.user.User;
 
@@ -17,16 +18,19 @@ public class RoommatePostController {
 
 
     @GetMapping("/api/board/roommate")
-    public ResponseEntity<List<RoommatePostReturnDto>> getPosts() {
-        List<RoommatePostReturnDto> roommatePosts = roommatePostService.getList();
+    public ResponseEntity<List<RoommatePostReturnDto>> getPosts(@RequestParam(name = "matchType", required = false, defaultValue = "0") int matchType,
+                                                                @AuthenticationPrincipal CustomUserDetail customUserDetail) {
+        // 매치타입 1 = 매칭되지 않은 게시글만 필터, 매치타입 0 혹은 그 외 숫자 = 모든 게시글 불러오기
+        List<RoommatePostReturnDto> roommatePosts = roommatePostService.getList(customUserDetail.getUser(), matchType);
         return ResponseEntity.status(HttpStatus.OK).body(roommatePosts);
     }
 
-    @GetMapping("/api/board/roommate/filtered")
-    public ResponseEntity<List<RoommatePostReturnDto>> getPostsFiltered() {
-        List<RoommatePostReturnDto> roommatePosts = roommatePostService.getListFiltered();
-        return ResponseEntity.status(HttpStatus.OK).body(roommatePosts);
-    }
+
+//    @GetMapping("/api/board/roommate/filtered")
+//    public ResponseEntity<List<RoommatePostReturnDto>> getPostsFiltered() {
+//        List<RoommatePostReturnDto> roommatePosts = roommatePostService.getListFiltered();
+//        return ResponseEntity.status(HttpStatus.OK).body(roommatePosts);
+//    }
 
 
     @PostMapping("/api/board/roommate/write")
@@ -63,6 +67,11 @@ public class RoommatePostController {
         return ResponseEntity.status(HttpStatus.OK).body(roommatePostDto);
     }
 
+    @PostMapping("/api/board/roommate/{no}/match")
+    public ResponseEntity<RoommatePostReturnDto> postMatchStatus(@PathVariable("no") Long no, @AuthenticationPrincipal CustomUserDetail customUserDetail) {
+        RoommatePostReturnDto roommatePostDto = roommatePostService.postMatchStatus(no, customUserDetail.getUserId());
+        return ResponseEntity.status(HttpStatus.OK).body(roommatePostDto);
+    }
 
     @PutMapping("/api/board/roommate/edit/{no}")
     public ResponseEntity<RoommatePostReturnDto> update(@PathVariable("no") Long no, @RequestBody RoommatePostDto roommatePostDto, @AuthenticationPrincipal CustomUserDetail customUserDetail) {
