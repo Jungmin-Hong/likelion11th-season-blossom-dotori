@@ -3,12 +3,6 @@ package season.blossom.dotori.delivery;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import season.blossom.dotori.delivery.DeliveryPostDto;
-import season.blossom.dotori.delivery.DeliveryPostRepository;
-import season.blossom.dotori.deliverycomment.DeliveryComment;
-import season.blossom.dotori.roommate.RoommatePost;
-import season.blossom.dotori.roommate.RoommatePostReturnDto;
-
 import season.blossom.dotori.deliverycomment.DeliveryCommentReturnDto;
 import season.blossom.dotori.deliverycomment.DeliveryCommentService;
 
@@ -100,7 +94,6 @@ public class DeliveryPostService {
     }
 
     @Transactional
-
     public DeliveryPostReturnDto getPost(Long postId) {
         Optional<DeliveryPost> deliveryPostWrapper = deliveryPostRepository.findById(postId);
         DeliveryPost deliveryPost = deliveryPostWrapper.get();
