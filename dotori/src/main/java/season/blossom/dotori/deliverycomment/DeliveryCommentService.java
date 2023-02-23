@@ -75,8 +75,6 @@ public class DeliveryCommentService {
             }
         }
 
-        deliveryPost.increaseNumber();
-
         DeliveryComment deliveryComment = DeliveryComment.builder()
                 .deliveryPost(deliveryPost)
                 .parentComment(parentComment)
