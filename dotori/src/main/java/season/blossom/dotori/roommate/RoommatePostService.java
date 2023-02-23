@@ -8,6 +8,7 @@ import season.blossom.dotori.delivery.DeliveryPostDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 @AllArgsConstructor
 @Service
 public class RoommatePostService {
@@ -22,6 +23,7 @@ public class RoommatePostService {
                 .people(roommatePostDto.getPeople())
                 .dorm_name(roommatePostDto.getDorm_name())
                 .content(roommatePostDto.getContent())
+                .roommateStatus(roommatePostDto.getRoommateStatus())
                 .build();
 
         return roommatePostRepository.save(roommatePost);
@@ -33,14 +35,22 @@ public class RoommatePostService {
         List<RoommatePost> roommatePosts = roommatePostRepository.findAll();
         List<RoommatePostReturnDto> roommatePostList = new ArrayList<>();
 
-        for ( RoommatePost roommatePost : roommatePosts) {
+        for (RoommatePost roommatePost : roommatePosts) {
             RoommatePostReturnDto roommatePostDto = RoommatePostReturnDto.builder()
                     .id(roommatePost.getId())
+                    .writer(roommatePost.getWriter().getEmail())
+                    .age(roommatePost.getWriter().getAge())
+                    .calling(roommatePost.getWriter().getCalling())
+                    .smoking(roommatePost.getWriter().getSmoking())
+                    .eating(roommatePost.getWriter().getEating())
+                    .cleaningCycle(roommatePost.getWriter().getCleaningCycle())
+                    .floor(roommatePost.getWriter().getFloor())
+                    .sleepHabits(roommatePost.getWriter().getSleepHabits())
+                    .sleepTime(roommatePost.getWriter().getSleepTime())
                     .title(roommatePost.getTitle())
                     .people(roommatePost.getPeople())
                     .dorm_name(roommatePost.getDorm_name())
                     .content(roommatePost.getContent())
-                    .writer(roommatePost.getWriter().getEmail())
                     .createdDate(roommatePost.getCreatedDate())
                     .modifiedDate(roommatePost.getModifiedDate())
                     .build();
@@ -55,24 +65,29 @@ public class RoommatePostService {
         List<RoommatePost> roommatePosts = roommatePostRepository.findAll();
         List<RoommatePostReturnDto> roommatePostList = new ArrayList<>();
 
-        for ( RoommatePost roommatePost : roommatePosts) {
-            if (roommatePost.getRoommateStatus().toString().equals("MATCHING")){
+        for (RoommatePost roommatePost : roommatePosts) {
+            if (roommatePost.getRoommateStatus().toString().equals("MATCHING")) {
                 RoommatePostReturnDto roommatePostDto = RoommatePostReturnDto.builder()
                         .id(roommatePost.getId())
+                        .writer(roommatePost.getWriter().getEmail())
+                        .age(roommatePost.getWriter().getAge())
+                        .calling(roommatePost.getWriter().getCalling())
+                        .smoking(roommatePost.getWriter().getSmoking())
+                        .eating(roommatePost.getWriter().getEating())
+                        .cleaningCycle(roommatePost.getWriter().getCleaningCycle())
+                        .floor(roommatePost.getWriter().getFloor())
+                        .sleepHabits(roommatePost.getWriter().getSleepHabits())
+                        .sleepTime(roommatePost.getWriter().getSleepTime())
                         .title(roommatePost.getTitle())
                         .people(roommatePost.getPeople())
                         .dorm_name(roommatePost.getDorm_name())
                         .content(roommatePost.getContent())
-                        .writer(roommatePost.getWriter().getEmail())
                         .createdDate(roommatePost.getCreatedDate())
                         .modifiedDate(roommatePost.getModifiedDate())
                         .build();
 
                 roommatePostList.add(roommatePostDto);
-            }
-            else {
-                continue;
-            }
+            } else continue;
         }
         return roommatePostList;
     }
@@ -105,7 +120,7 @@ public class RoommatePostService {
         roommatePost.setPeople(roommatePostDto.getPeople());
         roommatePost.setDorm_name(roommatePostDto.getDorm_name());
         roommatePost.setContent(roommatePostDto.getContent());
-        roommatePost.setRoommateStatus(roommatePostDto.getRoommateStatus());
+        roommatePost.setRoommateStatus(roommatePostDto.toEntity().getRoommateStatus());
 
         return roommatePostDto.builder()
                 .id(roommatePost.getId())

@@ -30,15 +30,23 @@ public class RoommatePostController {
 
 
     @PostMapping("/api/board/roommate/write")
-    public ResponseEntity<RoommatePostDto> createPost(@RequestBody RoommatePostDto roommatePostDto,
+    public ResponseEntity<RoommatePostReturnDto> createPost(@RequestBody RoommatePostDto roommatePostDto,
                                                       @AuthenticationPrincipal CustomUserDetail customUserDetail) {
         User user = customUserDetail.getUser();
         roommatePostDto.setWriter(user);
         RoommatePost roommatePost = roommatePostService.savePost(roommatePostDto);
 
-        RoommatePostDto roommate = RoommatePostDto.builder()
+        RoommatePostReturnDto roommate = RoommatePostReturnDto.builder()
                 .id(roommatePost.getId())
-                .writer(roommatePost.getWriter())
+                .writer(roommatePost.getWriter().getEmail())
+                .age(roommatePost.getWriter().getAge())
+                .calling(roommatePost.getWriter().getCalling())
+                .smoking(roommatePost.getWriter().getSmoking())
+                .eating(roommatePost.getWriter().getEating())
+                .cleaningCycle(roommatePost.getWriter().getCleaningCycle())
+                .floor(roommatePost.getWriter().getFloor())
+                .sleepHabits(roommatePost.getWriter().getSleepHabits())
+                .sleepTime(roommatePost.getWriter().getSleepTime())
                 .title(roommatePost.getTitle())
                 .people(roommatePost.getPeople())
                 .dorm_name(roommatePost.getDorm_name())
