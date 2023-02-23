@@ -19,7 +19,7 @@ public class RoommatePostReturnDto {
     private Integer cleaningCycle;
     private Integer floor;
     private String sleepHabits;
-    private Integer sleepTime;
+    private String sleepTime;
     private String title;
     private Integer people;
     private String dorm_name;
