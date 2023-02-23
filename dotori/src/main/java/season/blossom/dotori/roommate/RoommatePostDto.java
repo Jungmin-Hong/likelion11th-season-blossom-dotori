@@ -21,7 +21,6 @@ public class RoommatePostDto {
     private String content;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
-
     private RoommateStatus roommateStatus;
 
     public RoommatePost toEntity() {
