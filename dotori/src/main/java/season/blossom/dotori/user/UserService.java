@@ -91,13 +91,22 @@ public class UserService implements UserDetailsService {
     public User updatePwd(User user, PwdRequestDto pwdRequestDto) throws Exception {
         User me = userRepository.findById(user.getUserId()).orElseThrow(() -> new Exception("회원이 존재하지 않습니다"));
 
-        if (pwdRequestDto.getNewpwd1().equals(pwdRequestDto.getNewpwd2())) {
-            me.updatePassword(passwordEncoder, pwdRequestDto.getNewpwd1());
-        } else {
-            throw new RuntimeException();
+        if (me.matchPassword(passwordEncoder, pwdRequestDto.getOriginal())) {
+            if (pwdRequestDto.getNewpwd1().equals(pwdRequestDto.getNewpwd2())) {
+                me.updatePassword(passwordEncoder, pwdRequestDto.getNewpwd1());
+            } else {
+                throw new IllegalStateException("같은 비밀번호를 입력해주세요.");
+            }
         }
+        else {
+            throw new IllegalStateException("비밀번호가 틀렸습니다.");
+        }
+
+
 
         return me;
     }
+
+
 
 }
