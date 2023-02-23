@@ -22,6 +22,7 @@ public class RoommatePostDto {
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
+    private RoommateStatus roommateStatus;
 
     public RoommatePost toEntity() {
         RoommatePost roommatePost = RoommatePost.builder()
@@ -36,7 +37,7 @@ public class RoommatePostDto {
     }
 
     @Builder
-    public RoommatePostDto(Long id, String title, Integer people, String dorm_name, String content, User writer, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    public RoommatePostDto(Long id, String title, Integer people, String dorm_name, String content, User writer, LocalDateTime createdDate, LocalDateTime modifiedDate, RoommateStatus roommateStatus) {
         this.id = id;
         this.writer = writer;
         this.title = title;
@@ -45,5 +46,6 @@ public class RoommatePostDto {
         this.content = content;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
+        this.roommateStatus = roommateStatus;
     }
 }
