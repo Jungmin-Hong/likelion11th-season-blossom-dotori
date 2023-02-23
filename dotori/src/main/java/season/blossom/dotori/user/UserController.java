@@ -8,20 +8,23 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import season.blossom.dotori.delivery.DeliveryPostReturnDto;
+import season.blossom.dotori.roommate.RoommatePostDto;
+import season.blossom.dotori.roommate.RoommatePostReturnDto;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -73,6 +76,23 @@ public class UserController {
         return ResponseEntity.ok(authentication.getPrincipal());
     }
 
+    @PutMapping("/mypage/edit")
+    public ResponseEntity<UserReturnDto> updateUserInfo(@AuthenticationPrincipal CustomUserDetail customUserDetail, @RequestBody UserReturnDto userReturnDto) {
+        User user = userService.updateInfo(customUserDetail.getUser(), userReturnDto);
 
+        UserReturnDto userReturn = userService.getUser(user);
+
+        return ResponseEntity.ok(userReturn);
+    }
+
+    @PostMapping("/mypage/changepw")
+    public ResponseEntity<HttpStatus> changePwd(@AuthenticationPrincipal CustomUserDetail customUserDetail, @RequestBody PwdRequestDto pwdRequestDto) {
+        try {
+            userService.updatePwd(customUserDetail.getUser(),pwdRequestDto);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }
