@@ -8,6 +8,7 @@ import season.blossom.dotori.delivery.DeliveryPostDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 @AllArgsConstructor
 @Service
 public class RoommatePostService {
@@ -33,14 +34,22 @@ public class RoommatePostService {
         List<RoommatePost> roommatePosts = roommatePostRepository.findAll();
         List<RoommatePostReturnDto> roommatePostList = new ArrayList<>();
 
-        for ( RoommatePost roommatePost : roommatePosts) {
+        for (RoommatePost roommatePost : roommatePosts) {
             RoommatePostReturnDto roommatePostDto = RoommatePostReturnDto.builder()
                     .id(roommatePost.getId())
+                    .writer(roommatePost.getWriter().getEmail())
+                    .age(roommatePost.getWriter().getAge())
+                    .calling(roommatePost.getWriter().getCalling())
+                    .smoking(roommatePost.getWriter().getSmoking())
+                    .eating(roommatePost.getWriter().getEating())
+                    .cleaningCycle(roommatePost.getWriter().getCleaningCycle())
+                    .floor(roommatePost.getWriter().getFloor())
+                    .sleepHabits(roommatePost.getWriter().getSleepHabits())
+                    .sleepTime(roommatePost.getWriter().getSleepTime())
                     .title(roommatePost.getTitle())
                     .people(roommatePost.getPeople())
                     .dorm_name(roommatePost.getDorm_name())
                     .content(roommatePost.getContent())
-                    .writer(roommatePost.getWriter().getEmail())
                     .createdDate(roommatePost.getCreatedDate())
                     .modifiedDate(roommatePost.getModifiedDate())
                     .build();
@@ -55,24 +64,29 @@ public class RoommatePostService {
         List<RoommatePost> roommatePosts = roommatePostRepository.findAll();
         List<RoommatePostReturnDto> roommatePostList = new ArrayList<>();
 
-        for ( RoommatePost roommatePost : roommatePosts) {
-            if (roommatePost.getRoommateStatus().toString().equals("MATCHING")){
+        for (RoommatePost roommatePost : roommatePosts) {
+            if (roommatePost.getRoommateStatus().toString().equals("MATCHING")) {
                 RoommatePostReturnDto roommatePostDto = RoommatePostReturnDto.builder()
                         .id(roommatePost.getId())
+                        .writer(roommatePost.getWriter().getEmail())
+                        .age(roommatePost.getWriter().getAge())
+                        .calling(roommatePost.getWriter().getCalling())
+                        .smoking(roommatePost.getWriter().getSmoking())
+                        .eating(roommatePost.getWriter().getEating())
+                        .cleaningCycle(roommatePost.getWriter().getCleaningCycle())
+                        .floor(roommatePost.getWriter().getFloor())
+                        .sleepHabits(roommatePost.getWriter().getSleepHabits())
+                        .sleepTime(roommatePost.getWriter().getSleepTime())
                         .title(roommatePost.getTitle())
                         .people(roommatePost.getPeople())
                         .dorm_name(roommatePost.getDorm_name())
                         .content(roommatePost.getContent())
-                        .writer(roommatePost.getWriter().getEmail())
                         .createdDate(roommatePost.getCreatedDate())
                         .modifiedDate(roommatePost.getModifiedDate())
                         .build();
 
                 roommatePostList.add(roommatePostDto);
-            }
-            else {
-                continue;
-            }
+            } else continue;
         }
         return roommatePostList;
     }
