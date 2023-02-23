@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import season.blossom.dotori.delivery.DeliveryPostReturnDto;
 import season.blossom.dotori.user.CustomUserDetail;
 import season.blossom.dotori.user.User;
 
@@ -84,6 +83,13 @@ public class RoommatePostController {
     public ResponseEntity<List<RoommatePostReturnDto>> getMyPosts(@AuthenticationPrincipal CustomUserDetail customUserDetail) {
         User user = customUserDetail.getUser();
         List<RoommatePostReturnDto> roommatePosts = roommatePostService.getMyList(user);
+        return ResponseEntity.status(HttpStatus.OK).body(roommatePosts);
+    }
+
+    @GetMapping("/api/mypage/board/roommatecomment")
+    public ResponseEntity<List<RoommatePostReturnDto>> getMyComments(@AuthenticationPrincipal CustomUserDetail customUserDetail) {
+        User user = customUserDetail.getUser();
+        List<RoommatePostReturnDto> roommatePosts = roommatePostService.getMyCommentList(user);
         return ResponseEntity.status(HttpStatus.OK).body(roommatePosts);
     }
 }
