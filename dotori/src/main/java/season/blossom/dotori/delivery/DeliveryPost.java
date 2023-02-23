@@ -1,9 +1,11 @@
 package season.blossom.dotori.delivery;
 
 import lombok.*;
+import season.blossom.dotori.deliverycomment.DeliveryComment;
 import season.blossom.dotori.user.User;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "delivery_post")
@@ -34,6 +36,9 @@ public class DeliveryPost extends TimeEntity {
     // 매칭 상태
     @Enumerated(EnumType.STRING)
     private DeliveryStatus deliveryStatus;
+
+    @OneToMany(mappedBy = "deliveryPost")
+    private List<DeliveryComment> comments;
 
 
     @Builder

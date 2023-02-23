@@ -56,9 +56,8 @@ public class DeliveryPostController {
 
     // 상세 조회
     @GetMapping("/api/board/delivery/{no}")
-    public ResponseEntity<DeliveryPostReturnDto> getPostDetail(@PathVariable("no") Long no) {
-        DeliveryPostReturnDto deliveryPostDto = deliveryPostService.getPost(no);
-
+    public ResponseEntity<DeliveryPostReturnDto> getPostDetail(@PathVariable("no") Long no, @AuthenticationPrincipal CustomUserDetail customUserDetail) {
+        DeliveryPostReturnDto deliveryPostDto = deliveryPostService.getPost(no, customUserDetail.getUserId());
         return ResponseEntity.status(HttpStatus.OK).body(deliveryPostDto);
     }
 

@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import season.blossom.dotori.delivery.DeliveryPostDto;
-import season.blossom.dotori.delivery.DeliveryPostRepository;
-import season.blossom.dotori.deliverycomment.DeliveryComment;
+import season.blossom.dotori.deliverycomment.DeliveryCommentReturnDto;
+import season.blossom.dotori.deliverycomment.DeliveryCommentService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,7 @@ import java.util.Optional;
 @Service
 public class DeliveryPostService {
     private DeliveryPostRepository deliveryPostRepository;
+    private DeliveryCommentService deliveryCommentService;
 
     @Transactional
     public DeliveryPost savePost(DeliveryPostDto deliveryPostDto) {
@@ -51,8 +52,28 @@ public class DeliveryPostService {
     }
 
     @Transactional
-    public DeliveryPostReturnDto getPost(Long id) {
-        Optional<DeliveryPost> deliveryPostWrapper = deliveryPostRepository.findById(id);
+    public DeliveryPostReturnDto getPost(Long postId, Long userId) {
+        Optional<DeliveryPost> deliveryPostWrapper = deliveryPostRepository.findById(postId);
+        DeliveryPost deliveryPost = deliveryPostWrapper.get();
+        List<DeliveryCommentReturnDto> comments = deliveryCommentService.getComments(postId, userId);
+
+        DeliveryPostReturnDto deliveryPostDto = DeliveryPostReturnDto.builder()
+                .id(deliveryPost.getId())
+                .title(deliveryPost.getTitle())
+                .content(deliveryPost.getContent())
+                .writer(deliveryPost.getWriter().getEmail())
+                .createdDate(deliveryPost.getCreatedDate())
+                .modifiedDate(deliveryPost.getModifiedDate())
+                .comments(comments)
+                .build();
+
+        return deliveryPostDto;
+    }
+
+    @Transactional
+
+    public DeliveryPostReturnDto getPost(Long postId) {
+        Optional<DeliveryPost> deliveryPostWrapper = deliveryPostRepository.findById(postId);
         DeliveryPost deliveryPost = deliveryPostWrapper.get();
 
         DeliveryPostReturnDto deliveryPostDto = DeliveryPostReturnDto.builder()
@@ -66,6 +87,7 @@ public class DeliveryPostService {
 
         return deliveryPostDto;
     }
+
 
     @Transactional
     public DeliveryPostDto updatePost(Long postId, DeliveryPostDto deliveryPostDto) {

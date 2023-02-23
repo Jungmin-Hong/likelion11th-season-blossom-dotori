@@ -36,35 +36,35 @@ public class DeliveryCommentController {
     }
 
 
-    @GetMapping
-    public ResponseEntity<List<DeliveryCommentReturnDto>> getComments(@PathVariable Long postId,
-                                                                      @AuthenticationPrincipal CustomUserDetail customUserDetail) {
-        List<DeliveryComment> comments = deliveryCommentService.getComments(postId);
-        List<DeliveryCommentReturnDto> returnDtos = comments.stream()
-                .map(comment -> {
-                    List<DeliveryCommentReturnDto> childCommentDtos = comment.getChildComment().stream()
-                            .map(child -> {
-                                String content = filterContent(customUserDetail.getUserId(), child);
-                                DeliveryCommentReturnDto returnDto = DeliveryCommentReturnDto.builder()
-                                        .deliveryCommentId(child.getId())
-                                        .content(content)
-                                        .writer(child.getWriter().getEmail())
-                                        .isSecret(child.isSecret())
-                                        .build();
-                                return returnDto;
-                            })
-                            .collect(Collectors.toList());
-                    return DeliveryCommentReturnDto.builder()
-                            .deliveryCommentId(comment.getId())
-                            .content(filterContent(customUserDetail.getUserId(), comment))
-                            .writer(comment.getWriter().getEmail())
-                            .isSecret(comment.isSecret())
-                            .childCommentList(childCommentDtos.isEmpty() ? null : childCommentDtos)
-                            .build();
-                })
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(returnDtos);
-    }
+//    @GetMapping
+//    public ResponseEntity<List<DeliveryCommentReturnDto>> getComments(@PathVariable Long postId,
+//                                                                      @AuthenticationPrincipal CustomUserDetail customUserDetail) {
+//        List<DeliveryComment> comments = deliveryCommentService.getComments(postId, customUserDetail.getUser().getUserId());
+//        List<DeliveryCommentReturnDto> returnDtos = comments.stream()
+//                .map(comment -> {
+//                    List<DeliveryCommentReturnDto> childCommentDtos = comment.getChildComment().stream()
+//                            .map(child -> {
+//                                String content = filterContent(customUserDetail.getUserId(), child);
+//                                DeliveryCommentReturnDto returnDto = DeliveryCommentReturnDto.builder()
+//                                        .deliveryCommentId(child.getId())
+//                                        .content(content)
+//                                        .writer(child.getWriter().getEmail())
+//                                        .isSecret(child.isSecret())
+//                                        .build();
+//                                return returnDto;
+//                            })
+//                            .collect(Collectors.toList());
+//                    return DeliveryCommentReturnDto.builder()
+//                            .deliveryCommentId(comment.getId())
+//                            .content(filterContent(customUserDetail.getUserId(), comment))
+//                            .writer(comment.getWriter().getEmail())
+//                            .isSecret(comment.isSecret())
+//                            .childCommentList(childCommentDtos.isEmpty() ? null : childCommentDtos)
+//                            .build();
+//                })
+//                .collect(Collectors.toList());
+//        return ResponseEntity.ok(returnDtos);
+//    }
 
     private String filterContent(Long userId, DeliveryComment deliveryComment){
         if(deliveryComment.isSecret()){

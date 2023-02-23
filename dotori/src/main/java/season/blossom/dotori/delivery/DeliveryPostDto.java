@@ -1,5 +1,6 @@
 package season.blossom.dotori.delivery;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import season.blossom.dotori.user.User;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class DeliveryPostDto {
     private Long id;
+    @JsonIgnore
     private User writer;
     private String title;
     private String content;
