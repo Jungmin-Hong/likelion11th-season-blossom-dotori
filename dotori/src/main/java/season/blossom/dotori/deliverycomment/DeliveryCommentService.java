@@ -30,7 +30,7 @@ public class DeliveryCommentService {
                 .parentComment(parentComment)
                 .writer(commentDto.getWriter())
                 .content(commentDto.getContent())
-                .isSecret(commentDto.isSecret())
+                .isSecret(commentDto.getIsSecret())
                 .build();
 
         return deliveryCommentRepository.save(deliveryComment);

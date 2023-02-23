@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface DeliveryCommentRepository extends JpaRepository<DeliveryComment, Long> {
 
+
     List<DeliveryComment> findByDeliveryPostIdAndParentCommentIsNull(Long postId);
     List<DeliveryComment> findByParentCommentId(Long commentId);
 }
