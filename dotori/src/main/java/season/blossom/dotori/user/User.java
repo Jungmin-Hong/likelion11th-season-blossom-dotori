@@ -2,6 +2,7 @@ package season.blossom.dotori.user;
 
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import season.blossom.dotori.delivery.DeliveryPost;
 import season.blossom.dotori.deliverycomment.DeliveryComment;
 
 import javax.persistence.*;
@@ -34,6 +35,9 @@ public class User {
 
     @OneToMany(mappedBy = "writer")
     private List<DeliveryComment> deliveryComments;
+
+    @OneToMany(mappedBy = "writer")
+    private List<DeliveryPost> deliveryPosts;
 
     public User encodePassword(PasswordEncoder passwordEncoder){
         password = passwordEncoder.encode(password);
