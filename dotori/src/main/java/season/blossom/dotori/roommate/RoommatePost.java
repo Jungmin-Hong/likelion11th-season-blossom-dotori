@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class RoommatePost extends TimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "roommate_post_id")
     private Long id;
 

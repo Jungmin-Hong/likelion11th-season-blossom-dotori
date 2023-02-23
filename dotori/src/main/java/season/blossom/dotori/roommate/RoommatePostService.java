@@ -31,18 +31,18 @@ public class RoommatePostService {
 
 
     @Transactional
-    public List<RoommatePostDto> getList() {
+    public List<RoommatePostReturnDto> getList() {
         List<RoommatePost> roommatePosts = roommatePostRepository.findAll();
-        List<RoommatePostDto> roommatePostList = new ArrayList<>();
+        List<RoommatePostReturnDto> roommatePostList = new ArrayList<>();
 
         for ( RoommatePost roommatePost : roommatePosts) {
-            RoommatePostDto roommatePostDto = RoommatePostDto.builder()
+            RoommatePostReturnDto roommatePostDto = RoommatePostReturnDto.builder()
                     .id(roommatePost.getId())
                     .title(roommatePost.getTitle())
                     .people(roommatePost.getPeople())
                     .dorm_name(roommatePost.getDorm_name())
                     .content(roommatePost.getContent())
-                    .writer(roommatePost.getWriter())
+                    .writer(roommatePost.getWriter().getEmail())
                     .createdDate(roommatePost.getCreatedDate())
                     .modifiedDate(roommatePost.getModifiedDate())
                     .build();
@@ -52,18 +52,44 @@ public class RoommatePostService {
         return roommatePostList;
     }
 
+    public List<RoommatePostReturnDto> getListFiltered() {
+        List<RoommatePost> roommatePosts = roommatePostRepository.findAll();
+        List<RoommatePostReturnDto> roommatePostList = new ArrayList<>();
+
+        for ( RoommatePost roommatePost : roommatePosts) {
+            if (roommatePost.getRoommateStatus().toString().equals("MATCHED")){
+                RoommatePostReturnDto roommatePostDto = RoommatePostReturnDto.builder()
+                        .id(roommatePost.getId())
+                        .title(roommatePost.getTitle())
+                        .people(roommatePost.getPeople())
+                        .dorm_name(roommatePost.getDorm_name())
+                        .content(roommatePost.getContent())
+                        .writer(roommatePost.getWriter().getEmail())
+                        .createdDate(roommatePost.getCreatedDate())
+                        .modifiedDate(roommatePost.getModifiedDate())
+                        .build();
+
+                roommatePostList.add(roommatePostDto);
+            }
+            else {
+                continue;
+            }
+        }
+        return roommatePostList;
+    }
+
     @Transactional
-    public RoommatePostDto getPost(Long id) {
+    public RoommatePostReturnDto getPost(Long id) {
         Optional<RoommatePost> roommatePostWrapper = roommatePostRepository.findById(id);
         RoommatePost roommatePost = roommatePostWrapper.get();
 
-        RoommatePostDto roommatePostDto = RoommatePostDto.builder()
+        RoommatePostReturnDto roommatePostDto = RoommatePostReturnDto.builder()
                 .id(roommatePost.getId())
                 .title(roommatePost.getTitle())
                 .people(roommatePost.getPeople())
                 .dorm_name(roommatePost.getDorm_name())
                 .content(roommatePost.getContent())
-                .writer(roommatePost.getWriter())
+                .writer(roommatePost.getWriter().getEmail())
                 .createdDate(roommatePost.getCreatedDate())
                 .modifiedDate(roommatePost.getModifiedDate())
                 .build();
@@ -89,4 +115,5 @@ public class RoommatePostService {
     public void deletePost(Long id) {
         roommatePostRepository.deleteById(id);
     }
+
 }

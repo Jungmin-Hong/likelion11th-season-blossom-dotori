@@ -24,8 +24,8 @@ public class DeliveryPostController {
 //    }
 
     @GetMapping("/api/board/delivery")
-    public ResponseEntity<List<DeliveryPostDto>> getPosts() {
-        List<DeliveryPostDto> deliveryPosts = deliveryPostService.getList();
+    public ResponseEntity<List<DeliveryPostReturnDto>> getPosts() {
+        List<DeliveryPostReturnDto> deliveryPosts = deliveryPostService.getList();
         return ResponseEntity.status(HttpStatus.OK).body(deliveryPosts);
     }
 
@@ -35,17 +35,19 @@ public class DeliveryPostController {
 //    }
 
     @PostMapping("/api/board/delivery/write")
-    public ResponseEntity<DeliveryPostDto> createPost(@RequestBody DeliveryPostDto deliveryPostDto,
+    public ResponseEntity<DeliveryPostReturnDto> createPost(@RequestBody DeliveryPostDto deliveryPostDto,
                                                       @AuthenticationPrincipal CustomUserDetail customUserDetail) {
         User user = customUserDetail.getUser();
         deliveryPostDto.setWriter(user);
         DeliveryPost deliveryPost = deliveryPostService.savePost(deliveryPostDto);
 
-        DeliveryPostDto delivery = DeliveryPostDto.builder()
+        DeliveryPostReturnDto delivery = DeliveryPostReturnDto.builder()
                 .id(deliveryPost.getId())
-                .writer(deliveryPost.getWriter())
+                .writer(deliveryPost.getWriter().getEmail())
                 .title(deliveryPost.getTitle())
                 .content(deliveryPost.getContent())
+                .createdDate(deliveryPost.getCreatedDate())
+                .modifiedDate(deliveryPost.getModifiedDate())
                 .build();
 
         return ResponseEntity.ok(delivery);
@@ -54,18 +56,20 @@ public class DeliveryPostController {
 
     // 상세 조회
     @GetMapping("/api/board/delivery/{no}")
-    public ResponseEntity<DeliveryPostDto> getPostDetail(@PathVariable("no") Long no) {
-        DeliveryPostDto deliveryPostDto = deliveryPostService.getPost(no);
+    public ResponseEntity<DeliveryPostReturnDto> getPostDetail(@PathVariable("no") Long no) {
+        DeliveryPostReturnDto deliveryPostDto = deliveryPostService.getPost(no);
 
         return ResponseEntity.status(HttpStatus.OK).body(deliveryPostDto);
     }
 
 
     @PutMapping("/api/board/delivery/edit/{no}")
-    public ResponseEntity<DeliveryPostDto> update(@PathVariable("no") Long no, @RequestBody DeliveryPostDto deliveryPostDto) {
+    public ResponseEntity<DeliveryPostReturnDto> update(@PathVariable("no") Long no, @RequestBody DeliveryPostDto deliveryPostDto) {
         deliveryPostService.updatePost(no, deliveryPostDto);
 
-        return ResponseEntity.ok(deliveryPostDto);
+        DeliveryPostReturnDto deliveryPostReturnDto = deliveryPostService.getPost(no);
+
+        return ResponseEntity.ok(deliveryPostReturnDto);
     }
 
 

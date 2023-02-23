@@ -17,8 +17,14 @@ public class RoommatePostController {
 
 
     @GetMapping("/api/board/roommate")
-    public ResponseEntity<List<RoommatePostDto>> getPosts() {
-        List<RoommatePostDto> roommatePosts = roommatePostService.getList();
+    public ResponseEntity<List<RoommatePostReturnDto>> getPosts() {
+        List<RoommatePostReturnDto> roommatePosts = roommatePostService.getList();
+        return ResponseEntity.status(HttpStatus.OK).body(roommatePosts);
+    }
+
+    @GetMapping("/api/board/roommate/filtered")
+    public ResponseEntity<List<RoommatePostReturnDto>> getPostsFiltered() {
+        List<RoommatePostReturnDto> roommatePosts = roommatePostService.getListFiltered();
         return ResponseEntity.status(HttpStatus.OK).body(roommatePosts);
     }
 
@@ -37,6 +43,8 @@ public class RoommatePostController {
                 .people(roommatePost.getPeople())
                 .dorm_name(roommatePost.getDorm_name())
                 .content(roommatePost.getContent())
+                .createdDate(roommatePost.getCreatedDate())
+                .modifiedDate(roommatePost.getModifiedDate())
                 .build();
 
         return ResponseEntity.ok(roommate);
@@ -45,18 +53,18 @@ public class RoommatePostController {
 
     // 상세 조회
     @GetMapping("/api/board/roommate/{no}")
-    public ResponseEntity<RoommatePostDto> getPostDetail(@PathVariable("no") Long no) {
-        RoommatePostDto roommatePostDto = roommatePostService.getPost(no);
+    public ResponseEntity<RoommatePostReturnDto> getPostDetail(@PathVariable("no") Long no) {
+        RoommatePostReturnDto roommatePostDto = roommatePostService.getPost(no);
 
         return ResponseEntity.status(HttpStatus.OK).body(roommatePostDto);
     }
 
 
     @PutMapping("/api/board/roommate/edit/{no}")
-    public ResponseEntity<RoommatePostDto> update(@PathVariable("no") Long no, @RequestBody RoommatePostDto roommatePostDto) {
+    public ResponseEntity<RoommatePostReturnDto> update(@PathVariable("no") Long no, @RequestBody RoommatePostDto roommatePostDto) {
         roommatePostService.updatePost(no, roommatePostDto);
-
-        return ResponseEntity.ok(roommatePostDto);
+        RoommatePostReturnDto roommatePostReturnDto = roommatePostService.getPost(no);
+        return ResponseEntity.ok(roommatePostReturnDto);
     }
 
 
