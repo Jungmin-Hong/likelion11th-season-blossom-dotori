@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import season.blossom.dotori.deliverycomment.DeliveryCommentReturnDto;
 import season.blossom.dotori.deliverycomment.DeliveryCommentService;
+import season.blossom.dotori.user.User;
 
 
 import java.util.ArrayList;
@@ -130,5 +131,30 @@ public class DeliveryPostService {
     @Transactional
     public void deletePost(Long id) {
         deliveryPostRepository.deleteById(id);
+    }
+
+
+    @Transactional
+    public List<DeliveryPostReturnDto> getMyList(User user) {
+        List<DeliveryPost> deliveryPosts = deliveryPostRepository.findAll();
+        List<DeliveryPostReturnDto> deliveryPostList = new ArrayList<>();
+
+        for ( DeliveryPost deliveryPost : deliveryPosts) {
+            if (deliveryPost.getWriter().getEmail().equals(user.getEmail())) {
+                DeliveryPostReturnDto deliveryPostDto = DeliveryPostReturnDto.builder()
+                        .id(deliveryPost.getId())
+                        .title(deliveryPost.getTitle())
+                        .content(deliveryPost.getContent())
+                        .writer(deliveryPost.getWriter().getEmail())
+                        .createdDate(deliveryPost.getCreatedDate())
+                        .modifiedDate(deliveryPost.getModifiedDate())
+                        .build();
+                deliveryPostList.add(deliveryPostDto);
+            }
+            else {
+                continue;
+            }
+        }
+        return deliveryPostList;
     }
 }

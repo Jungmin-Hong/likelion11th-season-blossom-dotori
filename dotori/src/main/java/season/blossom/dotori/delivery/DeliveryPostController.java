@@ -79,4 +79,18 @@ public class DeliveryPostController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/api/mypage/board/delivery")
+    public ResponseEntity<List<DeliveryPostReturnDto>> getMyPosts(@AuthenticationPrincipal CustomUserDetail customUserDetail) {
+        User user = customUserDetail.getUser();
+        List<DeliveryPostReturnDto> deliveryPosts = deliveryPostService.getMyList(user);
+        return ResponseEntity.status(HttpStatus.OK).body(deliveryPosts);
+    }
+
+//    @GetMapping("/api/mypage/comment/delivery")
+//    public ResponseEntity<List<DeliveryPostReturnDto>> getMyComment(@AuthenticationPrincipal CustomUserDetail customUserDetail) {
+//        User user = customUserDetail.getUser();
+//        List<DeliveryPostReturnDto> deliveryPosts = d
+//    }
+
 }

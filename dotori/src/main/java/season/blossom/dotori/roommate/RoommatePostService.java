@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import season.blossom.dotori.delivery.DeliveryPostDto;
+import season.blossom.dotori.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -131,6 +132,38 @@ public class RoommatePostService {
     @Transactional
     public void deletePost(Long id) {
         roommatePostRepository.deleteById(id);
+    }
+
+    @Transactional
+    public List<RoommatePostReturnDto> getMyList(User user) {
+        List<RoommatePost> roommatePosts = roommatePostRepository.findAll();
+        List<RoommatePostReturnDto> roommatePostList = new ArrayList<>();
+
+        for (RoommatePost roommatePost : roommatePosts) {
+            if (roommatePost.getWriter().getEmail().equals(user.getEmail())) {
+                RoommatePostReturnDto roommatePostDto = RoommatePostReturnDto.builder()
+                        .id(roommatePost.getId())
+                        .writer(roommatePost.getWriter().getEmail())
+                        .age(roommatePost.getWriter().getAge())
+                        .calling(roommatePost.getWriter().getCalling())
+                        .smoking(roommatePost.getWriter().getSmoking())
+                        .eating(roommatePost.getWriter().getEating())
+                        .cleaningCycle(roommatePost.getWriter().getCleaningCycle())
+                        .floor(roommatePost.getWriter().getFloor())
+                        .sleepHabits(roommatePost.getWriter().getSleepHabits())
+                        .sleepTime(roommatePost.getWriter().getSleepTime())
+                        .title(roommatePost.getTitle())
+                        .people(roommatePost.getPeople())
+                        .dorm_name(roommatePost.getDorm_name())
+                        .content(roommatePost.getContent())
+                        .createdDate(roommatePost.getCreatedDate())
+                        .modifiedDate(roommatePost.getModifiedDate())
+                        .build();
+
+                roommatePostList.add(roommatePostDto);
+            } else continue;
+        }
+        return roommatePostList;
     }
 
 }

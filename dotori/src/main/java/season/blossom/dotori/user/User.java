@@ -1,9 +1,6 @@
 package season.blossom.dotori.user;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import season.blossom.dotori.deliverycomment.DeliveryComment;
 
@@ -14,7 +11,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
+@Getter @Setter
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
@@ -30,7 +27,7 @@ public class User {
     private Integer cleaningCycle;
     private Integer floor;
     private String sleepHabits;
-    private Integer sleepTime;
+    private String sleepTime;
 
     @Enumerated(EnumType.STRING)
     private Authority authority;
@@ -46,5 +43,9 @@ public class User {
     public User commonRegister(){
         authority = Authority.ROLE_USER;
         return this;
+    }
+
+    public void updatePassword(PasswordEncoder passwordEncoder, String password){
+        this.password = passwordEncoder.encode(password);
     }
 }
