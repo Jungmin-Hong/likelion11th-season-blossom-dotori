@@ -134,4 +134,29 @@ public class DeliveryPostService {
     public void deletePost(Long id) {
         deliveryPostRepository.deleteById(id);
     }
+
+
+    @Transactional
+    public List<DeliveryPostReturnDto> getMyList(User user) {
+        List<DeliveryPost> deliveryPosts = deliveryPostRepository.findAll();
+        List<DeliveryPostReturnDto> deliveryPostList = new ArrayList<>();
+
+        for ( DeliveryPost deliveryPost : deliveryPosts) {
+            if (deliveryPost.getWriter().getEmail().equals(user.getEmail())) {
+                DeliveryPostReturnDto deliveryPostDto = DeliveryPostReturnDto.builder()
+                        .id(deliveryPost.getId())
+                        .title(deliveryPost.getTitle())
+                        .content(deliveryPost.getContent())
+                        .writer(deliveryPost.getWriter().getEmail())
+                        .createdDate(deliveryPost.getCreatedDate())
+                        .modifiedDate(deliveryPost.getModifiedDate())
+                        .build();
+                deliveryPostList.add(deliveryPostDto);
+            }
+            else {
+                continue;
+            }
+        }
+        return deliveryPostList;
+    }
 }

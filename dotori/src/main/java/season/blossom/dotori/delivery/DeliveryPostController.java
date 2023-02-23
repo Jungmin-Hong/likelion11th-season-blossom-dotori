@@ -67,19 +67,4 @@ public class DeliveryPostController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-    // 목록
-//    @GetMapping("/api/board/delivery")
-//    public String list(Model model) {
-//        List<DeliveryPostDto> deliveryPostList = deliveryPostService.getDeliveryPostList();
-//        model.addAttribute("deliveryPostList", deliveryPostList);
-//        return "deliveryPost/list";
-//    }
-
-    @GetMapping("/api/board/delivery/filtered")
-    public ResponseEntity<List<DeliveryPostReturnDto>> getPostsFiltered() {
-        List<DeliveryPostReturnDto> deliveryPosts = deliveryPostService.getListFiltered();
-        return ResponseEntity.status(HttpStatus.OK).body(deliveryPosts);
-    }
-
 }
