@@ -43,10 +43,6 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "writer")
     private List<DeliveryComment> deliveryComments;
-
-    @JsonIgnore
-    @ManyToMany(mappedBy = "matchedUsers")
-    private List<DeliveryPost> matchedDelieveryPost;
     
 
     @OneToMany(mappedBy = "writer")
