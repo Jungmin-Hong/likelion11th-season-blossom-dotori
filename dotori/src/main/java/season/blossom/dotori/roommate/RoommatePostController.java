@@ -16,7 +16,6 @@ import java.util.List;
 public class RoommatePostController {
     private RoommatePostService roommatePostService;
 
-
     @GetMapping("/api/board/roommate")
     public ResponseEntity<List<RoommatePostReturnDto>> getPosts(@RequestParam(name = "matchType", required = false, defaultValue = "0") int matchType,
                                                                 @AuthenticationPrincipal CustomUserDetail customUserDetail) {
@@ -24,13 +23,6 @@ public class RoommatePostController {
         List<RoommatePostReturnDto> roommatePosts = roommatePostService.getList(customUserDetail.getUser(), matchType);
         return ResponseEntity.status(HttpStatus.OK).body(roommatePosts);
     }
-
-
-//    @GetMapping("/api/board/roommate/filtered")
-//    public ResponseEntity<List<RoommatePostReturnDto>> getPostsFiltered() {
-//        List<RoommatePostReturnDto> roommatePosts = roommatePostService.getListFiltered();
-//        return ResponseEntity.status(HttpStatus.OK).body(roommatePosts);
-//    }
 
 
     @PostMapping("/api/board/roommate/write")
