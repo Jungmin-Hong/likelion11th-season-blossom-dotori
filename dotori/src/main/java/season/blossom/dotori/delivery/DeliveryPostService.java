@@ -27,6 +27,7 @@ public class DeliveryPostService {
                 .writer(deliveryPostDto.getWriter())
                 .title(deliveryPostDto.getTitle())
                 .content(deliveryPostDto.getContent())
+                .deliveryStatus(deliveryPostDto.getDeliveryStatus())
                 .build();
 
 
