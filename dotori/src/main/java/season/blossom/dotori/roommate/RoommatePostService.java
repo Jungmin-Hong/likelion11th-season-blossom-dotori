@@ -113,25 +113,38 @@ public class RoommatePostService {
     }
 
     @Transactional
-    public RoommatePostDto updatePost(Long postId, RoommatePostDto roommatePostDto) {
+    public RoommatePostDto updatePost(Long postId, RoommatePostDto roommatePostDto, Long userId) {
         Optional<RoommatePost> byId = roommatePostRepository.findById(postId);
         RoommatePost roommatePost = byId.orElseThrow(() -> new NullPointerException("해당 포스트가 존재하지 않습니다."));
 
-        roommatePost.setTitle(roommatePostDto.getTitle());
-        roommatePost.setPeople(roommatePostDto.getPeople());
-        roommatePost.setDorm_name(roommatePostDto.getDorm_name());
-        roommatePost.setContent(roommatePostDto.getContent());
-        roommatePost.setRoommateStatus(roommatePostDto.toEntity().getRoommateStatus());
+        if (roommatePost.getWriter().getUserId().equals(userId)){
+            roommatePost.setTitle(roommatePostDto.getTitle());
+            roommatePost.setPeople(roommatePostDto.getPeople());
+            roommatePost.setDorm_name(roommatePostDto.getDorm_name());
+            roommatePost.setContent(roommatePostDto.getContent());
+            roommatePost.setRoommateStatus(roommatePostDto.toEntity().getRoommateStatus());
 
-        return roommatePostDto.builder()
-                .id(roommatePost.getId())
-                .build();
+            return roommatePostDto.builder()
+                    .id(roommatePost.getId())
+                    .build();
+        }
+        else {
+            throw new IllegalStateException();
+        }
     }
 
 
     @Transactional
-    public void deletePost(Long id) {
-        roommatePostRepository.deleteById(id);
+    public void deletePost(Long postId, Long userId) {
+        Optional<RoommatePost> byId = roommatePostRepository.findById(postId);
+        RoommatePost roommatePost = byId.orElseThrow(() -> new NullPointerException("해당 포스트가 존재하지 않습니다."));
+
+        if (roommatePost.getWriter().getUserId().equals(userId)){
+            roommatePostRepository.deleteById(postId);
+        }
+        else {
+            throw new IllegalStateException();
+        }
     }
 
     @Transactional

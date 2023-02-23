@@ -69,16 +69,16 @@ public class RoommatePostController {
 
 
     @PutMapping("/api/board/roommate/edit/{no}")
-    public ResponseEntity<RoommatePostReturnDto> update(@PathVariable("no") Long no, @RequestBody RoommatePostDto roommatePostDto) {
-        roommatePostService.updatePost(no, roommatePostDto);
+    public ResponseEntity<RoommatePostReturnDto> update(@PathVariable("no") Long no, @RequestBody RoommatePostDto roommatePostDto, @AuthenticationPrincipal CustomUserDetail customUserDetail) {
+        roommatePostService.updatePost(no, roommatePostDto, customUserDetail.getUserId());
         RoommatePostReturnDto roommatePostReturnDto = roommatePostService.getPost(no);
         return ResponseEntity.ok(roommatePostReturnDto);
     }
 
 
     @DeleteMapping("/api/board/roommate/delete/{no}")
-    public ResponseEntity<HttpStatus> delete(@PathVariable("no") Long no) {
-        roommatePostService.deletePost(no);
+    public ResponseEntity<HttpStatus> delete(@PathVariable("no") Long no, @AuthenticationPrincipal CustomUserDetail customUserDetail) {
+        roommatePostService.deletePost(no, customUserDetail.getUserId());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
