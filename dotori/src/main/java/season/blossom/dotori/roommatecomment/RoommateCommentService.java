@@ -1,10 +1,10 @@
-package season.blossom.dotori.deliverycomment;
+package season.blossom.dotori.roommatecomment;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import season.blossom.dotori.delivery.DeliveryPost;
-import season.blossom.dotori.delivery.DeliveryPostRepository;
+import season.blossom.dotori.roommate.RoommatePostRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,18 +12,18 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class DeliveryCommentService {
-    private final DeliveryPostRepository deliveryPostRepository;
-    private final DeliveryCommentRepository deliveryCommentRepository;
+public class RoommateCommentService {
+    private final RoommatePostRepository roommatePostRepository;
+    private final RoommateCommentRepository roommateCommentRepository;
 
-    public DeliveryComment createComment(DeliveryCommentRequestDto commentDto){
+    public RoommateComment createComment(RoommateCommentRequestDto commentDto){
 
-        DeliveryPost deliveryPost = deliveryPostRepository.findById(commentDto.getDeliveryPostId()).orElse(null);
-        DeliveryComment parentComment = null;
+        DeliveryPost roommatePost = roommatePostRepository.findById(commentDto.getRoommatePostId()).orElse(null);
+        RoommateComment parentComment = null;
         boolean isSecret;
 
         if(commentDto.getParentCommentId() != null) {
-            parentComment = deliveryCommentRepository.findById(commentDto.getParentCommentId()).orElse(null);
+            parentComment = roommateCommentRepository.findById(commentDto.getParentCommentId()).orElse(null);
         }
 
         //원
@@ -39,7 +39,7 @@ public class DeliveryCommentService {
         if(isSecret){
             boolean isForbidden = false;
             Long curRequestUserId = commentDto.getWriter().getUserId();
-            Long postWriterId = deliveryPost.getWriter().getUserId();
+            Long postWriterId = roommatePost.getWriter().getUserId();
             //작성자가 답글이 아닌 비밀 댓글을 다는 것은 불가능
             if(parentComment==null && postWriterId == curRequestUserId)
                 isForbidden = true;
@@ -59,26 +59,26 @@ public class DeliveryCommentService {
                 throw new IllegalStateException();
         }
 
-        DeliveryComment deliveryComment = DeliveryComment.builder()
-                .deliveryPost(deliveryPost)
+        RoommateComment deliveryComment = RoommateComment.builder()
+                .roommatePost(roommatePost)
                 .parentComment(parentComment)
                 .writer(commentDto.getWriter())
                 .content(commentDto.getContent())
                 .isSecret(isSecret)
                 .build();
 
-        return deliveryCommentRepository.save(deliveryComment);
+        return roommateCommentRepository.save(deliveryComment);
     }
 
-    public List<DeliveryCommentReturnDto> getComments(Long postId, Long userId) {
-        List<DeliveryComment> comments = deliveryCommentRepository.findByDeliveryPostIdAndParentCommentIsNull(postId);
+    public List<RoommateCommentReturnDto> getComments(Long postId, Long userId) {
+        List<RoommateComment> comments = roommateCommentRepository.findByRoommatePostIdAndParentCommentIsNull(postId);
 
-        List<DeliveryCommentReturnDto> returnDtos = comments.stream()
+        List<RoommateCommentReturnDto> returnDtos = comments.stream()
                 .map(comment -> {
-                    List<DeliveryCommentReturnDto> childCommentDtos = comment.getChildComment().stream()
+                    List<RoommateCommentReturnDto> childCommentDtos = comment.getChildComment().stream()
                             .map(child -> {
                                 String content = filterContent(userId, child);
-                                DeliveryCommentReturnDto returnDto = DeliveryCommentReturnDto.builder()
+                                RoommateCommentReturnDto returnDto = RoommateCommentReturnDto.builder()
                                         .commentId(child.getId())
                                         .content(content)
                                         .writer(child.getWriter().getEmail())
@@ -87,7 +87,7 @@ public class DeliveryCommentService {
                                 return returnDto;
                             })
                             .collect(Collectors.toList());
-                    return DeliveryCommentReturnDto.builder()
+                    return RoommateCommentReturnDto.builder()
                             .commentId(comment.getId())
                             .content(filterContent(userId, comment))
                             .writer(comment.getWriter().getEmail())
@@ -100,19 +100,19 @@ public class DeliveryCommentService {
     }
 
     public void addMatchingUser(Long userId, Long postId, Long commentId) {
-        DeliveryComment deliveryComment = deliveryCommentRepository.findById(commentId).orElse(null);
-        DeliveryPost deliveryPost = deliveryPostRepository.findById(postId).orElse(null);
+        RoommateComment deliveryComment = roommateCommentRepository.findById(commentId).orElse(null);
+        DeliveryPost roommatePost = roommatePostRepository.findById(postId).orElse(null);
 
-        if(deliveryPost.getWriter().getUserId() == userId){
-            deliveryPost.getMatchedUsers().add(deliveryComment.getWriter());
+        if(roommatePost.getWriter().getUserId() == userId){
+            roommatePost.getMatchedUsers().add(deliveryComment.getWriter());
         }
         else{
             throw new RuntimeException();
         }
     }
-        private String filterContent(Long userId, DeliveryComment deliveryComment){
+        private String filterContent(Long userId, RoommateComment deliveryComment){
         if(deliveryComment.isSecret()){
-            if(!(deliveryComment.getDeliveryPost().getWriter().getUserId() == userId ||
+            if(!(deliveryComment.getRoommatePost().getWriter().getUserId() == userId ||
                     deliveryComment.getWriter().getUserId() == userId))
             return "비밀댓글입니다.";
         }

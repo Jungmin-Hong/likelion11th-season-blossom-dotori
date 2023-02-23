@@ -80,4 +80,11 @@ public class DeliveryPostController {
         List<DeliveryPostReturnDto> deliveryPosts = deliveryPostService.getMyList(user);
         return ResponseEntity.status(HttpStatus.OK).body(deliveryPosts);
     }
+
+    @GetMapping("/api/mypage/board/comment")
+    public ResponseEntity<List<DeliveryPostReturnDto>> getMyComments(@AuthenticationPrincipal CustomUserDetail customUserDetail) {
+        User user = customUserDetail.getUser();
+        List<DeliveryPostReturnDto> deliveryPosts = deliveryPostService.getMyCommentList(user);
+        return ResponseEntity.status(HttpStatus.OK).body(deliveryPosts);
+    }
 }
