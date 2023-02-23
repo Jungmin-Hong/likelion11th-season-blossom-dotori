@@ -1,17 +1,8 @@
 package season.blossom.dotori.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import season.blossom.dotori.delivery.DeliveryPost;
 import season.blossom.dotori.deliverycomment.DeliveryComment;
@@ -64,5 +55,4 @@ public class User {
     public void updatePassword(PasswordEncoder passwordEncoder, String password){
         this.password = passwordEncoder.encode(password);
     }
-
 }

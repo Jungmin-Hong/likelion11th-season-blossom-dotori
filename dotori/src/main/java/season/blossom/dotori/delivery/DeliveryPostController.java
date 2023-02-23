@@ -81,6 +81,7 @@ public class DeliveryPostController {
 //        List<DeliveryPostReturnDto> deliveryPosts = d
 //    }
 
+
 // 목록
 //    @GetMapping("/api/board/delivery")
 //    public String list(Model model) {
@@ -94,5 +95,4 @@ public class DeliveryPostController {
         List<DeliveryPostReturnDto> deliveryPosts = deliveryPostService.getListFiltered();
         return ResponseEntity.status(HttpStatus.OK).body(deliveryPosts);
     }
-
 }

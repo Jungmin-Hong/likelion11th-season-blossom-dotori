@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import java.util.Locale;
-
 @Service
 //@RequiredArgsConstructor
 public class UserService implements UserDetailsService {
