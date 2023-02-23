@@ -26,6 +26,11 @@ public class DeliveryPost extends TimeEntity {
     @Column(nullable = false, length = 30) // 제한 없이도 가능
     private String title;
 
+    private String store;
+    private String place;
+    private Integer amount;
+    private Integer minimum;
+
     @Lob
     @Column(nullable = false)
     private String content;
@@ -44,10 +49,14 @@ public class DeliveryPost extends TimeEntity {
     }
 
     @Builder
-    public DeliveryPost(Long id, User writer, String title, String content, Integer numberOfCommentWriter, DeliveryStatus deliveryStatus) {
+    public DeliveryPost(Long id, User writer, String title, String store, String place, Integer amount, Integer minimum, String content, Integer numberOfCommentWriter, DeliveryStatus deliveryStatus) {
         this.id = id;
         this.writer = writer;
         this.title = title;
+        this.store = store;
+        this.place = place;
+        this.amount = amount;
+        this.minimum = minimum;
         this.content = content;
         this.numberOfCommentWriter = numberOfCommentWriter;
         this.deliveryStatus = DeliveryStatus.MATCHING;

@@ -16,6 +16,10 @@ public class DeliveryPostReturnDto {
     private Long id;
     private String writer;
     private String title;
+    private String store;
+    private String place;
+    private Integer amount;
+    private Integer minimum;
     private String content;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
@@ -27,6 +31,10 @@ public class DeliveryPostReturnDto {
         this.id = deliveryPost.getId();
         this.writer = deliveryPost.getWriter().getName();
         this.title = deliveryPost.getTitle();
+        this.store = deliveryPost.getStore();
+        this.place = deliveryPost.getPlace();
+        this.amount = deliveryPost.getAmount();
+        this.minimum = deliveryPost.getAmount();
         this.content = deliveryPost.getContent();
         this.createdDate = deliveryPost.getCreatedDate();
         this.modifiedDate = deliveryPost.getModifiedDate();
