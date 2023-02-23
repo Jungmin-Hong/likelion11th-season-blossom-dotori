@@ -23,6 +23,12 @@ public class DeliveryPostController {
         List<DeliveryPostReturnDto> deliveryPosts = deliveryPostService.getList(customUserDetail.getUser(), matchType);
         return ResponseEntity.status(HttpStatus.OK).body(deliveryPosts);
     }
+    
+    @GetMapping("/api/board/delivery/filtered")
+    public ResponseEntity<List<DeliveryPostReturnDto>> getPostsFiltered() {
+        List<DeliveryPostReturnDto> deliveryPosts = deliveryPostService.getListFiltered();
+        return ResponseEntity.status(HttpStatus.OK).body(deliveryPosts);
+    }
 
 
     @PostMapping("/api/board/delivery/write")
@@ -72,27 +78,6 @@ public class DeliveryPostController {
     public ResponseEntity<List<DeliveryPostReturnDto>> getMyPosts(@AuthenticationPrincipal CustomUserDetail customUserDetail) {
         User user = customUserDetail.getUser();
         List<DeliveryPostReturnDto> deliveryPosts = deliveryPostService.getMyList(user);
-        return ResponseEntity.status(HttpStatus.OK).body(deliveryPosts);
-    }
-
-//    @GetMapping("/api/mypage/comment/delivery")
-//    public ResponseEntity<List<DeliveryPostReturnDto>> getMyComment(@AuthenticationPrincipal CustomUserDetail customUserDetail) {
-//        User user = customUserDetail.getUser();
-//        List<DeliveryPostReturnDto> deliveryPosts = d
-//    }
-
-
-// 목록
-//    @GetMapping("/api/board/delivery")
-//    public String list(Model model) {
-//        List<DeliveryPostDto> deliveryPostList = deliveryPostService.getDeliveryPostList();
-//        model.addAttribute("deliveryPostList", deliveryPostList);
-//        return "deliveryPost/list";
-//    }
-
-    @GetMapping("/api/board/delivery/filtered")
-    public ResponseEntity<List<DeliveryPostReturnDto>> getPostsFiltered() {
-        List<DeliveryPostReturnDto> deliveryPosts = deliveryPostService.getListFiltered();
         return ResponseEntity.status(HttpStatus.OK).body(deliveryPosts);
     }
 }

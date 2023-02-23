@@ -46,6 +46,7 @@ public class User {
     @JsonIgnore
     @ManyToMany(mappedBy = "matchedUsers")
     private List<DeliveryPost> matchedDelieveryPost;
+    
 
     public User encodePassword(PasswordEncoder passwordEncoder){
         password = passwordEncoder.encode(password);
