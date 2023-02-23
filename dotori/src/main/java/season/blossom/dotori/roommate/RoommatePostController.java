@@ -82,4 +82,11 @@ public class RoommatePostController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/api/mypage/board/roommate")
+    public ResponseEntity<List<RoommatePostReturnDto>> getMyPosts(@AuthenticationPrincipal CustomUserDetail customUserDetail) {
+        User user = customUserDetail.getUser();
+        List<RoommatePostReturnDto> roommatePosts = roommatePostService.getMyList(user);
+        return ResponseEntity.status(HttpStatus.OK).body(roommatePosts);
+    }
 }

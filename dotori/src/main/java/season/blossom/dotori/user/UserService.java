@@ -30,4 +30,5 @@ public class UserService implements UserDetailsService {
         user.commonRegister();
         return userRepository.save(user);
     }
+
 }
