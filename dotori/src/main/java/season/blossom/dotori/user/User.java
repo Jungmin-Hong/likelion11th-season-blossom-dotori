@@ -5,8 +5,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import season.blossom.dotori.deliverycomment.DeliveryComment;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Builder
@@ -25,13 +27,16 @@ public class User {
     private Boolean calling;
     private Boolean smoking;
     private Boolean eating;
-    private Byte cleaningCycle;
-    private Byte floor;
+    private Integer cleaningCycle;
+    private Integer floor;
     private String sleepHabits;
-    private Byte sleepTime;
+    private Integer sleepTime;
 
     @Enumerated(EnumType.STRING)
     private Authority authority;
+
+    @OneToMany(mappedBy = "writer")
+    private List<DeliveryComment> deliveryComments;
 
     public User encodePassword(PasswordEncoder passwordEncoder){
         password = passwordEncoder.encode(password);
