@@ -23,6 +23,7 @@ public class RoommatePostService {
                 .people(roommatePostDto.getPeople())
                 .dorm_name(roommatePostDto.getDorm_name())
                 .content(roommatePostDto.getContent())
+                .roommateStatus(roommatePostDto.getRoommateStatus())
                 .build();
 
         return roommatePostRepository.save(roommatePost);
@@ -119,7 +120,7 @@ public class RoommatePostService {
         roommatePost.setPeople(roommatePostDto.getPeople());
         roommatePost.setDorm_name(roommatePostDto.getDorm_name());
         roommatePost.setContent(roommatePostDto.getContent());
-        roommatePost.setRoommateStatus(roommatePostDto.getRoommateStatus());
+        roommatePost.setRoommateStatus(roommatePostDto.toEntity().getRoommateStatus());
 
         return roommatePostDto.builder()
                 .id(roommatePost.getId())

@@ -1,5 +1,6 @@
 package season.blossom.dotori.roommate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import season.blossom.dotori.delivery.DeliveryPost;
 import season.blossom.dotori.user.User;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class RoommatePostDto {
     private Long id;
+    @JsonIgnore
     private User writer;
     private String title;
     private Integer people;
@@ -31,6 +33,7 @@ public class RoommatePostDto {
                 .people(people)
                 .dorm_name(dorm_name)
                 .content(content)
+                .roommateStatus(roommateStatus)
                 .build();
         return roommatePost;
     }
