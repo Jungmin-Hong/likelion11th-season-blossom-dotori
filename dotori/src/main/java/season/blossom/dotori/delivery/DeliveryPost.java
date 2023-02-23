@@ -49,11 +49,11 @@ public class DeliveryPost extends TimeEntity {
 
 
     @Builder
-    public DeliveryPost(Long id, User writer, String title, String content, DeliveryStatus deliveryStatus) {
+    public DeliveryPost(Long id, User writer, String title, String content) {
         this.id = id;
         this.writer = writer;
         this.title = title;
         this.content = content;
-        this.deliveryStatus = deliveryStatus;
+        this.deliveryStatus = DeliveryStatus.MATCHING;
     }
 }

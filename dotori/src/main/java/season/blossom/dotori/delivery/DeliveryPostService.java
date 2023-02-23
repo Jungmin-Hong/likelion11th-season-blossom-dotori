@@ -27,9 +27,7 @@ public class DeliveryPostService {
                 .writer(deliveryPostDto.getWriter())
                 .title(deliveryPostDto.getTitle())
                 .content(deliveryPostDto.getContent())
-                .deliveryStatus(deliveryPostDto.getDeliveryStatus())
                 .build();
-
 
         return new DeliveryPostReturnDto(deliveryPostRepository.save(deliveryPost));
     }
@@ -83,11 +81,12 @@ public class DeliveryPostService {
 
         DeliveryPostReturnDto deliveryPostDto = DeliveryPostReturnDto.builder()
                 .id(deliveryPost.getId())
+                .writer(deliveryPost.getWriter().getEmail())
                 .title(deliveryPost.getTitle())
                 .content(deliveryPost.getContent())
-                .writer(deliveryPost.getWriter().getEmail())
                 .createdDate(deliveryPost.getCreatedDate())
                 .modifiedDate(deliveryPost.getModifiedDate())
+                .deliveryStatus(deliveryPost.getDeliveryStatus())
                 .comments(comments)
                 .build();
 
@@ -121,9 +120,10 @@ public class DeliveryPostService {
         DeliveryPost deliveryPost = byId.orElseThrow(() -> new NullPointerException("해당 포스트가 존재하지 않습니다."));
 
         if (deliveryPost.getWriter().getUserId().equals(userId)){
+            deliveryPost.setId(deliveryPost.getId());
+            deliveryPost.setWriter(deliveryPost.getWriter());
             deliveryPost.setTitle(deliveryPostDto.getTitle());
             deliveryPost.setContent(deliveryPostDto.getContent());
-            deliveryPost.setDeliveryStatus(deliveryPostDto.toEntity().getDeliveryStatus());
 
             return deliveryPostDto.builder()
                     .id(deliveryPost.getId())
@@ -132,7 +132,6 @@ public class DeliveryPostService {
         else {
             throw new IllegalStateException();
         }
-
     }
 
 
@@ -146,7 +145,6 @@ public class DeliveryPostService {
         else {
             throw new IllegalStateException();
         }
-
     }
 
 

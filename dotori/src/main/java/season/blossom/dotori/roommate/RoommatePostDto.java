@@ -18,7 +18,6 @@ public class RoommatePostDto {
     private User writer;
     private String title;
     private Integer people;
-    private String dorm_name;
     private String content;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
@@ -30,20 +29,17 @@ public class RoommatePostDto {
                 .writer(writer)
                 .title(title)
                 .people(people)
-                .dorm_name(dorm_name)
                 .content(content)
-                .roommateStatus(roommateStatus)
                 .build();
         return roommatePost;
     }
 
     @Builder
-    public RoommatePostDto(Long id, String title, Integer people, String dorm_name, String content, User writer, LocalDateTime createdDate, LocalDateTime modifiedDate, RoommateStatus roommateStatus) {
+    public RoommatePostDto(Long id, String title, Integer people, String content, User writer, LocalDateTime createdDate, LocalDateTime modifiedDate, RoommateStatus roommateStatus) {
         this.id = id;
         this.writer = writer;
         this.title = title;
         this.people = people;
-        this.dorm_name = dorm_name;
         this.content = content;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;

@@ -74,16 +74,21 @@ public class UserController {
     @PostMapping("/profile")
     public ResponseEntity<UserReturnDto> userInfo(@AuthenticationPrincipal CustomUserDetail customUserDetail, @RequestBody UserReturnDto userReturnDto) {
         User user = userService.updateInfo(customUserDetail.getUser(), userReturnDto);
-
         UserReturnDto userReturn = userService.getUser(user);
 
         return ResponseEntity.ok(userReturn);
     }
 
+    @GetMapping("/profile")
+    public ResponseEntity<UserReturnDto> getUserInfo(@AuthenticationPrincipal CustomUserDetail customUserDetail) {
+        UserReturnDto userReturn = userService.getUser(customUserDetail.getUser());
+
+        return ResponseEntity.status(HttpStatus.OK).body(userReturn);
+    }
+
     @PutMapping("/mypage/edit")
     public ResponseEntity<UserReturnDto> updateUserInfo(@AuthenticationPrincipal CustomUserDetail customUserDetail, @RequestBody UserReturnDto userReturnDto) {
         User user = userService.updateInfo(customUserDetail.getUser(), userReturnDto);
-
         UserReturnDto userReturn = userService.getUser(user);
 
         return ResponseEntity.ok(userReturn);

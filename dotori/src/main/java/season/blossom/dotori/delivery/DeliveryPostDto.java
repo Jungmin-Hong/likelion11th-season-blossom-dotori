@@ -19,7 +19,6 @@ public class DeliveryPostDto {
     private String content;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
-
     private DeliveryStatus deliveryStatus;
 
     public DeliveryPost toEntity(){
@@ -28,7 +27,6 @@ public class DeliveryPostDto {
                 .writer(writer)
                 .title(title)
                 .content(content)
-                .deliveryStatus(deliveryStatus)
                 .build();
         return deliveryPost;
     }

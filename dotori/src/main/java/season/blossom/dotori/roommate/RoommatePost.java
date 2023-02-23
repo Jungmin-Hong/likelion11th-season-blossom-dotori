@@ -29,14 +29,9 @@ public class RoommatePost extends TimeEntity {
     @Column(nullable = false)
     private Integer people;
 
-    // 기숙사명
-    @Column(nullable = false, length = 30)
-    private String dorm_name;
-
     @Lob
     @Column(nullable = false)
     private String content;
-
 
 
     // 매칭 상태
@@ -45,14 +40,13 @@ public class RoommatePost extends TimeEntity {
 
 
     @Builder
-    public RoommatePost(Long id, User writer, Integer people, String dorm_name, String title, String content, RoommateStatus roommateStatus) {
+    public RoommatePost(Long id, User writer, Integer people, String title, String content, RoommateStatus roommateStatus) {
         this.id = id;
         this.writer = writer;
         this.people = people;
-        this.dorm_name = dorm_name;
         this.title = title;
         this.content = content;
-        this.roommateStatus = roommateStatus;
+        this.roommateStatus = RoommateStatus.MATCHING;
     }
 }
 

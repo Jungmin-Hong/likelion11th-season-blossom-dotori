@@ -21,7 +21,6 @@ public class RoommatePostService {
                 .writer(roommatePostDto.getWriter())
                 .title(roommatePostDto.getTitle())
                 .people(roommatePostDto.getPeople())
-                .dorm_name(roommatePostDto.getDorm_name())
                 .content(roommatePostDto.getContent())
                 .roommateStatus(roommatePostDto.getRoommateStatus())
                 .build();
@@ -38,13 +37,17 @@ public class RoommatePostService {
         for (RoommatePost roommatePost : roommatePosts) {
             RoommatePostReturnDto roommatePostDto = RoommatePostReturnDto.builder()
                     .id(roommatePost.getId())
-                    .writer(roommatePost.getWriter().getEmail())
                     .title(roommatePost.getTitle())
                     .people(roommatePost.getPeople())
-                    .dorm_name(roommatePost.getDorm_name())
                     .content(roommatePost.getContent())
+                    .writer(roommatePost.getWriter().getEmail())
+                    .age(roommatePost.getWriter().getAge())
+                    .floor(roommatePost.getWriter().getFloor())
+                    .dorm(roommatePost.getWriter().getDorm())
+                    .gender(roommatePost.getWriter().getGender())
                     .createdDate(roommatePost.getCreatedDate())
                     .modifiedDate(roommatePost.getModifiedDate())
+                    .roommateStatus(roommatePost.getRoommateStatus())
                     .build();
 
             roommatePostList.add(roommatePostDto);
@@ -64,10 +67,10 @@ public class RoommatePostService {
                         .writer(roommatePost.getWriter().getEmail())
                         .title(roommatePost.getTitle())
                         .people(roommatePost.getPeople())
-                        .dorm_name(roommatePost.getDorm_name())
                         .content(roommatePost.getContent())
                         .createdDate(roommatePost.getCreatedDate())
                         .modifiedDate(roommatePost.getModifiedDate())
+                        .roommateStatus(roommatePost.getRoommateStatus())
                         .build();
 
                 roommatePostList.add(roommatePostDto);
@@ -85,11 +88,15 @@ public class RoommatePostService {
                 .id(roommatePost.getId())
                 .title(roommatePost.getTitle())
                 .people(roommatePost.getPeople())
-                .dorm_name(roommatePost.getDorm_name())
                 .content(roommatePost.getContent())
                 .writer(roommatePost.getWriter().getEmail())
+                .age(roommatePost.getWriter().getAge())
+                .floor(roommatePost.getWriter().getFloor())
+                .dorm(roommatePost.getWriter().getDorm())
+                .gender(roommatePost.getWriter().getGender())
                 .createdDate(roommatePost.getCreatedDate())
                 .modifiedDate(roommatePost.getModifiedDate())
+                .roommateStatus(roommatePost.getRoommateStatus())
                 .build();
 
         return roommatePostDto;
@@ -103,9 +110,7 @@ public class RoommatePostService {
         if (roommatePost.getWriter().getUserId().equals(userId)){
             roommatePost.setTitle(roommatePostDto.getTitle());
             roommatePost.setPeople(roommatePostDto.getPeople());
-            roommatePost.setDorm_name(roommatePostDto.getDorm_name());
             roommatePost.setContent(roommatePostDto.getContent());
-            roommatePost.setRoommateStatus(roommatePostDto.toEntity().getRoommateStatus());
 
             return roommatePostDto.builder()
                     .id(roommatePost.getId())
@@ -142,10 +147,10 @@ public class RoommatePostService {
                         .writer(roommatePost.getWriter().getEmail())
                         .title(roommatePost.getTitle())
                         .people(roommatePost.getPeople())
-                        .dorm_name(roommatePost.getDorm_name())
                         .content(roommatePost.getContent())
                         .createdDate(roommatePost.getCreatedDate())
                         .modifiedDate(roommatePost.getModifiedDate())
+                        .roommateStatus(roommatePost.getRoommateStatus())
                         .build();
 
                 roommatePostList.add(roommatePostDto);

@@ -40,11 +40,15 @@ public class RoommatePostController {
                 .id(roommatePost.getId())
                 .writer(roommatePost.getWriter().getEmail())
                 .title(roommatePost.getTitle())
+                .gender(roommatePost.getWriter().getGender())
+                .age(roommatePost.getWriter().getAge())
+                .dorm(roommatePost.getWriter().getDorm())
+                .floor(roommatePost.getWriter().getFloor())
                 .people(roommatePost.getPeople())
-                .dorm_name(roommatePost.getDorm_name())
                 .content(roommatePost.getContent())
                 .createdDate(roommatePost.getCreatedDate())
                 .modifiedDate(roommatePost.getModifiedDate())
+                .roommateStatus(roommatePost.getRoommateStatus())
                 .build();
 
         return ResponseEntity.ok(roommate);
