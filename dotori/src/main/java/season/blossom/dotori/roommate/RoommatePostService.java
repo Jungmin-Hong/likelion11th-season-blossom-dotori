@@ -3,9 +3,6 @@ package season.blossom.dotori.roommate;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import season.blossom.dotori.delivery.DeliveryPost;
-import season.blossom.dotori.delivery.DeliveryPostReturnDto;
-import season.blossom.dotori.delivery.DeliveryStatus;
 import season.blossom.dotori.user.User;
 
 import java.util.ArrayList;
@@ -58,6 +55,7 @@ public class RoommatePostService {
 //        }
 //        return roommatePostList;
 //    }
+
 
     @Transactional
     public List<RoommatePostReturnDto> getList(User user, int matchType) {
