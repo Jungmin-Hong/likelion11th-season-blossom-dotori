@@ -17,23 +17,23 @@ import java.util.List;
 @NoArgsConstructor
 public class DeliveryComment {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "delivery_comment_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private DeliveryPost deliveryPost;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private User writer;
 
     private String content;
     private boolean isSecret;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private DeliveryComment parentComment;
 
-    @OneToMany
+    @OneToMany(mappedBy = "parentComment")
     private List<DeliveryComment> childComment;
 
     @CreationTimestamp
