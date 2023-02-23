@@ -1,10 +1,12 @@
 package season.blossom.dotori.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import season.blossom.dotori.delivery.DeliveryPost;
 import season.blossom.dotori.deliverycomment.DeliveryComment;
 
 import javax.persistence.*;
@@ -19,8 +21,12 @@ public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
+    @Column(unique = true)
     private String email;
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private University university;
     private String name;
     private Integer age;
 
@@ -35,16 +41,17 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "writer")
     private List<DeliveryComment> deliveryComments;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "matchedUsers")
+    private List<DeliveryPost> matchedDelieveryPost;
 
     public User encodePassword(PasswordEncoder passwordEncoder){
         password = passwordEncoder.encode(password);
         return this;
     }
 
-    public User commonRegister(){
-        authority = Authority.ROLE_USER;
-        return this;
-    }
 }

@@ -5,11 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import season.blossom.dotori.user.CustomUserDetail;
-import season.blossom.dotori.user.User;
-
-import java.nio.file.attribute.UserPrincipal;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,7 +21,7 @@ public class DeliveryCommentController {
         DeliveryComment deliveryComment = deliveryCommentService.createComment(commentDto);
 
         DeliveryCommentReturnDto returnDto = DeliveryCommentReturnDto.builder()
-                .deliveryCommentId(deliveryComment.getId())
+                .commentId(deliveryComment.getId())
                 .content(deliveryComment.getContent())
                 .writer(deliveryComment.getWriter().getEmail())
                 .isSecret(deliveryComment.isSecret())
@@ -35,6 +30,16 @@ public class DeliveryCommentController {
         return ResponseEntity.ok(returnDto);
     }
 
+    @PostMapping("/match/{commentId}")
+    public ResponseEntity<?> addMatchingUser(@PathVariable Long postId,
+                                                                  @PathVariable Long commentId,
+                                                                  @AuthenticationPrincipal CustomUserDetail customUserDetail) {
+
+        deliveryCommentService.addMatchingUser(customUserDetail.getUserId(), postId, commentId);
+
+
+        return ResponseEntity.ok("ok");
+    }
 
 //    @GetMapping
 //    public ResponseEntity<List<DeliveryCommentReturnDto>> getComments(@PathVariable Long postId,

@@ -15,43 +15,25 @@ import java.util.List;
 public class DeliveryPostController {
     private DeliveryPostService deliveryPostService;
 
-    // 목록
-//    @GetMapping("/api/board/delivery")
-//    public String list(Model model) {
-//        List<DeliveryPostDto> deliveryPostList = deliveryPostService.getDeliveryPostList();
-//        model.addAttribute("deliveryPostList", deliveryPostList);
-//        return "deliveryPost/list";
-//    }
 
     @GetMapping("/api/board/delivery")
-    public ResponseEntity<List<DeliveryPostReturnDto>> getPosts() {
-        List<DeliveryPostReturnDto> deliveryPosts = deliveryPostService.getList();
+    public ResponseEntity<List<DeliveryPostReturnDto>> getPosts(@RequestParam(name = "matchType", required = false, defaultValue = "0") int matchType,
+                                                                    @AuthenticationPrincipal CustomUserDetail customUserDetail) {
+        //매치타입 1 = 매칭되지 않은 게시글만 필터, 매치타입 0 혹은 그 외 숫자 = 모든 게시글 불러오기
+        List<DeliveryPostReturnDto> deliveryPosts = deliveryPostService.getList(customUserDetail.getUser(), matchType);
         return ResponseEntity.status(HttpStatus.OK).body(deliveryPosts);
     }
 
-    @GetMapping("/api/board/delivery/filtered")
-    public ResponseEntity<List<DeliveryPostReturnDto>> getPostsFiltered() {
-        List<DeliveryPostReturnDto> deliveryPosts = deliveryPostService.getListFiltered();
-        return ResponseEntity.status(HttpStatus.OK).body(deliveryPosts);
-    }
 
     @PostMapping("/api/board/delivery/write")
     public ResponseEntity<DeliveryPostReturnDto> createPost(@RequestBody DeliveryPostDto deliveryPostDto,
                                                       @AuthenticationPrincipal CustomUserDetail customUserDetail) {
         User user = customUserDetail.getUser();
         deliveryPostDto.setWriter(user);
-        DeliveryPost deliveryPost = deliveryPostService.savePost(deliveryPostDto);
+        DeliveryPostReturnDto deliveryPostReturn = deliveryPostService.savePost(deliveryPostDto);
 
-        DeliveryPostReturnDto delivery = DeliveryPostReturnDto.builder()
-                .id(deliveryPost.getId())
-                .writer(deliveryPost.getWriter().getEmail())
-                .title(deliveryPost.getTitle())
-                .content(deliveryPost.getContent())
-                .createdDate(deliveryPost.getCreatedDate())
-                .modifiedDate(deliveryPost.getModifiedDate())
-                .build();
 
-        return ResponseEntity.ok(delivery);
+        return ResponseEntity.ok(deliveryPostReturn);
     }
 
 
@@ -59,6 +41,12 @@ public class DeliveryPostController {
     @GetMapping("/api/board/delivery/{no}")
     public ResponseEntity<DeliveryPostReturnDto> getPostDetail(@PathVariable("no") Long no, @AuthenticationPrincipal CustomUserDetail customUserDetail) {
         DeliveryPostReturnDto deliveryPostDto = deliveryPostService.getPost(no, customUserDetail.getUserId());
+        return ResponseEntity.status(HttpStatus.OK).body(deliveryPostDto);
+    }
+
+    @PostMapping("/api/board/delivery/{no}/match")
+    public ResponseEntity<DeliveryPostReturnDto> postMatchStatus(@PathVariable("no") Long no, @AuthenticationPrincipal CustomUserDetail customUserDetail) {
+        DeliveryPostReturnDto deliveryPostDto = deliveryPostService.postMatchStatus(no, customUserDetail.getUserId());
         return ResponseEntity.status(HttpStatus.OK).body(deliveryPostDto);
     }
 
@@ -79,4 +67,19 @@ public class DeliveryPostController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    // 목록
+//    @GetMapping("/api/board/delivery")
+//    public String list(Model model) {
+//        List<DeliveryPostDto> deliveryPostList = deliveryPostService.getDeliveryPostList();
+//        model.addAttribute("deliveryPostList", deliveryPostList);
+//        return "deliveryPost/list";
+//    }
+
+    @GetMapping("/api/board/delivery/filtered")
+    public ResponseEntity<List<DeliveryPostReturnDto>> getPostsFiltered() {
+        List<DeliveryPostReturnDto> deliveryPosts = deliveryPostService.getListFiltered();
+        return ResponseEntity.status(HttpStatus.OK).body(deliveryPosts);
+    }
+
 }
