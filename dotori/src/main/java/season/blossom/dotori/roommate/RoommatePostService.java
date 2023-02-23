@@ -50,12 +50,13 @@ public class RoommatePostService {
         return roommatePostList;
     }
 
+    @Transactional
     public List<RoommatePostReturnDto> getListFiltered() {
         List<RoommatePost> roommatePosts = roommatePostRepository.findAll();
         List<RoommatePostReturnDto> roommatePostList = new ArrayList<>();
 
         for ( RoommatePost roommatePost : roommatePosts) {
-            if (roommatePost.getRoommateStatus().toString().equals("MATCHED")){
+            if (roommatePost.getRoommateStatus().toString().equals("MATCHING")){
                 RoommatePostReturnDto roommatePostDto = RoommatePostReturnDto.builder()
                         .id(roommatePost.getId())
                         .title(roommatePost.getTitle())
@@ -101,7 +102,10 @@ public class RoommatePostService {
         RoommatePost roommatePost = byId.orElseThrow(() -> new NullPointerException("해당 포스트가 존재하지 않습니다."));
 
         roommatePost.setTitle(roommatePostDto.getTitle());
+        roommatePost.setPeople(roommatePostDto.getPeople());
+        roommatePost.setDorm_name(roommatePostDto.getDorm_name());
         roommatePost.setContent(roommatePostDto.getContent());
+        roommatePost.setRoommateStatus(roommatePostDto.toEntity().getRoommateStatus());
 
         return roommatePostDto.builder()
                 .id(roommatePost.getId())
