@@ -105,7 +105,7 @@ public class RoommatePostService {
         roommatePost.setPeople(roommatePostDto.getPeople());
         roommatePost.setDorm_name(roommatePostDto.getDorm_name());
         roommatePost.setContent(roommatePostDto.getContent());
-        roommatePost.setRoommateStatus(roommatePostDto.toEntity().getRoommateStatus());
+        roommatePost.setRoommateStatus(roommatePostDto.getRoommateStatus());
 
         return roommatePostDto.builder()
                 .id(roommatePost.getId())

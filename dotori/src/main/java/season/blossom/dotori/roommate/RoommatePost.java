@@ -44,14 +44,14 @@ public class RoommatePost extends TimeEntity {
 
 
     @Builder
-    public RoommatePost(Long id, User writer, Integer people, String dorm_name, String title, String content) {
+    public RoommatePost(Long id, User writer, Integer people, String dorm_name, String title, String content, RoommateStatus roommateStatus) {
         this.id = id;
         this.writer = writer;
         this.people = people;
         this.dorm_name = dorm_name;
         this.title = title;
         this.content = content;
-        this.roommateStatus = RoommateStatus.MATCHING;
+        this.roommateStatus = roommateStatus;
     }
 }
 
