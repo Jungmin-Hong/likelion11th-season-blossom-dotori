@@ -64,7 +64,7 @@ public class UserController {
         cookie.setPath("/");
         cookie.setHttpOnly(true);
         cookie.setMaxAge(30000 * 60);
-//        cookie.setSecure(true);
+        cookie.setSecure(true);
         response.addCookie(cookie);
         return new ResponseEntity(HttpStatus.OK);
     }
