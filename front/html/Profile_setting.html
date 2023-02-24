@@ -13,6 +13,7 @@
   <title>프로필 등록</title>
   <!-- axios cdn -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
   <!-- Noto sans  -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,8 +34,8 @@
 
           <div class="question_items_content">
             <div class="radio">
-              <input type="radio" id="man" name="gender" value="man"><label for="man">  남</label>
-              <input type="radio" id="woman" name="gender" value="woman"><label for="woman">  여</label>
+              <input type="radio" id="man" name="gender" value="woman"><label for="man">  남</label>
+              <input type="radio" id="woman" name="gender" value="man"><label for="woman">  여</label>
             </div>
           </div>
         </div>
@@ -59,18 +60,18 @@
         </div>
 
         <div class="question_container">
-          <div class="question_items_title">기숙사를 입력해주세요.</div>
-          <input type="text" placeholder="어느 기숙사를 이용하시나요?" class="question_items_content">
+          <div iclass="question_items_title">기숙사를 입력해주세요.</div>
+          <input type="text" name="dormName" placeholder="어느 기숙사를 이용하시나요?" class="question_items_content">
         </div>
 
         <div class="question_container">
           <div class="question_items_title">선호하는 층수를 선택해주세요.</div>
-          <select id="birth" name="birth" class="question_items_content" style="width:320px">
-            <option value="Floor1">1층</option>
-            <option value="Floor2">2층</option>
-            <option value="Floor3">3층</option>
-            <option value="Floor4">4층</option>
-            <option value="Floor5">5층</option>
+          <select id="floor" name="floor" class="question_items_content" style="width:320px">
+            <option value="1">1층</option>
+            <option value="2">2층</option>
+            <option value="3">3층</option>
+            <option value="4">4층</option>
+            <option value="5">5층</option>
           </select>
         </div>
       </div>
@@ -81,28 +82,28 @@
 
         <div class="question_container">
           <div class="question_items_title">청소 습관</div>
-          <input type="text" placeholder="청소 주기는 어떤가요?" class="question_items_content">
+          <input type="text" name="cleaningCycle" placeholder="청소 주기는 어떤가요?" class="question_items_content">
         </div>
 
         <div class="question_container">
           <div class="question_items_title">소등 시간</div>
-          <input type="text" placeholder="평소에 언제 잠드나요?" class="question_items_content">
+          <input type="text" name="sleepingTime" placeholder="평소에 언제 잠드나요?" class="question_items_content">
         </div>
 
         <div class="question_container">
           <div class="question_items_title">잠버릇</div>
-          <input type="text" placeholder="잠버릇이 있으신가요?" class="question_items_content">
+          <input type="text" name="sleepingHabits" placeholder="잠버릇이 있으신가요?" class="question_items_content">
         </div>
 
         <div class="question_container">
           <div class="question_items_title">기숙사 이용 시간</div>
-          <input type="text" placeholder="일주일에 기숙사를 얼마나 이용하나요?" class="question_items_content">
+          <input type="text" name="usingTime" placeholder="일주일에 기숙사를 얼마나 이용하나요?" class="question_items_content">
         </div>
 
         <div class="question_container">
           <div class="question_items_title">흡연 여부</div>
           <div class="question_items_content">
-            <div class="radio">
+            <div id="smokingHabits" class="radio">
               <input type="radio" id="smoke-y" name="smoke" value="smoke-y"><label for="smoke-y"> 흡연</label>
               <input type="radio" id="smoke-n" name="smoke" value="smoke-n"><label for="smoke-n"> 비흡연</label>
             </div>
@@ -117,7 +118,7 @@
         <div class="question_container">
           <div class="question_items_title">방에서 음식 먹기</div>
           <div class="question_items_content">
-            <div class="radio">
+            <div  id="eating" class="radio">
               <input type="radio" id="eat-y" name="eat" value="eat-y"><label for="eat-y"> 가능</label>
               <input type="radio" id="eat-n" name="eat" value="eat-n"><label for="eat-n"> 불가능</label>
             </div>
@@ -127,7 +128,7 @@
         <div class="question_container">
           <div class="question_items_title">방에서 통화하기</div>
           <div class="question_items_content">
-            <div class="radio">
+            <div id="calling" class="radio">
               <input type="radio" id="call-y" name="call" value="call-y"><label for="call-y"> 가능</label>
               <input type="radio" id="call-n" name="call" value="call-n"><label for="call-n"> 불가능</label>
             </div>
@@ -137,23 +138,23 @@
         <div class="question_container">
           <div class="question_items_title">룸메이트 흡연 여부</div>
           <div class="question_items_content">
-            <div class="radio" class="radio">
-              <input type="radio" id="roommate-smoke-y" name="roommate-smoke" value="roommate-smoke-y"><label for="roommate-smoke-y"> 흡연자</label>
-              <input type="radio" id="roommate-smoke-n" name="roommate-smoke" value="roommate-smoke-n"><label for="roommate-smoke-n"> 비흡연자</label>
-              <input type="radio" id="roommate-smoke-n" name="roommate-smoke" value="roommate-smoke-n"><label for="roommate-smoke-n"> 상관 없음</label>
+            <div id="smoking" class="radio">
+              <input type="radio" id="roommate-smoke-y" name="roommateSmoke" value="roommate-smoke-y"><label for="roommate-smoke-y"> 흡연자</label>
+              <input type="radio" id="roommate-smoke-n" name="roommateSmoke" value="roommate-smoke-n"><label for="roommate-smoke-n"> 비흡연자</label>
+              <input type="radio" id="roommate-smoke-n" name="roommateSmoke" value="roommate-smoke-n"><label for="roommate-smoke-n"> 상관 없음</label>
             </div>
           </div>
         </div>
 
         <div class="question_container">
           <div class="question_items_title">룸메에게 하고 싶은 말</div>
-          <input type="text" placeholder="룸메한테 하고 싶은 말이 있다면 적어주세요!" class="question_items_content">
+          <input name="wantToSay" type="text" placeholder="룸메한테 하고 싶은 말이 있다면 적어주세요!" class="question_items_content">
         </div>
       </div>
-      <button type="button" class="btn">완료 > </button>
+      <button type="button" onclick="log()" class="btn">완료 > </button>
 
     </form>
   </div>
 </body>
-
+<script src="../js/Profile_settings.js"></script>
 </html>
