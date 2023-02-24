@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>게시글 목록</title>
+  <link rel="stylesheet" type="text/css" href="../css/deliverylist.css" />
+</head>
+
+<body>
+  <header>
+    <div class="top">
+      <img class="logo" src="../static/image/로고.png" />
+      <div class="titles">
+        <span id="subtitle">슬기로운 기숙 생활</span><br />
+        <span id="title">도토리</span>
+      </div>
+      <div class="images">
+        <img class="dotori" src="../static/image/도토리.png" />
+        <img class="daramgy" src="../static/image/다람쥐.png" />
+      </div>
+    </div>
+  </header>
+  <nav>
+    <span class="menu" id="home">
+      홈
+    </span>
+    <span class="menu">
+      룸메이트
+    </span>
+    <span class="menu" id="delivery">
+      공동배달
+    </span>
+    <span class="menu">
+      마이페이지
+    </span>
+    <a href="deliverywrite.html"><button class="write">글 작성하기</button></a>
+    <div class="icons">
+      <img class="filter" src="../static/image/필터.png" />
+      <img class="search" src="../static/image/검색버튼.png" />
+    </div>
+  </nav>
+  <section class="list-section">
+    <div class="list">
+      <!-- 게시글 추가되는 부분 -->
+      <!-- <div class="show_list"  style="margin-bottom:30px;">
+        <a href="./deliverydetail.html?id=2595">
+          <span class="title">${element.title}</span>
+          <div class="list-content">
+            <span class="content">${element.content}</span>
+          </div>
+        </a>
+        <img class="dib" />
+        <div class="apply">
+          <img id="checkimg" src="../html/images/모집중.png" />
+          <span class="apply-text">모집 중</span>
+        </div>
+      </div> -->
+
+    </div>
+  </section>
+
+  <script src="../js/list_function.js"></script>
+  <script src="../js/show_list.js"></script>
+  <script src="../js/add_list01.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,315 @@
+html {
+    background: #EFEFEF;
+    padding-bottom: 75px;
+}
+
+body {
+    width: 364px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 상단 */
+header {
+    position: absolute;
+    top: 75px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+.top {
+    width: 364px;
+    height: 75.48px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logo {
+    width: 55px;
+    height: 60px;
+    position: absolute;
+    left: 23px;
+}
+.titles {
+    height: 75.48px;
+    display: table;
+    table-layout: fixed;
+}
+@font-face{
+    src: url("../static/font/Cafe24Dongdong.ttf");
+    font-family: "Cafe24 Dongdong";
+}
+#subtitle {
+    font-family: "Cafe24 Dongdong";
+    font-style: normal;
+    font-weight: 400px;
+    font-size: 14px;
+    line-height: 31px;
+    position: absolute;
+    top: 13px;
+    left: 88px;
+    width: 191.35px;
+    height: 21.85px;
+    color: #484848;
+    margin-bottom: 10px;
+    display:table-cell;
+    vertical-align: middle;    
+}
+@font-face{
+    src: url("../static/font/KCCDodamdodam.ttf");
+    font-family: "KCCDodamdodam";
+}
+#title {
+    font-family: "KCCDodamdodam";
+    font-style: normal;
+    font-weight: 400px;
+    font-size: 36px;
+    line-height: 31px;
+    position: absolute;
+    top: 34px;
+    left: 88px;
+    width: 87.42px;
+    height: 24.83px;
+    color: #B56700;
+    display:table-cell;
+    vertical-align: middle;    
+}
+.images {
+    width: 45.41px;
+    height: 16.88px;
+    position: absolute;
+    right: 9px;
+    display: flex;
+    align-items: center;
+    justify-self: center;
+}
+.dotori {
+    width: 13.6px;
+    height: 16.88px;
+    position: absolute;
+    right: 40px;
+}
+.daramgy {
+    width: 15.3px;
+    height: 13.9px;
+    position: absolute;
+    right: 9px;
+}
+
+/* 네비바 */
+nav {
+    width: 365px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    top: 180px;
+}
+@font-face{
+    src: url("../static/font/source-sans-pro.regular.ttf");
+    font-family: "Source Sans Pro";
+}
+.menu {
+    display: inline-block;
+    width: 86.79px;
+    height: 26px;
+    text-align: center;
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    align-items: center;
+    text-align: center;
+    color: #B1B1B1;
+    border-bottom: solid 1px #B1B1B1;
+    cursor: pointer;
+}
+/* 네비바 클릭 */
+.menu.active {
+    color: #FFA000;
+    border-bottom-color: #FFA000;
+}
+#home {
+    font-weight: 700;
+}
+#delivery {
+    color: #FFA000;
+    border-bottom-color: #FFA000;
+}
+/* 글 작성 버튼 */
+@font-face{
+    src: url("../static/font/DMSans-Regular.ttf");
+    font-family: "DM Sans";
+}
+.write {
+    color: #ffffff;
+    align-items: center;
+    width: 95px;
+    height: 38px;
+    background: #FFA000;
+    border: none;
+    border-radius: 30px;
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 14px;
+    text-align: center;
+    margin: 20px 0 15px 25px; 
+    cursor: pointer;
+}
+/* 필터 및 검색 버튼 */
+.icons {
+    width: 45.41px;
+    height: 24px;
+    position: absolute;
+    right: 9px;
+    top: 55px;
+    display: flex;
+    align-items: center;
+    justify-self: center;
+}
+.filter {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    right: 40px;
+}
+.search {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 9px;
+}
+
+/* 목록 */
+.list-section {
+    box-sizing: border-box;
+    width: 364px;
+    height: 1048px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px 18px;
+    background: #FFFFFF;
+    border: 1.5px dashed #737373;
+    border-radius: 12px;
+    margin-top: 270px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+/* 목록아이템 */
+.list {
+    margin-top: 20px;
+}
+/* 제목 */
+.title {
+    width: 152.15px;
+    height: 15px;
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 16px;
+    color: #683B00;
+    float: left;
+    margin: -7px 20px;
+}
+/* 글쓴이 */
+.writer {
+    width: 55.01px;
+    height: 14px;
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    color: #737373;
+    float: left;
+    margin: -6px 5px;
+}
+/* 찜 */
+.dib {
+    float: right;
+    margin: -70px 0;
+    content: url(../static/image/찜전.png);
+}
+.dib.active {
+    content: url(../static/image/찜후.png);
+}
+
+/* 내용 */
+.list-content {
+    width: 335.91px;
+    height: 64px;
+    background: #E5E5E5;
+    border-radius: 40px;
+    clear: both;
+}
+.content {
+    clear: both;
+    position: absolute;
+    width: 165px;
+    height: 42px;
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    color: #959595;
+    margin: 15px 30px;
+}
+/* 모집 중 및 완료 버튼*/
+.apply {
+    float: right;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+    width: 92px;
+    height: 32px;
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 5px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+    margin-right: 20px;
+    margin-top: -20px;
+    cursor: pointer;
+}
+.checkimg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    width: 24px;
+    height: 24px;
+    margin: auto;
+}
+.apply-text {
+    width: 60px;
+    height: 24px;
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+    margin-right: auto;
+    padding: auto;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+/* 체크 후 */
+
