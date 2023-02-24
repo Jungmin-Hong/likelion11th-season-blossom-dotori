@@ -75,6 +75,7 @@ public class UserService implements UserDetailsService {
         me.setEating(userReturnDto.getEating());
         me.setCalling(userReturnDto.getCalling());
         me.setSmokeMate(userReturnDto.getSmokeMate());
+        me.setWords(userReturnDto.getWords());
         userRepository.save(me);
 
         return me;
@@ -98,6 +99,7 @@ public class UserService implements UserDetailsService {
                 .eating(me.getEating())
                 .calling(me.getCalling())
                 .smokeMate(me.getSmokeMate())
+                .words(me.getWords())
                 .build();
 
         return userReturnDto;

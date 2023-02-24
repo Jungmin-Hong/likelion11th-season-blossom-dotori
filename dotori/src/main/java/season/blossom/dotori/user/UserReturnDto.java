@@ -34,6 +34,7 @@ public class UserReturnDto {
     private Boolean calling;
     // 룸메 흡연 여부
     private Boolean smokeMate;
+    private String words;
 
     public UserReturnDto(User user) {
         this.userId = user.getUserId();
@@ -49,5 +50,6 @@ public class UserReturnDto {
         this.eating = user.getEating();
         this.calling = user.getCalling();
         this.smokeMate = user.getSmokeMate();
+        this.words = user.getWords();
     }
 }

@@ -52,6 +52,8 @@ public class User {
     // 룸메 흡연 여부
     private Boolean smokeMate;
 
+    private String words;
+
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
