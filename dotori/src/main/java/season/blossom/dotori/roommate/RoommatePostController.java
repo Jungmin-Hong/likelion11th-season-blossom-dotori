@@ -64,6 +64,15 @@ public class RoommatePostController {
         return ResponseEntity.status(HttpStatus.OK).body(roommatePostDto);
     }
 
+    @GetMapping("/api/board/roommate/edit/{no}")
+    public ResponseEntity<RoommatePostReturnDto> getDetailForUpdate(@PathVariable("no") Long no, @AuthenticationPrincipal CustomUserDetail customUserDetail) {
+        roommatePostService.getPostForUpdate(no, customUserDetail.getUser());
+
+        RoommatePostReturnDto roommatePostReturnDto = roommatePostService.getPost(no);
+
+        return ResponseEntity.ok(roommatePostReturnDto);
+    }
+
     @PutMapping("/api/board/roommate/edit/{no}")
     public ResponseEntity<RoommatePostReturnDto> update(@PathVariable("no") Long no, @RequestBody RoommatePostDto roommatePostDto, @AuthenticationPrincipal CustomUserDetail customUserDetail) {
         roommatePostService.updatePost(no, roommatePostDto, customUserDetail.getUserId());

@@ -9,6 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import season.blossom.dotori.error.errorcode.CommonErrorCode;
+import season.blossom.dotori.error.exception.RestApiException;
 import season.blossom.dotori.roommate.RoommatePost;
 import season.blossom.dotori.roommate.RoommatePostReturnDto;
 
@@ -37,6 +39,7 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findByEmail(email).orElse(null);
 
         if (user == null) {
+//            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
             throw new UsernameNotFoundException("UsernameNotFoundException");
         }
 
@@ -58,7 +61,7 @@ public class UserService implements UserDetailsService {
     @Transactional
     public User updateInfo(User user, UserReturnDto userReturnDto) {
         Optional<User> byId = userRepository.findById(user.getUserId());
-        User me = byId.orElseThrow(() -> new NullPointerException("해당 포스트가 존재하지 않습니다."));
+        User me = byId.orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
 
         me.setGender(userReturnDto.getGender());
         me.setAge(userReturnDto.getAge());
@@ -80,7 +83,7 @@ public class UserService implements UserDetailsService {
     @Transactional
     public UserReturnDto getUser(User user) {
         Optional<User> byId = userRepository.findById(user.getUserId());
-        User me = byId.orElseThrow(() -> new NullPointerException("해당 포스트가 존재하지 않습니다."));
+        User me = byId.orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
 
         UserReturnDto userReturnDto = UserReturnDto.builder()
                 .gender(me.getGender())
@@ -101,20 +104,20 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public User updatePwd(User user, PwdRequestDto pwdRequestDto) throws Exception {
-        User me = userRepository.findById(user.getUserId()).orElseThrow(() -> new Exception("회원이 존재하지 않습니다"));
+    public User updatePwd(User user, PwdRequestDto pwdRequestDto){
+        Optional<User> byId = userRepository.findById(user.getUserId());
+        User me = byId.orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
 
         if (me.matchPassword(passwordEncoder, pwdRequestDto.getOriginal())) {
             if (pwdRequestDto.getNewpwd1().equals(pwdRequestDto.getNewpwd2())) {
                 me.updatePassword(passwordEncoder, pwdRequestDto.getNewpwd1());
             } else {
-                throw new IllegalStateException("같은 비밀번호를 입력해주세요.");
+                throw new RestApiException(CommonErrorCode.DIFFERENT_PASSWORD);
             }
         }
         else {
-            throw new IllegalStateException("비밀번호가 틀렸습니다.");
+            throw new RestApiException(CommonErrorCode.WRONG_PASSWORD);
         }
-
         return me;
     }
 

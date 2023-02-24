@@ -3,7 +3,8 @@ package season.blossom.dotori.roommate;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import season.blossom.dotori.delivery.DeliveryPostReturnDto;
+import season.blossom.dotori.error.errorcode.CommonErrorCode;
+import season.blossom.dotori.error.exception.RestApiException;
 import season.blossom.dotori.user.User;
 
 import java.util.ArrayList;
@@ -31,33 +32,6 @@ public class RoommatePostService {
     }
 
 
-//    @Transactional
-//    public List<RoommatePostReturnDto> getList() {
-//        List<RoommatePost> roommatePosts = roommatePostRepository.findAll();
-//        List<RoommatePostReturnDto> roommatePostList = new ArrayList<>();
-//
-//        for (RoommatePost roommatePost : roommatePosts) {
-//            RoommatePostReturnDto roommatePostDto = RoommatePostReturnDto.builder()
-//                    .id(roommatePost.getId())
-//                    .title(roommatePost.getTitle())
-//                    .people(roommatePost.getPeople())
-//                    .content(roommatePost.getContent())
-//                    .writer(roommatePost.getWriter().getEmail())
-//                    .age(roommatePost.getWriter().getAge())
-//                    .floor(roommatePost.getWriter().getFloor())
-//                    .dorm(roommatePost.getWriter().getDorm())
-//                    .gender(roommatePost.getWriter().getGender())
-//                    .createdDate(roommatePost.getCreatedDate())
-//                    .modifiedDate(roommatePost.getModifiedDate())
-//                    .roommateStatus(roommatePost.getRoommateStatus())
-//                    .build();
-//
-//            roommatePostList.add(roommatePostDto);
-//        }
-//        return roommatePostList;
-//    }
-
-
     @Transactional
     public List<RoommatePostReturnDto> getList(User user, int matchType) {
         List<RoommatePost> roommatePosts;
@@ -74,34 +48,11 @@ public class RoommatePostService {
     }
 
 
-//    @Transactional
-//    public List<RoommatePostReturnDto> getListFiltered() {
-//        List<RoommatePost> roommatePosts = roommatePostRepository.findAll();
-//        List<RoommatePostReturnDto> roommatePostList = new ArrayList<>();
-//
-//        for (RoommatePost roommatePost : roommatePosts) {
-//            if (roommatePost.getRoommateStatus().toString().equals("MATCHING")) {
-//                RoommatePostReturnDto roommatePostDto = RoommatePostReturnDto.builder()
-//                        .id(roommatePost.getId())
-//                        .writer(roommatePost.getWriter().getEmail())
-//                        .title(roommatePost.getTitle())
-//                        .people(roommatePost.getPeople())
-//                        .content(roommatePost.getContent())
-//                        .createdDate(roommatePost.getCreatedDate())
-//                        .modifiedDate(roommatePost.getModifiedDate())
-//                        .roommateStatus(roommatePost.getRoommateStatus())
-//                        .build();
-//
-//                roommatePostList.add(roommatePostDto);
-//            } else continue;
-//        }
-//        return roommatePostList;
-//    }
-
     @Transactional
-    public RoommatePostReturnDto getPost(Long id) {
-        Optional<RoommatePost> roommatePostWrapper = roommatePostRepository.findById(id);
-        RoommatePost roommatePost = roommatePostWrapper.get();
+    public RoommatePostReturnDto getPost(Long postId) {
+        Optional<RoommatePost> byId = roommatePostRepository.findById(postId);
+        RoommatePost roommatePost = byId.orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
+
 
         RoommatePostReturnDto roommatePostDto = RoommatePostReturnDto.builder()
                 .id(roommatePost.getId())
@@ -122,7 +73,9 @@ public class RoommatePostService {
     }
 
     public RoommatePostReturnDto postMatchStatus(Long postId, Long userId){
-        RoommatePost roommatePost = roommatePostRepository.findById(postId).orElse(null);
+        Optional<RoommatePost> byId = roommatePostRepository.findById(postId);
+        RoommatePost roommatePost = byId.orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
+
         if(roommatePost.getWriter().getUserId() == userId){
             roommatePost.setRoommateStatus(RoommateStatus.MATCHED);
         }
@@ -135,7 +88,7 @@ public class RoommatePostService {
     @Transactional
     public RoommatePostDto updatePost(Long postId, RoommatePostDto roommatePostDto, Long userId) {
         Optional<RoommatePost> byId = roommatePostRepository.findById(postId);
-        RoommatePost roommatePost = byId.orElseThrow(() -> new NullPointerException("해당 포스트가 존재하지 않습니다."));
+        RoommatePost roommatePost = byId.orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
 
         if (roommatePost.getWriter().getUserId().equals(userId)){
             roommatePost.setTitle(roommatePostDto.getTitle());
@@ -147,7 +100,7 @@ public class RoommatePostService {
                     .build();
         }
         else {
-            throw new IllegalStateException();
+            throw new RestApiException(CommonErrorCode.UNAUTHORIZED_USER);
         }
     }
 
@@ -155,13 +108,13 @@ public class RoommatePostService {
     @Transactional
     public void deletePost(Long postId, Long userId) {
         Optional<RoommatePost> byId = roommatePostRepository.findById(postId);
-        RoommatePost roommatePost = byId.orElseThrow(() -> new NullPointerException("해당 포스트가 존재하지 않습니다."));
+        RoommatePost roommatePost = byId.orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
 
         if (roommatePost.getWriter().getUserId().equals(userId)){
             roommatePostRepository.deleteById(postId);
         }
         else {
-            throw new IllegalStateException();
+            throw new RestApiException(CommonErrorCode.UNAUTHORIZED_USER);
         }
     }
 
@@ -197,6 +150,17 @@ public class RoommatePostService {
         return roommatePostRepository.findAllByCommentWriter(user)
                 .stream().map(RoommatePostReturnDto::new)
                 .collect(Collectors.toList());
+    }
+
+    public RoommatePostReturnDto getPostForUpdate(Long postId, User user) {
+        Optional<RoommatePost> byId = roommatePostRepository.findById(postId);
+        RoommatePost roommatePost = byId.orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
+
+        if(roommatePost.getWriter().getUserId() != user.getUserId()){
+            throw new RestApiException(CommonErrorCode.UNAUTHORIZED_USER);
+        }
+
+        return new RoommatePostReturnDto(roommatePost);
     }
 
 }

@@ -2,7 +2,6 @@ package season.blossom.dotori.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.web.bind.annotation.*;
+
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -64,7 +64,7 @@ public class UserController {
         cookie.setPath("/");
         cookie.setHttpOnly(true);
         cookie.setMaxAge(30000 * 60);
-        cookie.setSecure(true);
+//        cookie.setSecure(true);
         response.addCookie(cookie);
         return new ResponseEntity(HttpStatus.OK);
     }
