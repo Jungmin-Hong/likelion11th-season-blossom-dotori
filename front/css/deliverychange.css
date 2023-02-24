@@ -1,0 +1,61 @@
+#change-apply {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+    width: 92px;
+    height: 32px;
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 5px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+    margin: 20px 0 15px 30px;
+    cursor: pointer; 
+}
+#change-checkimg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    width: 24px;
+    height: 24px;
+    margin: auto;
+    content: url(../static/image/모집중.png);
+}
+#change-text {
+    width: 60px;
+    height: 24px;
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+    margin-right: auto;
+    padding: auto;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+#change-checkimg.active {
+    content: url(../static/image/모집후.png);
+}
+#change-apply.active {
+    width: 105px;
+    background: rgba(33, 33, 33, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+}
+#change-text.active {
+    width: 73px;
+    font-size: 14px;
+}
