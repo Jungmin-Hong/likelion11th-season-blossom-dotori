@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import season.blossom.dotori.error.errorcode.CommonErrorCode;
 import season.blossom.dotori.error.exception.RestApiException;
+import season.blossom.dotori.roommatecomment.*;
 import season.blossom.dotori.user.User;
 
 import java.util.ArrayList;
@@ -16,19 +17,29 @@ import java.util.stream.Collectors;
 @Service
 public class RoommatePostService {
     private RoommatePostRepository roommatePostRepository;
+    private RoommateCommentService roommateCommentService;
+    private RoommateCommentSeqRepository roommateCommentSeqRepository;
 
     @Transactional
     public RoommatePost savePost(RoommatePostDto roommatePostDto) {
 
-        RoommatePost roommatePost = RoommatePost.builder()
+        RoommatePost savedPost = RoommatePost.builder()
                 .writer(roommatePostDto.getWriter())
                 .title(roommatePostDto.getTitle())
                 .people(roommatePostDto.getPeople())
                 .content(roommatePostDto.getContent())
-                .roommateStatus(roommatePostDto.getRoommateStatus())
+                .roommateStatus(RoommateStatus.MATCHING)
                 .build();
 
-        return roommatePostRepository.save(roommatePost);
+        RoommateCommentSeq roommateCommentSeq = RoommateCommentSeq.builder()
+                .roommatePost(savedPost)
+                .user(savedPost.getWriter())
+                .writeSeq(savedPost.getNumberOfCommentWriter())
+                .build();
+
+        roommateCommentSeqRepository.save(roommateCommentSeq);
+
+        return roommatePostRepository.save(savedPost);
     }
 
 
@@ -49,10 +60,10 @@ public class RoommatePostService {
 
 
     @Transactional
-    public RoommatePostReturnDto getPost(Long postId) {
-        Optional<RoommatePost> byId = roommatePostRepository.findById(postId);
-        RoommatePost roommatePost = byId.orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
-
+    public RoommatePostReturnDto getPost(Long userId, Long postId) {
+        Optional<RoommatePost> roommatePostWrapper = roommatePostRepository.findById(postId);
+        RoommatePost roommatePost = roommatePostWrapper.get();
+        List<RoommateCommentReturnDto> comments = roommateCommentService.getComments(postId, userId);
 
         RoommatePostReturnDto roommatePostDto = RoommatePostReturnDto.builder()
                 .id(roommatePost.getId())
@@ -67,6 +78,7 @@ public class RoommatePostService {
                 .createdDate(roommatePost.getCreatedDate())
                 .modifiedDate(roommatePost.getModifiedDate())
                 .roommateStatus(roommatePost.getRoommateStatus())
+                .comments(comments)
                 .build();
 
         return roommatePostDto;
@@ -86,18 +98,15 @@ public class RoommatePostService {
     }
 
     @Transactional
-    public RoommatePostDto updatePost(Long postId, RoommatePostDto roommatePostDto, Long userId) {
-        Optional<RoommatePost> byId = roommatePostRepository.findById(postId);
-        RoommatePost roommatePost = byId.orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
+    public RoommatePostReturnDto updatePost(Long postId, RoommatePostDto roommatePostDto, Long userId) {
+        RoommatePost roommatePost = roommatePostRepository.findById(postId).orElseThrow(() -> new NullPointerException("해당 포스트가 존재하지 않습니다."));
 
         if (roommatePost.getWriter().getUserId().equals(userId)){
             roommatePost.setTitle(roommatePostDto.getTitle());
             roommatePost.setPeople(roommatePostDto.getPeople());
             roommatePost.setContent(roommatePostDto.getContent());
 
-            return roommatePostDto.builder()
-                    .id(roommatePost.getId())
-                    .build();
+           return new RoommatePostReturnDto(roommatePost);
         }
         else {
             throw new RestApiException(CommonErrorCode.UNAUTHORIZED_USER);

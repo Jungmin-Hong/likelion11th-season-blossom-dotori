@@ -36,7 +36,7 @@ public class DeliveryPostService {
                 .amount(deliveryPostDto.getAmount())
                 .minimum(deliveryPostDto.getMinimum())
                 .content(deliveryPostDto.getContent())
-                .deliveryStatus(deliveryPostDto.getDeliveryStatus())
+                .matchingStatus(MatchingStatus.UNMATCHED)
                 .numberOfCommentWriter(0)
                 .build();
 
@@ -59,8 +59,8 @@ public class DeliveryPostService {
         List<DeliveryPost> deliveryPosts;
 
         if(matchType == 1) {
-            deliveryPosts = deliveryPostRepository.findAllByWriter_UniversityAndDeliveryStatusOrderByCreatedDateDesc(
-                    user.getUniversity(), DeliveryStatus.MATCHING);
+            deliveryPosts = deliveryPostRepository.findAllByWriter_UniversityAndMatchingStatusOrderByCreatedDateDesc(
+                    user.getUniversity(), MatchingStatus.UNMATCHED);
         }
         else {
             deliveryPosts = deliveryPostRepository.findAllByWriter_UniversityOrderByCreatedDateDesc(
@@ -86,6 +86,7 @@ public class DeliveryPostService {
                 .writer(deliveryPost.getWriter().getEmail())
                 .createdDate(deliveryPost.getCreatedDate())
                 .modifiedDate(deliveryPost.getModifiedDate())
+                .comments(comments)
                 .build();
 
         return deliveryPostDto;
@@ -105,7 +106,7 @@ public class DeliveryPostService {
         Optional<DeliveryPost> byId = deliveryPostRepository.findById(postId);
         DeliveryPost deliveryPost = byId.orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
         if(deliveryPost.getWriter().getUserId() == userId){
-            deliveryPost.setDeliveryStatus(DeliveryStatus.MATCHED);
+            deliveryPost.setMatchingStatus(MatchingStatus.MATCHED);
         }
 
         DeliveryPostReturnDto deliveryPostDto = new DeliveryPostReturnDto(deliveryPost);

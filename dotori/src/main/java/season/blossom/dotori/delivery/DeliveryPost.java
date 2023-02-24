@@ -39,7 +39,7 @@ public class DeliveryPost extends TimeEntity {
 
     // 매칭 상태
     @Enumerated(EnumType.STRING)
-    private DeliveryStatus deliveryStatus;
+    private MatchingStatus matchingStatus;
 
     @OneToMany(mappedBy = "deliveryPost")
     private List<DeliveryComment> comments;
@@ -49,7 +49,7 @@ public class DeliveryPost extends TimeEntity {
     }
 
     @Builder
-    public DeliveryPost(Long id, User writer, String title, String store, String place, Integer amount, Integer minimum, String content, Integer numberOfCommentWriter, DeliveryStatus deliveryStatus) {
+    public DeliveryPost(Long id, User writer, String title, String store, String place, Integer amount, Integer minimum, String content, Integer numberOfCommentWriter, MatchingStatus matchingStatus) {
         this.id = id;
         this.writer = writer;
         this.title = title;
@@ -59,6 +59,6 @@ public class DeliveryPost extends TimeEntity {
         this.minimum = minimum;
         this.content = content;
         this.numberOfCommentWriter = numberOfCommentWriter;
-        this.deliveryStatus = DeliveryStatus.MATCHING;
+        this.matchingStatus = MatchingStatus.UNMATCHED;
     }
 }

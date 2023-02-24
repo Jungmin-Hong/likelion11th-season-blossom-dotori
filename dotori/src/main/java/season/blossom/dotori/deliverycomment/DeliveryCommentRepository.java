@@ -12,5 +12,4 @@ public interface DeliveryCommentRepository extends JpaRepository<DeliveryComment
     Optional<DeliveryComment> findById(Long id);
 
     List<DeliveryComment> findByDeliveryPostIdAndParentCommentIsNull(Long postId);
-    List<DeliveryComment> findByParentCommentId(Long commentId);
 }

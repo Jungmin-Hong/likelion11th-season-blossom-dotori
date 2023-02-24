@@ -36,6 +36,8 @@ public class RoommatePost extends TimeEntity {
     @Column(nullable = false)
     private String content;
 
+    private Integer numberOfCommentWriter;
+
 
     // 매칭 상태
     @Enumerated(EnumType.STRING)
@@ -44,6 +46,9 @@ public class RoommatePost extends TimeEntity {
     @OneToMany(mappedBy = "roommatePost")
     private List<RoommateComment> comments;
 
+    public void increaseNumber(){
+        this.numberOfCommentWriter += 1;
+    }
 
     @Builder
     public RoommatePost(Long id, User writer, Integer people, String title, String content, RoommateStatus roommateStatus) {

@@ -23,7 +23,7 @@ public class DeliveryPostDto {
     private String content;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
-    private DeliveryStatus deliveryStatus;
+    private MatchingStatus matchingStatus;
 
     public DeliveryPost toEntity(){
         DeliveryPost deliveryPost = DeliveryPost.builder()
@@ -40,7 +40,7 @@ public class DeliveryPostDto {
     }
 
     @Builder
-    public DeliveryPostDto(Long id, String title, String store, String place, Integer amount, Integer minimum, String content, User writer, LocalDateTime createdDate, LocalDateTime modifiedDate, DeliveryStatus deliveryStatus) {
+    public DeliveryPostDto(Long id, String title, String store, String place, Integer amount, Integer minimum, String content, User writer, LocalDateTime createdDate, LocalDateTime modifiedDate, MatchingStatus matchingStatus) {
         this.id = id;
         this.writer = writer;
         this.title = title;
@@ -51,6 +51,6 @@ public class DeliveryPostDto {
         this.content = content;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
-        this.deliveryStatus = deliveryStatus;
+        this.matchingStatus = matchingStatus;
     }
 }

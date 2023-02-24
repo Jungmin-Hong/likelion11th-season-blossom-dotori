@@ -4,10 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import season.blossom.dotori.delivery.DeliveryPost;
+import season.blossom.dotori.roommatecomment.RoommateComment;
+import season.blossom.dotori.roommatecomment.RoommateCommentReturnDto;
 import season.blossom.dotori.user.User;
 
 import javax.persistence.Column;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -25,6 +28,7 @@ public class RoommatePostReturnDto {
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
     private RoommateStatus roommateStatus;
+    private List<RoommateCommentReturnDto> comments;
 
     public RoommatePostReturnDto(RoommatePost roommatePost) {
         this.id = roommatePost.getId();

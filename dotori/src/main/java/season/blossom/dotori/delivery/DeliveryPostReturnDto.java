@@ -23,7 +23,7 @@ public class DeliveryPostReturnDto {
     private String content;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
-    private DeliveryStatus deliveryStatus;
+    private MatchingStatus matchingStatus;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<DeliveryCommentReturnDto> comments;
 
@@ -38,6 +38,6 @@ public class DeliveryPostReturnDto {
         this.content = deliveryPost.getContent();
         this.createdDate = deliveryPost.getCreatedDate();
         this.modifiedDate = deliveryPost.getModifiedDate();
-        this.deliveryStatus = deliveryPost.getDeliveryStatus();
+        this.matchingStatus = deliveryPost.getMatchingStatus();
     }
 }

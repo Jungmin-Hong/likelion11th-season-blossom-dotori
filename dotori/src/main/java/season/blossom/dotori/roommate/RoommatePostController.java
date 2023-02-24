@@ -52,8 +52,8 @@ public class RoommatePostController {
 
     // 상세 조회
     @GetMapping("/api/board/roommate/{no}")
-    public ResponseEntity<RoommatePostReturnDto> getPostDetail(@PathVariable("no") Long no) {
-        RoommatePostReturnDto roommatePostDto = roommatePostService.getPost(no);
+    public ResponseEntity<RoommatePostReturnDto> getPostDetail(@PathVariable("no") Long no, @AuthenticationPrincipal CustomUserDetail userDetail) {
+        RoommatePostReturnDto roommatePostDto = roommatePostService.getPost(userDetail.getUserId(), no);
 
         return ResponseEntity.status(HttpStatus.OK).body(roommatePostDto);
     }
@@ -66,17 +66,14 @@ public class RoommatePostController {
 
     @GetMapping("/api/board/roommate/edit/{no}")
     public ResponseEntity<RoommatePostReturnDto> getDetailForUpdate(@PathVariable("no") Long no, @AuthenticationPrincipal CustomUserDetail customUserDetail) {
-        roommatePostService.getPostForUpdate(no, customUserDetail.getUser());
-
-        RoommatePostReturnDto roommatePostReturnDto = roommatePostService.getPost(no);
+        RoommatePostReturnDto roommatePostReturnDto = roommatePostService.getPostForUpdate(no, customUserDetail.getUser());
 
         return ResponseEntity.ok(roommatePostReturnDto);
     }
 
     @PutMapping("/api/board/roommate/edit/{no}")
     public ResponseEntity<RoommatePostReturnDto> update(@PathVariable("no") Long no, @RequestBody RoommatePostDto roommatePostDto, @AuthenticationPrincipal CustomUserDetail customUserDetail) {
-        roommatePostService.updatePost(no, roommatePostDto, customUserDetail.getUserId());
-        RoommatePostReturnDto roommatePostReturnDto = roommatePostService.getPost(no);
+        RoommatePostReturnDto roommatePostReturnDto = roommatePostService.updatePost(no, roommatePostDto, customUserDetail.getUserId());
         return ResponseEntity.ok(roommatePostReturnDto);
     }
 

@@ -5,10 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import season.blossom.dotori.delivery.DeliveryPost;
 import season.blossom.dotori.delivery.DeliveryPostRepository;
+import season.blossom.dotori.notice.Notice;
+import season.blossom.dotori.notice.NoticeRepository;
+import season.blossom.dotori.notice.NoticeType;
+import season.blossom.dotori.notice.PostType;
 import season.blossom.dotori.user.User;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,6 +21,7 @@ public class DeliveryCommentService {
     private final DeliveryCommentSeqRepository deliveryCommentSeqRepository;
     private final DeliveryPostRepository deliveryPostRepository;
     private final DeliveryCommentRepository deliveryCommentRepository;
+    private final NoticeRepository noticeRepository;
 
     public DeliveryComment createComment(DeliveryCommentRequestDto commentDto){
 
@@ -29,11 +33,15 @@ public class DeliveryCommentService {
             parentComment = deliveryCommentRepository.findById(commentDto.getParentCommentId()).orElse(null);
         }
 
-        //원
+        //원댓글의 secret 여부를 확인해서 요청과 다르면 예외
         if(parentComment == null)
             isSecret = commentDto.getIsSecret();
         else
             isSecret = parentComment.isSecret();
+
+        if(isSecret ^ commentDto.getIsSecret()){
+            throw new IllegalStateException("일반 댓글에는 일반 답글만, 비밀 댓글에는 비밀 답글만 사용 가능");
+        }
 
         if(parentComment != null && parentComment.getParentComment() != null){
             parentComment = parentComment.getParentComment();
@@ -83,7 +91,42 @@ public class DeliveryCommentService {
                 .isSecret(isSecret)
                 .build();
 
+        createNoticeForPostWriter(deliveryPost, deliveryComment);
+        if(parentComment != null)
+            createNoticeForCommentWriter(deliveryPost, deliveryComment, parentComment);
+
         return deliveryCommentRepository.save(deliveryComment);
+    }
+
+    private void createNoticeForCommentWriter(DeliveryPost deliveryPost, DeliveryComment deliveryComment, DeliveryComment parentComment) {
+        //원댓글 작성자가 자신이 아닌 경우에만 알람을 보내야함
+        //원댓글자가 작성자일 때에는 원댓글 작성자 댓글에 답글을 달아도 답글 알림을 생성하지 않음
+        //자신의 게시글에 댓글 달린것은 알림이 이미 생성되었기 때문
+        if(deliveryComment.getWriter().getUserId() != parentComment.getWriter().getUserId() &&
+                parentComment.getWriter().getUserId() != deliveryPost.getWriter().getUserId()){
+            Notice notice = Notice.builder()
+                    .user(parentComment.getWriter())
+                    .noticeType(NoticeType.REPLY)
+                    .postType(PostType.DELIVERY)
+                    .deliveryPost(deliveryPost)
+                    .content(deliveryComment.getContent())
+                    .build();
+            noticeRepository.save(notice);
+        }
+    }
+
+    private void createNoticeForPostWriter(DeliveryPost deliveryPost, DeliveryComment deliveryComment) {
+        //본인 게시글에 댓글을 작성할 때에는 알림이 생성되지 않아야 함
+        if(deliveryPost.getWriter().getUserId() != deliveryComment.getWriter().getUserId()){
+            Notice notice = Notice.builder()
+                    .user(deliveryPost.getWriter())
+                    .noticeType(NoticeType.COMMENT)
+                    .postType(PostType.DELIVERY)
+                    .deliveryPost(deliveryPost)
+                    .content(deliveryComment.getContent())
+                    .build();
+            noticeRepository.save(notice);
+        }
     }
 
     public List<DeliveryCommentReturnDto> getComments(Long postId, Long userId) {

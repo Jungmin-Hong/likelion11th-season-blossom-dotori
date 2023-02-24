@@ -18,6 +18,7 @@ public class DeliveryCommentController {
                                                                   @AuthenticationPrincipal CustomUserDetail customUserDetail) {
         commentDto.setWriter(customUserDetail.getUser());
         commentDto.setDeliveryPostId(postId);
+        commentDto.setIsSecret(commentDto.getIsSecret() != null && commentDto.getIsSecret());
         DeliveryComment deliveryComment = deliveryCommentService.createComment(commentDto);
 
         DeliveryCommentReturnDto returnDto = DeliveryCommentReturnDto.builder()
@@ -28,45 +29,6 @@ public class DeliveryCommentController {
                 .build();
 
         return ResponseEntity.ok(returnDto);
-    }
-
-//    @GetMapping
-//    public ResponseEntity<List<DeliveryCommentReturnDto>> getComments(@PathVariable Long postId,
-//                                                                      @AuthenticationPrincipal CustomUserDetail customUserDetail) {
-//        List<DeliveryComment> comments = deliveryCommentService.getComments(postId, customUserDetail.getUser().getUserId());
-//        List<DeliveryCommentReturnDto> returnDtos = comments.stream()
-//                .map(comment -> {
-//                    List<DeliveryCommentReturnDto> childCommentDtos = comment.getChildComment().stream()
-//                            .map(child -> {
-//                                String content = filterContent(customUserDetail.getUserId(), child);
-//                                DeliveryCommentReturnDto returnDto = DeliveryCommentReturnDto.builder()
-//                                        .deliveryCommentId(child.getId())
-//                                        .content(content)
-//                                        .writer(child.getWriter().getEmail())
-//                                        .isSecret(child.isSecret())
-//                                        .build();
-//                                return returnDto;
-//                            })
-//                            .collect(Collectors.toList());
-//                    return DeliveryCommentReturnDto.builder()
-//                            .deliveryCommentId(comment.getId())
-//                            .content(filterContent(customUserDetail.getUserId(), comment))
-//                            .writer(comment.getWriter().getEmail())
-//                            .isSecret(comment.isSecret())
-//                            .childCommentList(childCommentDtos.isEmpty() ? null : childCommentDtos)
-//                            .build();
-//                })
-//                .collect(Collectors.toList());
-//        return ResponseEntity.ok(returnDtos);
-//    }
-
-    private String filterContent(Long userId, DeliveryComment deliveryComment){
-        if(deliveryComment.isSecret()){
-//            if(!(deliveryComment.getDeliveryPost().getWriter().getUserId().equals(userId) ||
-//                    deliveryComment.getWriter().getUserId().equals(userId)))
-                return "비밀댓글입니다.";
-        }
-        return deliveryComment.getContent();
     }
 
 //    @DeleteMapping("/{commentId}")
