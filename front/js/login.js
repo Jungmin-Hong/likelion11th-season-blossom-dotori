@@ -20,12 +20,12 @@ login_form.addEventListener('submit', (event) => {
   })
     .then((response) => { // 성공
       console.log(response); // test
-      // window.location.href = './join01.html'; // 메인 페이지로
+      window.location.href = './Home(PC).html'; // 메인 페이지로
       alert('Login Success!');
     })
     .catch((error) => { // 실패
       console.error(error);
-      window.location.href = '#'; // 로그인 페이지 재로딩
+      window.location.href = '/'; // 로그인 페이지 재로딩
       alert('Login Failed!');
     });
 });
