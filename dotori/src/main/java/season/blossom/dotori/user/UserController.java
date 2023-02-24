@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
-@CrossOrigin(origins = "http://127.0.0.1:5500", allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:5500", allowCredentials = "true")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
@@ -60,17 +60,12 @@ public class UserController {
                 (HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
                         SecurityContextHolder.getContext());
 
-//        ResponseCookie cookie = ResponseCookie.from("JSESSIONID", session.getId())
-//                .sameSite("None")
-//                .secure(true)
-//                .path("/")
-//                .build();
         Cookie cookie = new Cookie("JSESSIONID", session.getId());
         cookie.setPath("/");
         cookie.setHttpOnly(true);
         cookie.setMaxAge(30000 * 60);
+        cookie.setSecure(true);
         response.addCookie(cookie);
-//        response.addHeader("Set-Cookie", cookie.toString());
         return new ResponseEntity(HttpStatus.OK);
     }
 

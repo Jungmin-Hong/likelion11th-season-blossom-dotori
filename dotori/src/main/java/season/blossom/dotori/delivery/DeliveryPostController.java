@@ -51,6 +51,15 @@ public class DeliveryPostController {
     }
 
 
+    @GetMapping("/api/board/delivery/edit/{no}")
+    public ResponseEntity<DeliveryPostReturnDto> getDetailForUpdate(@PathVariable("no") Long no, @AuthenticationPrincipal CustomUserDetail customUserDetail) {
+        deliveryPostService.getPostForUpdate(no,  customUserDetail.getUser());
+
+        DeliveryPostReturnDto deliveryPostReturnDto = deliveryPostService.getPost(no);
+
+        return ResponseEntity.ok(deliveryPostReturnDto);
+    }
+
     @PutMapping("/api/board/delivery/edit/{no}")
     public ResponseEntity<DeliveryPostReturnDto> update(@PathVariable("no") Long no, @RequestBody DeliveryPostDto deliveryPostDto, @AuthenticationPrincipal CustomUserDetail customUserDetail) {
         deliveryPostService.updatePost(no, deliveryPostDto, customUserDetail.getUserId());
