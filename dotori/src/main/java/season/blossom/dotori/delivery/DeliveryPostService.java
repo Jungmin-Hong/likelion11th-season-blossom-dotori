@@ -7,6 +7,8 @@ import season.blossom.dotori.deliverycomment.DeliveryCommentReturnDto;
 import season.blossom.dotori.deliverycomment.DeliveryCommentSeq;
 import season.blossom.dotori.deliverycomment.DeliveryCommentSeqRepository;
 import season.blossom.dotori.deliverycomment.DeliveryCommentService;
+import season.blossom.dotori.error.errorcode.CommonErrorCode;
+import season.blossom.dotori.error.exception.RestApiException;
 import season.blossom.dotori.user.User;
 
 
@@ -69,8 +71,8 @@ public class DeliveryPostService {
     }
 
     public DeliveryPostReturnDto getPost(Long postId, Long userId) {
-        Optional<DeliveryPost> deliveryPostWrapper = deliveryPostRepository.findById(postId);
-        DeliveryPost deliveryPost = deliveryPostWrapper.get();
+        Optional<DeliveryPost> byId = deliveryPostRepository.findById(postId);
+        DeliveryPost deliveryPost = byId.orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
         List<DeliveryCommentReturnDto> comments = deliveryCommentService.getComments(postId, userId);
 
         DeliveryPostReturnDto deliveryPostDto = DeliveryPostReturnDto.builder()
@@ -91,8 +93,8 @@ public class DeliveryPostService {
 
     @Transactional
     public DeliveryPostReturnDto getPost(Long postId) {
-        Optional<DeliveryPost> deliveryPostWrapper = deliveryPostRepository.findById(postId);
-        DeliveryPost deliveryPost = deliveryPostWrapper.get();
+        Optional<DeliveryPost> byId = deliveryPostRepository.findById(postId);
+        DeliveryPost deliveryPost = byId.orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
 
         DeliveryPostReturnDto deliveryPostDto = new DeliveryPostReturnDto(deliveryPost);
 
@@ -100,7 +102,8 @@ public class DeliveryPostService {
     }
 
     public DeliveryPostReturnDto postMatchStatus(Long postId, Long userId){
-        DeliveryPost deliveryPost = deliveryPostRepository.findById(postId).orElse(null);
+        Optional<DeliveryPost> byId = deliveryPostRepository.findById(postId);
+        DeliveryPost deliveryPost = byId.orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
         if(deliveryPost.getWriter().getUserId() == userId){
             deliveryPost.setDeliveryStatus(DeliveryStatus.MATCHED);
         }
@@ -113,7 +116,7 @@ public class DeliveryPostService {
     @Transactional
     public DeliveryPostDto updatePost(Long postId, DeliveryPostDto deliveryPostDto, Long userId) {
         Optional<DeliveryPost> byId = deliveryPostRepository.findById(postId);
-        DeliveryPost deliveryPost = byId.orElseThrow(() -> new NullPointerException("해당 포스트가 존재하지 않습니다."));
+        DeliveryPost deliveryPost = byId.orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
 
         if (deliveryPost.getWriter().getUserId().equals(userId)){
             deliveryPost.setId(deliveryPost.getId());
@@ -126,7 +129,7 @@ public class DeliveryPostService {
                     .build();
         }
         else {
-            throw new IllegalStateException();
+            throw new RestApiException(CommonErrorCode.UNAUTHORIZED_USER);
         }
     }
 
@@ -134,12 +137,12 @@ public class DeliveryPostService {
     @Transactional
     public void deletePost(Long postId, Long userId) {
         Optional<DeliveryPost> byId = deliveryPostRepository.findById(postId);
-        DeliveryPost deliveryPost = byId.orElseThrow(() -> new NullPointerException("해당 포스트가 존재하지 않습니다."));
+        DeliveryPost deliveryPost = byId.orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
         if (deliveryPost.getWriter().getUserId().equals(userId)){
             deliveryPostRepository.deleteById(postId);
         }
         else {
-            throw new IllegalStateException();
+            throw new RestApiException(CommonErrorCode.UNAUTHORIZED_USER);
         }
     }
 
@@ -178,12 +181,12 @@ public class DeliveryPostService {
                 .collect(Collectors.toList());
     }
 
-    public DeliveryPostReturnDto getPostForUpdate(Long no, User user) {
-        Optional<DeliveryPost> deliveryPostWrapper = deliveryPostRepository.findById(no);
-        DeliveryPost deliveryPost = deliveryPostWrapper.get();
+    public DeliveryPostReturnDto getPostForUpdate(Long postId, User user) {
+        Optional<DeliveryPost> byId = deliveryPostRepository.findById(postId);
+        DeliveryPost deliveryPost = byId.orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
 
         if(deliveryPost.getWriter().getUserId() != user.getUserId()){
-            throw new IllegalStateException();
+            throw new RestApiException(CommonErrorCode.UNAUTHORIZED_USER);
         }
 
         return new DeliveryPostReturnDto(deliveryPost);
