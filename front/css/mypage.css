@@ -1,0 +1,232 @@
+@font-face {
+    font-family: 'Cafe24';
+    src: url(../static/font/Cafe24Dongdong.ttf) format('truetype');
+}
+
+@font-face {
+    font-family:'DodamDodam';
+    src: url(../static/font/KCCDodamdodam.ttf) format('truetype');
+}
+
+h2{
+    font-family : 'Cafe24';
+}
+
+h1{
+    font-family : 'DodamDodam'
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0 ;
+    padding: 0 ;
+} 
+a:link, a:visited{
+    text-decoration: none;
+    color:#B1B1B1;
+}
+
+.container{
+    width: 363.25px;
+    height: 932.59px;
+    margin :0 auto;
+    background-color:#F7F7F7;
+    border-radius: 16px;
+}
+
+.logo_container{
+    position: absolute;
+    width: 363px;
+    height: 75.48px;
+    background-color: white;
+    top : 43.59px;
+}
+
+.logo{
+    width : 55px;
+    width: 55px;
+    height: 60px;
+    position: absolute;
+    left: 23px;
+    margin-top : 13px;
+}
+
+.imgs {
+    width: 45.41px;
+    height: 16.88px;
+    position: absolute;
+    right: 9px;
+    top : 31.78px;
+}
+.dotori {
+    width: 13.6px;
+    height: 16.88px;
+    position: absolute;
+    right: 40px;
+
+}
+.daramgy {
+    width: 15.3px;
+    height: 13.9px;
+    position: absolute;
+    right: 9px;
+    top : 1px;
+}
+
+nav {
+    width: 365px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    top: 110px;
+}
+
+.menu {
+    display: inline-block;
+    width: 86.79px;
+    height: 26px;
+    text-align: center;
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    align-items: center;
+    text-align: center;
+    color: #B1B1B1;
+    border-bottom: solid 1px #B1B1B1;
+}
+
+span#mypage{
+    border-bottom: solid 1px #FFA000;
+}
+
+.status_container{
+    position: absolute;
+    width: 364px;
+    height: 26px;
+}
+
+h1.service_name{
+    margin-top: 0;
+    margin-left : 86.15px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 31px;
+    color: #B56700;
+}
+
+h2.service_slogan{
+    margin-bottom : 0;
+    margin-left : 86.15px;
+    width: 190.7px;
+    height: 21.85px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 31px;
+    color: #484848;
+}
+
+ul.page_nav{
+    position: absolute;
+    display: flex;
+    width: 364px;
+    height: 26px;
+    margin-top : 146.59px;
+    
+
+    font-family: 'Source Sans Pro', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    list-style-type: none;
+    color: #B1B1B1;
+    justify-content: space-between;
+    padding-right:20px;
+    padding-left:20px;
+} 
+
+
+.inner_space{
+    padding: 0px 0px 171px;
+    gap: 32px;
+    position: absolute;
+    width: 301.26px;
+    height: 491.62px;
+    background: #EFEFEF;
+    border: 1px solid #DBDBDB;
+    border-radius: 16px;
+    margin-top : 110px;
+    margin-bottom: 204.59px;
+    margin-left : 31px;
+    margin-right : 31px;
+}
+
+p.inner_top{
+    font-size: 20px;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    color: #737373;
+    text-align:center;
+}
+
+ul.top_inner>li{
+    margin: 20px;
+    list-style-type: none;
+    text-align: left;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    color: #683B00;
+    margin-top:32px;
+}
+
+ul.top_inner{
+    padding-left : 0;
+    margin-top:0;
+}
+
+ul.top_inner:last-child{
+    margin-bottom:32px;
+}
+
+p.inner_bottom{
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    color: #737373;
+    text-align : center;
+    margin-top:0;
+}
+
+ul.bottom_inner>li{
+    margin: 20px;
+    list-style-type: none;
+    text-align: left;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    color: #683B00;
+    margin-top:32px;
+}
+
+ul.bottom_inner{
+    padding-left : 0;
+}
+
+span#mypage{
+    border-bottom: solid 1px #FFA000;
+  }

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/Profile_setting.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+  <title>프로필 등록</title>
+  <!-- axios cdn -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <!-- Noto sans  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="main_container">
+    <h2 class="title">프로필 등록</h2>
+
+    <form>
+      <!-- 기본정보 -->
+      <div class="sub">
+        <h4 class="sub_title">기본 정보</h4>
+
+        <div class="question_container">
+          <div class="question_items_title">성별을 선택해주세요</div>
+
+          <div class="question_items_content">
+            <div class="radio">
+              <input type="radio" id="man" name="gender" value="man"><label for="man">  남</label>
+              <input type="radio" id="woman" name="gender" value="woman"><label for="woman">  여</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="question_container">
+          <div class="question_items_title">출생년도를 선택해주세요</div>
+          <select id="birth" name="birth" class="question_items_content" style="width:320px">
+            <option value="select">출생년도를 선택해주세요</option>
+            <option value="2005">2005</option>
+            <option value="2004">2004</option>
+            <option value="2003">2003</option>
+            <option value="2002">2002</option>
+            <option value="2001">2001</option>
+            <option value="2000">2000</option>
+            <option value="1999">1999</option>
+            <option value="1998">1998</option>
+            <option value="1997">1997</option>
+            <option value="1996">1996</option>
+            <option value="1995">1995</option>
+            <option value="1994">1994</option>
+          </select>
+        </div>
+
+        <div class="question_container">
+          <div class="question_items_title">기숙사를 입력해주세요.</div>
+          <input type="text" placeholder="어느 기숙사를 이용하시나요?" class="question_items_content">
+        </div>
+
+        <div class="question_container">
+          <div class="question_items_title">선호하는 층수를 선택해주세요.</div>
+          <select id="birth" name="birth" class="question_items_content" style="width:320px">
+            <option value="Floor1">1층</option>
+            <option value="Floor2">2층</option>
+            <option value="Floor3">3층</option>
+            <option value="Floor4">4층</option>
+            <option value="Floor5">5층</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="sub">
+        <!-- 생활습관 -->
+        <h4 class="sub_title">생활 습관</h4>
+
+        <div class="question_container">
+          <div class="question_items_title">청소 습관</div>
+          <input type="text" placeholder="청소 주기는 어떤가요?" class="question_items_content">
+        </div>
+
+        <div class="question_container">
+          <div class="question_items_title">소등 시간</div>
+          <input type="text" placeholder="평소에 언제 잠드나요?" class="question_items_content">
+        </div>
+
+        <div class="question_container">
+          <div class="question_items_title">잠버릇</div>
+          <input type="text" placeholder="잠버릇이 있으신가요?" class="question_items_content">
+        </div>
+
+        <div class="question_container">
+          <div class="question_items_title">기숙사 이용 시간</div>
+          <input type="text" placeholder="일주일에 기숙사를 얼마나 이용하나요?" class="question_items_content">
+        </div>
+
+        <div class="question_container">
+          <div class="question_items_title">흡연 여부</div>
+          <div class="question_items_content">
+            <div class="radio">
+              <input type="radio" id="smoke-y" name="smoke" value="smoke-y"><label for="smoke-y"> 흡연</label>
+              <input type="radio" id="smoke-n" name="smoke" value="smoke-n"><label for="smoke-n"> 비흡연</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub">
+        <!-- 룸메한테 원하는 점 -->
+        <h4 class="sub_title">룸메한테 원하는 점</h4>
+
+        <div class="question_container">
+          <div class="question_items_title">방에서 음식 먹기</div>
+          <div class="question_items_content">
+            <div class="radio">
+              <input type="radio" id="eat-y" name="eat" value="eat-y"><label for="eat-y"> 가능</label>
+              <input type="radio" id="eat-n" name="eat" value="eat-n"><label for="eat-n"> 불가능</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="question_container">
+          <div class="question_items_title">방에서 통화하기</div>
+          <div class="question_items_content">
+            <div class="radio">
+              <input type="radio" id="call-y" name="call" value="call-y"><label for="call-y"> 가능</label>
+              <input type="radio" id="call-n" name="call" value="call-n"><label for="call-n"> 불가능</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="question_container">
+          <div class="question_items_title">룸메이트 흡연 여부</div>
+          <div class="question_items_content">
+            <div class="radio" class="radio">
+              <input type="radio" id="roommate-smoke-y" name="roommate-smoke" value="roommate-smoke-y"><label for="roommate-smoke-y"> 흡연자</label>
+              <input type="radio" id="roommate-smoke-n" name="roommate-smoke" value="roommate-smoke-n"><label for="roommate-smoke-n"> 비흡연자</label>
+              <input type="radio" id="roommate-smoke-n" name="roommate-smoke" value="roommate-smoke-n"><label for="roommate-smoke-n"> 상관 없음</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="question_container">
+          <div class="question_items_title">룸메에게 하고 싶은 말</div>
+          <input type="text" placeholder="룸메한테 하고 싶은 말이 있다면 적어주세요!" class="question_items_content">
+        </div>
+      </div>
+      <button type="button" class="btn">완료 > </button>
+
+    </form>
+  </div>
+</body>
+
+</html>
