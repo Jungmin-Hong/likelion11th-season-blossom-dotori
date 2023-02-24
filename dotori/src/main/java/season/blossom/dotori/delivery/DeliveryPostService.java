@@ -177,4 +177,15 @@ public class DeliveryPostService {
                 .stream().map(DeliveryPostReturnDto::new)
                 .collect(Collectors.toList());
     }
+
+    public DeliveryPostReturnDto getPostForUpdate(Long no, User user) {
+        Optional<DeliveryPost> deliveryPostWrapper = deliveryPostRepository.findById(no);
+        DeliveryPost deliveryPost = deliveryPostWrapper.get();
+
+        if(deliveryPost.getWriter().getUserId() != user.getUserId()){
+            throw new IllegalStateException();
+        }
+
+        return new DeliveryPostReturnDto(deliveryPost);
+    }
 }
