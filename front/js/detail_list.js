@@ -29,18 +29,18 @@ window.onload = function() {
   `;
 
   const data = response.data.comments
-  let htmlString ="";
+  let htmlString = "";
+  htmlString += `<div class="writecomment">
+  <form id="writeComment">
+    <input type="checkbox" class='isSecret' id="check_btn" name="secret" value="비밀" />
+    <label for="check_btn"><span>비밀</span></label>
+
+    <input type="text" name="commenttext" id="commenttext" placeholder="댓글을 입력하세요">
+    <input type="submit" value="" id="pencil">
+  </form>
+</div>`;
   console.log(data)
   if (data) {
-    htmlString += `<div class="writecomment">
-    <form id="writeComment">
-      <input type="checkbox" class='isSecret' id="check_btn" name="secret" value="비밀" />
-      <label for="check_btn"><span>비밀</span></label>
-
-      <input type="text" name="commenttext" id="commenttext" placeholder="댓글을 입력하세요">
-      <input type="submit" value="" id="pencil">
-    </form>
-  </div>`
   data.forEach(comment => {
   htmlString += `
         <div class="showcomment">
@@ -73,8 +73,8 @@ window.onload = function() {
         }
       })
       // console.log(htmlString)
-      comments.innerHTML += htmlString
     }
+    comments.innerHTML += htmlString
           
   
     })

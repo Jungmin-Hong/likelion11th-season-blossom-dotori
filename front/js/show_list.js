@@ -17,7 +17,6 @@ window.onload = function () {
               <span class="content">${element.content}</span>
             </div>
           </a>
-          <img class="dib" />
           <div class="apply">
             <img id="checkimg" src="../static/image/모집중.png" />
             <span class="apply-text">모집 중</span>

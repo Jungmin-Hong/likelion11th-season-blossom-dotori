@@ -6,16 +6,16 @@ const list = document.querySelector(".list");
 write_container.addEventListener('click', (event) => {
   event.preventDefault();
   axios.defaults.withCredentials = true;
-  const title = document.querySelector("#titlewrite");
+  const title = document.querySelector("#titlewrite").value;
 
-  const store = document.querySelector("#store");
-  const place = document.querySelector("#place");
-  const amount = document.querySelector("#sum");
-  const minimum = document.querySelector("#minimum");
-  const content = document.querySelector("#contentwrite");
+  const store = document.querySelector("#store").value;
+  const place = document.querySelector("#place").value;
+  const amount = document.querySelector("#sum").value;
+  const minimum = document.querySelector("#minimum").value;
+  const content = document.querySelector("#contentwrite").value;
   console.log(store);
 
-  axios.post('http://localhost:8080/board/delivery/write', {
+  axios.post('http://localhost:8080/api/board/delivery/write', {
     title: title,
     store: store,
     place: place,

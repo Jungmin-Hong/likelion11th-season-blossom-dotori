@@ -23,7 +23,7 @@ public class RoommatePostController {
         return ResponseEntity.status(HttpStatus.OK).body(roommatePosts);
     }
 
- 
+
     @PostMapping("/api/board/roommate/write")
     public ResponseEntity<RoommatePostReturnDto> createPost(@RequestBody RoommatePostDto roommatePostDto,
                                                       @AuthenticationPrincipal CustomUserDetail customUserDetail) {
