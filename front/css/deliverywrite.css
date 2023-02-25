@@ -25,6 +25,7 @@
     letter-spacing: 0.25px;
     margin: 20px 0 15px 30px;
 }
+
 #write-checkimg {
     display: flex;
     justify-content: center;
@@ -35,6 +36,7 @@
     margin: auto;
     content: url(../static/image/모집중.png);
 }
+
 #write-text {
     width: 60px;
     height: 24px;
@@ -52,18 +54,22 @@
     margin-top: auto;
     margin-bottom: auto;
 }
+
 #write-checkimg.active {
     content: url(../static/image/모집후.png);
 }
+
 #write-apply.active {
     width: 105px;
     background: rgba(33, 33, 33, 0.08);
     border: 1px solid rgba(0, 0, 0, 0.12);
 }
+
 #write-text.active {
     width: 73px;
     font-size: 14px;
 }
+
 /* 글 올리기 버튼 */
 #write-submit {
     color: #ffffff;
@@ -105,16 +111,19 @@
     left: 50%;
     transform: translate(-50%, 0);
 }
+
 #inputtitle {
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
     margin: 5px 0;
 }
+
 /* 제목 */
 input:focus {
     outline: none;
 }
+
 #titlewrite {
     color: #683B00;
     width: 128px;
@@ -128,6 +137,7 @@ input:focus {
     outline: none;
     margin-right: 5px;
 }
+
 /* 글쓴이 */
 #writerwrite {
     width: 47px;
@@ -143,10 +153,21 @@ input:focus {
     text-align: right;
     margin-left: 80px
 }
+
 #writerwrite::placeholder {
     color: #737373;
 }
+
 /* 주문 내용 */
+.no {
+    display: none;
+}
+
+.orderlist {
+    display: flex;
+    flex-direction: column;
+}
+
 .order {
     width: 91px;
     height: 18px;
@@ -160,10 +181,10 @@ input:focus {
     display: flex;
     flex-direction: row;
     margin: 10px 0;
-    }
-    
-    label {
-        width: 150px;
+}
+
+label {
+    width: 150px;
     height: 18px;
     font-family: 'Noto Sans KR';
     font-style: normal;
@@ -177,30 +198,18 @@ input:focus {
     order: 0;
     flex-grow: 0;
     margin-right: 40px;
-    }
-    .price {
-        display: flex;
-        text-align: center;
-        justify-content: center;
-    }
-    .orderwrite {
-        background: none;
-        border: none;
-        width: 53px;
-        height: 18px;
-        font-family: 'Noto Sans KR';
-        font-style: normal;
-        font-weight: 700;
-        font-size: 12px;
-        line-height: 16px;
-        color: #737373;
-        text-align: right;
-        margin-left: 20px;
-        }
-    .orderprice {
+}
+
+.price {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
+.orderwrite {
     background: none;
     border: none;
-    width: 53px;
+    width: 70px;
     height: 18px;
     font-family: 'Noto Sans KR';
     font-style: normal;
@@ -209,21 +218,34 @@ input:focus {
     line-height: 16px;
     color: #737373;
     text-align: right;
-    }
-    .orderwrite::placeholder {
-        color: #B1B1B1;
-    }
-    .orderprice::placeholder {
-        color: #B1B1B1;
-    }
-    .writeborder {
-        border: 0;
-        background: #959595;
-        height: 1px;
-        width: 266px;
-        text-align: center;
-    }
-    #contentwrite {
+    margin-left: 10px;
+}
+
+.orderprice {
+    background: none;
+    border: none;
+    width: 30px;
+    height: 18px;
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 16px;
+    color: #737373;
+    text-align: right;
+    margin-left: 10px;
+    margin-right: 20px;
+}
+
+.writeborder {
+    border: 0;
+    background: #959595;
+    height: 1px;
+    width: 266px;
+    text-align: center;
+}
+
+#contentwrite {
     width: 266px;
     height: 780px;
     font-family: 'Noto Sans KR';
@@ -234,10 +256,12 @@ input:focus {
     color: #515F7E;
     border: none;
     resize: none;
-    }
-    #contentwrite::placeholder {
-        color: #515F7E;
-    }
-    textarea:focus {
-        outline: none;
-    }
+}
+
+#contentwrite::placeholder {
+    color: #515F7E;
+}
+
+textarea:focus {
+    outline: none;
+}

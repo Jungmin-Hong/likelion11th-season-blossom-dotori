@@ -19,7 +19,7 @@ window.onload = function () {
           </a>
           <img class="dib" />
           <div class="apply">
-            <img id="checkimg" src="../html/images/모집중.png" />
+            <img id="checkimg" src="../static/image/모집중.png" />
             <span class="apply-text">모집 중</span>
           </div>
         </div>

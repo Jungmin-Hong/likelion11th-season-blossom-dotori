@@ -1,0 +1,14 @@
+iframe {
+    position: absolute;
+    top: -140px;
+    right: 8px;
+    box-sizing: border-box;
+    width: 311px;
+    height: 581px;
+    background: #FFFFFF;
+    border: 2px solid #C67100;
+    border-radius: 12px;
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}

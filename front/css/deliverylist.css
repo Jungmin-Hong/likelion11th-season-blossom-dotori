@@ -83,11 +83,23 @@ header {
     align-items: center;
     justify-self: center;
 }
-.dotori {
+#dotori {
     width: 13.6px;
     height: 16.88px;
     position: absolute;
     right: 40px;
+}
+#noticeLength {
+    background: #ffa20077;
+    border-radius: 80%;
+    font-size: 2px;
+    width: 15px;
+    height: 15px;
+    display: absolute;
+    bottom: 10px;
+    text-align: center;
+    margin: 0 0 10px 270px;
+    color: white;
 }
 .daramgy {
     width: 15.3px;
@@ -283,7 +295,6 @@ nav {
     letter-spacing: 0.25px;
     margin-right: 20px;
     margin-top: -20px;
-    cursor: pointer;
 }
 .checkimg {
     display: flex;
@@ -293,6 +304,7 @@ nav {
     width: 24px;
     height: 24px;
     margin: auto;
+    content: url(../static/image/모집중.png);
 }
 .apply-text {
     width: 60px;
@@ -312,4 +324,15 @@ nav {
     margin-bottom: auto;
 }
 /* 체크 후 */
-
+.apply.active {
+    width: 105px;
+    background: rgba(33, 33, 33, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+}
+.checkimg.active {
+    content: url(../static/image/모집후.png);
+}
+.apply-text.active {
+    width: 73px;
+    font-size: 14px;
+}

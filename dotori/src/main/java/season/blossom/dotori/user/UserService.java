@@ -106,6 +106,30 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
+    public UserReturnDto getUser(Long no) {
+        Optional<User> byId = userRepository.findById(no);
+        User me = byId.orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
+
+        UserReturnDto userReturnDto = UserReturnDto.builder()
+                .gender(me.getGender())
+                .age(me.getAge())
+                .dorm(me.getDorm())
+                .floor(me.getFloor())
+                .cleaningCycle(me.getCleaningCycle())
+                .sleepTime(me.getSleepTime())
+                .sleepHabits(me.getSleepHabits())
+                .useTime(me.getUseTime())
+                .smoking(me.getSmoking())
+                .eating(me.getEating())
+                .calling(me.getCalling())
+                .smokeMate(me.getSmokeMate())
+                .words(me.getWords())
+                .build();
+
+        return userReturnDto;
+    }
+
+    @Transactional
     public User updatePwd(User user, PwdRequestDto pwdRequestDto){
         Optional<User> byId = userRepository.findById(user.getUserId());
         User me = byId.orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));

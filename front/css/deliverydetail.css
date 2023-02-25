@@ -128,6 +128,7 @@ width: 15.75px;
 height: 14px;
 float:left;
 margin: 12px 0 0 8px;
+content: url(../static/image/댓글다람쥐.png)
 }
 .commentwriter {
 width: 76px;
@@ -168,13 +169,14 @@ margin-left: -7px;
     text-align: left;
     margin-top: 20px;
     margin-left: 45px;
-    }
+}
 .subcomment-daramgy {
     width: 15.75px;
     height: 14px;
     float:left;
-    margin: 12px 0 0 8px;
-    }
+    margin: -8px 0 20px 53px;
+    content: url(../static/image/댓글다람쥐.png);
+}
 .subcommentwriter {
     width: 76px;
     height: 13px;
@@ -184,9 +186,9 @@ margin-left: -7px;
     font-size: 10px;
     line-height: 16px;
     color: #683B00;
-    margin: 12px 0 0 5px;
+    margin: -8px 0 0 5px;
     float: left;
-    }
+}
 .subcomment-detail {
     width: 200px;
     height: 19.91px;
@@ -197,10 +199,42 @@ margin-left: -7px;
     line-height: 16px;
     color: #545454;
     float: left;
-    margin-top: 7px;
-    margin-left: -7px;
-    }
+    margin-top: -15px;
+    margin-left: 18px;
+}
 .subcommentfunc {
     float: right;
-    margin: 5px 6px 0 0;
-    }
+    margin: -20px 6px 0 0;
+}
+/* 글쓴이 */
+.comment-daramgy.master {
+    width: 15.75px;
+    height: 14px;
+    float:left;
+    margin: 12px 0 0 8px;
+    content: url('../static/image/다람쥐.png');
+}
+.commentwriter.master {
+    width: 80px;
+    height: 13px;
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 16px;
+    color: #FFA000;
+    margin: 12px 0 0 5px;
+    float: left;
+}
+
+/* 익명 */
+.comment-daramgy.secret {
+     width: 15.75px;
+    height: 14px;
+    float:left;
+    margin: 12px 0 0 8px;
+    content: url('../static/image/익명다람쥐.png');
+}
+.commentwriter.secret {
+    visibility: hidden;
+}

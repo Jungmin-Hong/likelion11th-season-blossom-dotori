@@ -84,6 +84,13 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userReturn);
     }
 
+    @GetMapping("/profile/{no}")
+    public ResponseEntity<UserReturnDto> getUserInfo(@PathVariable("no") Long no) {
+        UserReturnDto userReturn = userService.getUser(no);
+
+        return ResponseEntity.status(HttpStatus.OK).body(userReturn);
+    }
+
     @PutMapping("/mypage/edit")
     public ResponseEntity<UserReturnDto> updateUserInfo(@AuthenticationPrincipal CustomUserDetail customUserDetail, @RequestBody UserReturnDto userReturnDto) {
         User user = userService.updateInfo(customUserDetail.getUser(), userReturnDto);
