@@ -1,4 +1,4 @@
-import { axios } from "axios";
+// import { axios } from "axios";
 
 const button = document.querySelector("#pencil");
 const secret = document.getElementById("check_btn");
