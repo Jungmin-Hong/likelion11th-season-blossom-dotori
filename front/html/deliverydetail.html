@@ -51,28 +51,29 @@
     </nav>
     <section id="write-section">
       <!-- 상세보기 내용 -->
-        <div class="detail_container" >
-          <!-- <input type="submit" name="writesubmit" id="write-submit" value="수정하기">
+      <div class="detail_container">
+        <!-- <input type="submit" name="writesubmit" id="write-submit" value="수정하기">
           
-          <div id="inputtitle">
-            <div name="titlewrite" id="titlewrite">제목제목제목제목</div>
-            <div name="writerwrite" id="writerwrite">글쓴이</div>
-          </div>
-          <hr class="writeborder">
-          <div>
-              <span class="order"><label for="store">배달시킬 가게(배달 플랫폼)</label><input type="text" name="store" class="orderwrite" placeholder="내용 입력" disabled></span>
-              <span class="order"><label for="place">픽업 장소</label><input type="text" name="place" class="orderwrite" placeholder="내용 입력" disabled></span>
-              <span class="order"><label for="sum">작성자 주문 금액</label><span class="price">(<input type="text" name="sum" class="orderprice" disabled>)</span>원</span>
-              <span class="order"><label for="minimum">최소 주문 금액</label><span class="price">(<input type="text" name="minimum" class="orderprice" disabled>)</span>원</span>
-          </div>
+          <div id="inputtitle">	
+            <div name="titlewrite" id="titlewrite">제목제목제목제목</div>	
+            <div name="writerwrite" id="writerwrite">글쓴이</div>	
+          </div>	
+          <hr class="writeborder">	
+          <div class="orderlist">	
+              <span class="order"><label for="store">배달시킬 가게(배달 플랫폼)</label><label class="orderwrite"><input type="text" name="store" class="no" disabled>내용 입력</label></span>	
+              <span class="order"><label for="place">픽업 장소</label><label class="orderwrite"><input type="text" name="place" class="no" disabled>내용 입력</label></span>	
+              <span class="order"><label for="sum">작성자 주문 금액</label><span class="price"><label class="orderprice"></label></span>원</span>	
+              <span class="order"><label for="minimum">최소 주문 금액</label><span class="price"><label class="orderprice"></label></span>원</span>	
+          </div>	
           <hr class="writeborder">
           <div name="ordercontent" class="ordercontentshow">내용</div> -->
-        </div>
+      </div>
 
       <!-- 댓글창 -->
       <hr class="detailborder">
+      
 
-      <div class="comments">
+      <!-- <div class="comments">
 
         <div class="writecomment">
           <form id="writeComment">
@@ -85,23 +86,24 @@
         </div>
 
         <div class="showcomment">
-          <img src="../static/image/댓글다람쥐.png" class="comment-daramgy">
+          <img class="comment-daramgy">
           <span class="commentwriter">익명의 다람쥐1</span>
           <div class="maincomment">
             <span class="maincomment-detail">내용을 입력하세요.</span>
             <img src="../static/image/댓글기능.png" class="commentfunc">
-          </div>
+          </div> -->
 
           <!-- 대댓글 -->
 
-          <div class="showsubcomment">
-            <img src="../static/image/댓글다람쥐.png" class="subcomment-daramgy">
+          <!-- <div class="showsubcomment">
+            <img class="subcomment-daramgy">
             <span class="subcommentwriter">익명의 다람쥐1</span>
             <div class="subcomment">
-                <span class="subcomment-detail">내용을 입력하세요.</span>
-                <img src="../static/image/댓글기능.png" class="subcommentfunc">
+              <span class="subcomment-detail">내용을 입력하세요.</span>
+              <img src="../img/댓글기능.png" class="subcommentfunc">
             </div>
-        </div>
+          </div>
+        </div> -->
 
       </div>
     </section>
@@ -109,7 +111,7 @@
     <script type='module' src="../js/detail_list.js"></script>
     <!-- <script type='module' src="../js/detail_list01.js"></script> -->
     <!-- <script type='module' src="../js/add_comment.js"></script> -->
-    <script type='module' src="../js/add_comment01.js"></script>
+    <!-- <script type='module' src="../js/add_comment01.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </form>

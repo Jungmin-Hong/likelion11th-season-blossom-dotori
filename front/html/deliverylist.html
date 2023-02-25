@@ -7,6 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>게시글 목록</title>
   <link rel="stylesheet" type="text/css" href="../css/deliverylist.css" />
+  <link rel="stylesheet" type="text/css" href="../css/notice.css" />
+  <link rel="stylesheet" type="text/css" href="../css/deliverychange.css" />
 </head>
 
 <body>
@@ -21,6 +23,7 @@
         <img class="dotori" src="../static/image/도토리.png" />
         <img class="daramgy" src="../static/image/다람쥐.png" />
       </div>
+      <span id="noticeLength">1</span>
     </div>
   </header>
   <nav>
@@ -54,17 +57,21 @@
         </a>
         <img class="dib" />
         <div class="apply">
-          <img id="checkimg" src="../html/images/모집중.png" />
+          <img id="checkimg"/>
           <span class="apply-text">모집 중</span>
         </div>
       </div> -->
 
     </div>
+    <iframe id="noticeFrame" src="../html/iframe.html" style="display:none">
+    </iframe>
   </section>
 
   <script src="../js/list_function.js"></script>
   <script src="../js/show_list.js"></script>
-  <script src="../js/add_list01.js"></script>
+  <!-- <script src="../js/add_list01.js"></script> -->
+  <iframe id="noticeFrame" src="../html/iframe.html" style="display:none">
+  </iframe>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </body>
 

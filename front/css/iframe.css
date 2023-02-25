@@ -1,0 +1,149 @@
+#notice-section {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 18px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+#top {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+}
+#title {
+    margin-top: 25px;
+    width: 124px;
+    height: 17px;
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 16px;
+    color: #B56700;
+}
+#icon {
+    width: 47px;
+    height: 14px;
+    text-align: right;
+    margin-left: 80px;
+    width: 46.71px;
+    height: 46px;
+    left: 245px;
+    top: 20px;
+}
+hr { 
+    width: 250px;
+    height: 0px;
+    border: 1px solid #959595;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.list-section {
+    box-sizing: border-box;
+    width: 300px;
+    height: 581px;
+    align-items: center;
+    display: flex;
+    justify-content: center;;
+    flex-direction: column;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);    
+    padding: 20px 18px;
+    margin-top: -225px;
+}
+/* 알림들 */
+.lists {
+    align-items: center;
+    display: flex;
+    justify-content: center;;
+    flex-direction: column;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+.list {
+    background: #E5E5E5;
+    border-radius: 40px;
+    width: 269.91px;
+    height: 64px;
+    background: #E5E5E5;
+    border-radius: 40px;
+    margin-bottom: 20px;
+}
+/* 찜 */
+.dib {
+    float: left;
+    margin: 1px 0 0 10px;
+    content: url(../img/찜전.png);
+}
+a:visited ~ .dib {
+    content: url(../img/찜후.png);
+}
+/* 제목 */
+.notice-title {
+    position: absolute;
+    width: 242.66px;
+    height: 18px;
+    left: 31.34px;
+    top: 10px;
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 10px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    color: #737373;;
+
+}
+.list-title {
+    height: 18px;
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 10px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    color: #B56700;
+}
+/* 알림 내용 */
+.notice-content {
+    position: absolute;
+    width: 227.4px;
+    height: 18px;
+    left: 46px;
+    top: 28px;
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 9px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+}
+.list-writer {
+    color: #683B00;
+}
+.list-content {
+    color: #959595;
+}
+
+.time {
+    position: absolute;
+    width: 45px;
+    height: 18px;
+    left: 200px;
+    top: 45px;
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 10px;
+    line-height: 16px;
+    color: #737373;
+}

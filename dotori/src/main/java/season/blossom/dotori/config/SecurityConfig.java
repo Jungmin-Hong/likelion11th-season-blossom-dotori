@@ -30,7 +30,7 @@ public class SecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-//    @Bean
+    //    @Bean
 //    public WebSecurityCustomizer webSecurityCustomizer() {
 //        return (web) -> web.ignoring()
 //                .antMatchers(HttpMethod.POST, "/api/user/**");
@@ -39,20 +39,22 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf()
-                    .disable()
+                .disable()
                 .authorizeRequests()
-                    .antMatchers("/api/user/register",  "/api/user/login")
-                    .permitAll()
-                    .anyRequest().authenticated()
+                .antMatchers("/api/user/register", "/api/user/login")
+                .permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                    .disable()
+                .disable()
                 .logout()
-                    .logoutUrl("/api/user/logout")
-                    .deleteCookies("JSESSIONID")
-                    .and()
+                .logoutUrl("/api/user/logout")
+                .deleteCookies("JSESSIONID")
+                .and()
                 .exceptionHandling()
-                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));;
+                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
+        ;
         http.userDetailsService(userDetailsService);
 
         return http.build();
@@ -68,8 +70,9 @@ public class SecurityConfig {
                 .and()
                 .build();
     }
+
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

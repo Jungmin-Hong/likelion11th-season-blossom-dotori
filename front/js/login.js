@@ -25,7 +25,7 @@ login_form.addEventListener('submit', (event) => {
     })
     .catch((error) => { // 실패
       console.error(error);
-      window.location.href = '/'; // 로그인 페이지 재로딩
+      window.location.href = './login.html'; // 로그인 페이지 재로딩
       alert('Login Failed!');
     });
 });

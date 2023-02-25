@@ -32,17 +32,19 @@ a {
     margin: 15px 0;
     flex-direction: column;
 }
-#writeComment {
+.writecomment {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     padding: 8px 8px 8px 12px;
     gap: 6px;
-    width: 250px;
+    width: 245px;
     height: 25px;
     background: #CACACA;
     border-radius: 40px;
-    padding: 5px 10px;
+    margin: 15px 10px;
+
 }
 
 input#check_btn {
@@ -91,9 +93,10 @@ input#check_btn:checked + label:before {
     color: #959595;
     flex: none;
     background: #E5E5E5;
-    margin-left: -145px;
+    margin-left: -155px;
     border-radius: 20px;
     padding-left: 10px;
+    margin-right: 3px;
 }
 #commenttext::placeholder {
     font-family: 'Noto Sans KR';
@@ -127,10 +130,12 @@ margin-top: 20px;
 width: 15.75px;
 height: 14px;
 float:left;
-margin: 12px 0 0 8px;
+margin: -7px 0 0 8px;
+content: url(../static/image/댓글다람쥐.png)
 }
 .commentwriter {
-width: 76px;
+text-align: left;
+width: 55px;
 height: 13px;
 font-family: 'DM Sans';
 font-style: normal;
@@ -138,8 +143,9 @@ font-weight: 700;
 font-size: 10px;
 line-height: 16px;
 color: #683B00;
-margin: 12px 0 0 5px;
 float: left;
+margin-top: -8px;
+margin-right: 3px;
 }
 .maincomment-detail {
 width: 200px;
@@ -151,12 +157,12 @@ font-size: 10px;
 line-height: 16px;
 color: #545454;
 float: left;
-margin-top: 7px;
-margin-left: -7px;
+margin-top: 3px;
+margin-left: -5px;
 }
 .commentfunc {
     float: right;
-    margin: 5px 6px 0 0;
+    margin: 2px 6px 0 0;
 }
 
 /* 대댓글 */
@@ -168,15 +174,16 @@ margin-left: -7px;
     text-align: left;
     margin-top: 20px;
     margin-left: 45px;
-    }
+}
 .subcomment-daramgy {
     width: 15.75px;
     height: 14px;
-    float:left;
-    margin: 12px 0 0 8px;
-    }
+    float: left;
+    margin: -8px 0 20px 53px;
+    content: url(../static/image/댓글다람쥐.png);
+}
 .subcommentwriter {
-    width: 76px;
+    width: 55px;
     height: 13px;
     font-family: 'DM Sans';
     font-style: normal;
@@ -184,9 +191,9 @@ margin-left: -7px;
     font-size: 10px;
     line-height: 16px;
     color: #683B00;
-    margin: 12px 0 0 5px;
+    margin: -8px 0 0 0;
     float: left;
-    }
+}
 .subcomment-detail {
     width: 200px;
     height: 19.91px;
@@ -197,10 +204,42 @@ margin-left: -7px;
     line-height: 16px;
     color: #545454;
     float: left;
-    margin-top: 7px;
-    margin-left: -7px;
-    }
+    margin-top: -15px;
+    margin-left: 18px;
+}
 .subcommentfunc {
     float: right;
-    margin: 5px 6px 0 0;
-    }
+    margin: -20px 6px 0 0;
+}
+/* 글쓴이 */
+.comment-daramgy.master {
+    width: 15.75px;
+    height: 14px;
+    float:left;
+    margin: 12px 0 0 8px;
+    content: url('../static/image/다람쥐.png');
+}
+.commentwriter.master {
+    width: 80px;
+    height: 13px;
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 16px;
+    color: #FFA000;
+    margin: 12px 0 0 5px;
+    float: left;
+}
+
+/* 익명 */
+.comment-daramgy.secret {
+     width: 15.75px;
+    height: 14px;
+    float:left;
+    margin: 12px 0 0 8px;
+    content: url('../static/image/익명다람쥐.png');
+}
+.commentwriter.secret {
+    visibility: hidden;
+}
